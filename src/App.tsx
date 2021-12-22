@@ -1,12 +1,18 @@
-import { Container } from '@sberdevices/plasma-ui'
-
-import { AppHeader } from './components/AppHeader'
+import { StartPage } from './pages/StartPage'
+import {
+    Routes,
+    Route
+} from 'react-router-dom'
+import { Names } from './pages/Names'
+import { Random } from './pages/Random'
 
 function App() {
     return (
-        <Container>
-            <AppHeader />
-        </Container>
+        <Routes>
+            <Route path="/" element={<StartPage />} />
+            <Route path="/names" element={<Names />} />
+            <Route path="/random" element={<Random />} />
+        </Routes>
     )
 }
 

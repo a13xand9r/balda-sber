@@ -5,14 +5,17 @@
   "dependencies": {
     "@sberdevices/assistant-client": "^4.6.0",
     "@sberdevices/plasma-icons": "^1.44.0",
+    "@sberdevices/plasma-temple": "^1.15.1",
     "@sberdevices/plasma-tokens": "^1.13.0",
     "@sberdevices/plasma-ui": "^1.51.0",
     "@sberdevices/spatial-navigation": "^1.0.3",
     "axios": "^0.21.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-router-dom": "^6.2.1",
     "react-scripts": "4.0.3",
     "styled-components": "^5.3.1",
+    "uuid": "^8.3.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -45,6 +48,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/styled-components": "^5.1.14",
+    "@types/uuid": "^8.3.3",
     "typescript": "^4.1.2"
   }
 }
