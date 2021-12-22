@@ -13,40 +13,41 @@ export const Random = () => {
     const [state, dispatch] = useStore()
     const socket = React.useRef<WebSocket>()
     React.useEffect(() => {
-        // const wsConnect = () => {
-        //     // socket.current = new WebSocket('ws://ws-typescript-test.herokuapp.com/')
-        //     socket.current = new WebSocket(process.env.NODE_ENV === 'development' ?
-        //          'ws://localhost:5000/' :
-        //          'ws://balda-scenario-sber.herokuapp.com/'
-        //          )
+        const wsConnect = () => {
+            // socket.current = new WebSocket('ws://ws-typescript-test.herokuapp.com/')
+            socket.current = new WebSocket(
+                process.env.NODE_ENV === 'development' ?
+                    'ws://localhost:5000/' :
+                    'wss://balda-scenario-sber.herokuapp.com/'
+            )
 
-        //     socket.current.onopen = () => {
-        //         console.log('socket started')
-        //         socket.current?.send(JSON.stringify({
-        //             type: 'RANDOM',
-        //             payload: {
-        //                 userId: v4(),
-        //                 name: state.name
-        //             }
-        //         } as SendMessage))
-        //     }
-        //     socket.current.onclose = () => {
-        //         console.log('socket closed')
-        //         console.log('reconnecting...')
-        //         wsConnect()
-        //     }
-        //     socket.current.onmessage = (event) => {
-        //         console.log('message', event)
-        //         const data = JSON.parse(event.data) as GetMessage
-        //         dispatch(actions.setOpponent({
-        //             name: data.payload.opponentName,
-        //             userId: data.payload.opponentId,
-        //             roomId: Number(data.payload.roomId)
-        //         }))
-        //     }
-        // }
+            socket.current.onopen = () => {
+                console.log('socket started')
+                socket.current?.send(JSON.stringify({
+                    type: 'RANDOM',
+                    payload: {
+                        userId: v4(),
+                        name: state.name
+                    }
+                } as SendMessage))
+            }
+            socket.current.onclose = () => {
+                console.log('socket closed')
+                console.log('reconnecting...')
+                wsConnect()
+            }
+            socket.current.onmessage = (event) => {
+                console.log('message', event)
+                const data = JSON.parse(event.data) as GetMessage
+                dispatch(actions.setOpponent({
+                    name: data.payload.opponentName,
+                    userId: data.payload.opponentId,
+                    roomId: Number(data.payload.roomId)
+                }))
+            }
+        }
 
-        // wsConnect()
+        wsConnect()
     }, [])
     return (
         <Container>
