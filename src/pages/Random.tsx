@@ -3,7 +3,6 @@ import React from 'react'
 import { AppHeader } from '../components/AppHeader'
 import { Loader } from '../components/Loader'
 import { usePushScreen } from '../hooks/usePushScreen'
-import {v4} from 'uuid'
 import { GetMessage, SendMessage } from '../types/types'
 import { useStore } from '../hooks/useStore'
 import { actions } from '../store/store'
@@ -16,8 +15,8 @@ export const Random = () => {
         const wsConnect = () => {
             // socket.current = new WebSocket('ws://ws-typescript-test.herokuapp.com/')
             socket.current = new WebSocket(
-                process.env.NODE_ENV === 'development' ?
-                    'ws://localhost:5000/' :
+                // process.env.NODE_ENV === 'development' ?
+                //     'ws://localhost:5000/' :
                     'wss://balda-scenario-sber.herokuapp.com/'
             )
 
@@ -26,7 +25,7 @@ export const Random = () => {
                 socket.current?.send(JSON.stringify({
                     type: 'RANDOM',
                     payload: {
-                        userId: v4(),
+                        userId: state.userId,
                         name: state.name
                     }
                 } as SendMessage))
@@ -48,6 +47,9 @@ export const Random = () => {
         }
 
         wsConnect()
+        return () => {
+            socket.current?.close()
+        }
     }, [])
     return (
         <Container>

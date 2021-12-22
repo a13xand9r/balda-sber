@@ -1,10 +1,12 @@
 import { ActionsType, CharacterType, OnlineOpponent, StateType } from '../types/types'
+import {v4} from 'uuid'
 
 
 export const initialState = {
     character: 'sber' as CharacterType,
     name: '',
-    onlineOpponent: null as null | OnlineOpponent
+    onlineOpponent: null as null | OnlineOpponent,
+    userId: v4()
 }
 
 export const reducer = (state: StateType, action: ActionsType): StateType => {
