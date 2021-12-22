@@ -15,7 +15,10 @@ export const Random = () => {
     React.useEffect(() => {
         const wsConnect = () => {
             // socket.current = new WebSocket('ws://ws-typescript-test.herokuapp.com/')
-            socket.current = new WebSocket('ws://localhost:5000/')
+            socket.current = new WebSocket(process.env.NODE_ENV === 'development' ?
+                 'ws://localhost:5000/' :
+                 'ws://balda-scenario-sber.herokuapp.com/'
+                 )
 
             socket.current.onopen = () => {
                 console.log('socket started')
