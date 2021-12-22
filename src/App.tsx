@@ -9,9 +9,9 @@ import { Random } from './pages/Random'
 function App() {
     return (
         <Routes>
-            <Route path="/" element={<StartPage />} />
             <Route path="/names" element={<Names />} />
             <Route path="/random" element={<Random />} />
+            <Route path="/" element={<StartPage />} />
         </Routes>
     )
 }
