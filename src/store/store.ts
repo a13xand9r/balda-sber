@@ -6,7 +6,8 @@ export const initialState = {
     character: 'sber' as CharacterType,
     name: '',
     onlineOpponent: null as null | OnlineOpponent,
-    userId: v4()
+    userId: v4(),
+    playGroundSize: 5
 }
 
 export const reducer = (state: StateType, action: ActionsType): StateType => {

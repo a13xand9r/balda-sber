@@ -16,7 +16,7 @@ export const Random = () => {
             // socket.current = new WebSocket('ws://ws-typescript-test.herokuapp.com/')
             socket.current = new WebSocket(
                 // process.env.NODE_ENV === 'development' ?
-                //     'ws://localhost:5000/' :
+                //     `ws://localhost:5000/?token=${state.userId}` :
                     'wss://balda-scenario-sber.herokuapp.com/'
             )
 
@@ -48,7 +48,12 @@ export const Random = () => {
 
         wsConnect()
         return () => {
-            socket.current?.close()
+            if (socket.current) {
+                socket.current.onclose = () => {
+                    console.log('socket closed')
+                }
+                socket.current?.close()
+            }
         }
     }, [])
     return (

@@ -3,14 +3,16 @@ import {
     Routes,
     Route
 } from 'react-router-dom'
-import { Names } from './pages/Names'
-import { Random } from './pages/Random'
+import { SettingsPage } from './pages/SettingsPage'
+import { Random } from './pages/RandomPage'
+import { PlayPage } from './pages/PlayPage'
 
 function App() {
     return (
         <Routes>
-            <Route path="/names" element={<Names />} />
+            <Route path="/settings" element={<SettingsPage />} />
             <Route path="/random" element={<Random />} />
+            <Route path="/play" element={<PlayPage />} />
             <Route path="/" element={<StartPage />} />
         </Routes>
     )

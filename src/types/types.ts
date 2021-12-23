@@ -12,7 +12,7 @@ export interface PageStateType {
     random: null,
     play: null,
     wordsHistory: null
-    names: null,
+    settings: null,
     rules: null
     finish: null
 }

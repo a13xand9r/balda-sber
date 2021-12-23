@@ -5,7 +5,7 @@ import { usePushScreen } from '../hooks/usePushScreen'
 import { useStore } from '../hooks/useStore'
 import { actions } from '../store/store'
 
-export const Names = () => {
+export const SettingsPage = () => {
     const pushScreen = usePushScreen()
     const [state, dispatch] = useStore()
     const [name, setName] = React.useState('')
