@@ -13,8 +13,8 @@ const PlayGround = styled.div<{playSize: number}>`
     grid-gap: 0.3rem;
 `
 const PlayCell = styled.div<{isColored: boolean}>`
-    width: 5rem;
-    height: 5rem;
+    width: 3rem;
+    height: 3rem;
     background-color: ${props => props.isColored ? 'red' : 'aqua'};
     border-radius: 8%;
 `
@@ -54,10 +54,10 @@ export const PlayPage = () => {
     ))
     return (
         <Container>
-            <AppHeader
+            {/* <AppHeader
                 back={false}
                 title='Балда онлайн'
-            />
+            /> */}
 
             <PlayGround playSize={state.playGroundSize}>
                 {playCells}
