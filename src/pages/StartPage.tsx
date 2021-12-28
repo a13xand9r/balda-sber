@@ -1,24 +1,59 @@
 import { Button, Container } from '@sberdevices/plasma-ui'
-import axios from 'axios'
 import React from 'react'
+import styled from 'styled-components'
+import { getWord } from '../api/getWord'
 import { AppHeader } from '../components/AppHeader'
 import { usePushScreen } from '../hooks/usePushScreen'
+import { useStore } from '../hooks/useStore'
+import { actions } from '../store/store'
 
-const link = 'https://dictionary.yandex.net/api/v1/dicservice.json/lookup?lang=ru-ru&text=идея&key=dict.1.1.20211222T132610Z.c5187e7ef30aff2e.f22ccc1a1ad50ba343d27c5dd978fb470e758ca2'
+const StyledButton = styled(Button)`
+    margin: 0.5rem auto;
+    width: 90%;
+`
+
 export const StartPage = () => {
     const pushScreen = usePushScreen()
-    // React.useEffect(() => {
-    //     axios.get(link).then(res => console.log(res.data))
-    // }, [])
+    const [state, dispatch] = useStore()
+    React.useEffect(() => {
+        getWord(state.playGroundSize).then(res => dispatch(actions.setStartWord(res)))
+    }, [])
+    const [value, setValue] = React.useState(0)
+    const onChange = (value: number) => {
+        console.log('change')
+        setValue(value)
+    }
+    const onPlayClick = () => {
+        dispatch(actions.setMultiPlayer(false))
+        pushScreen('settings')
+    }
+    const onRandomClick = () => {
+        dispatch(actions.setMultiPlayer(true))
+        pushScreen('settings')
+    }
     return (
         <Container>
             <AppHeader
                 back={false}
                 title='Балда онлайн'
             />
-            <Button onClick={() => pushScreen('play')}>Играть вдвоем</Button>
-            <Button onClick={() => pushScreen('settings')}>Поиск случайного соперника</Button>
-            <Button>Играть с другом онлайн</Button>
+            <StyledButton
+                onClick={onPlayClick}
+                view='primary'
+            >
+                Играть вдвоем
+            </StyledButton>
+            <StyledButton
+                onClick={onRandomClick}
+                view='primary'
+            >
+                Поиск случайного соперника
+            </StyledButton>
+            <StyledButton
+                view='primary'
+            >
+                Играть с другом онлайн
+            </StyledButton>
         </Container>
     )
 }

@@ -49,3 +49,25 @@ export type OnlineOpponent = {
     userId: string,
     roomId: number
 }
+
+export type CellType = {
+    colored: boolean
+    letter: string | null
+    isAvailableToPutLetter: boolean
+    isInput: boolean
+    tempLetter: string | null
+}
+
+type DefType = {
+    text: string
+    pos: string
+}
+export type CheckWordResponse = {
+    def: DefType[]
+}
+
+export type Player = {
+    name: string
+    words: string[]
+    score: number
+}

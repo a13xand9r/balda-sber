@@ -1,0 +1,151 @@
+import { actions } from './../store/store';
+import { checkWordAlreadyUsed } from './../utils';
+import { checkWord } from './../api/checkWord';
+import React from 'react'
+import { CellType } from '../types/types'
+import { usePushScreen } from './usePushScreen'
+import { useStore } from './useStore'
+
+export const usePlay = () => {
+    const [{playGroundSize, startWord, currentPlayerNumber, player1, player2}, dispatch] = useStore()
+    const pushScreen = usePushScreen()
+    const [cells, setCells] = React.useState<CellType[]>(() => new Array(playGroundSize ** 2).fill({
+        colored: false,
+        letter: null,
+        isAvailableToPutLetter: false,
+        isInput: false
+    }))
+    const [isLetterPut, setLetterPut] = React.useState(false)
+    const [lastColored, setLastColored] = React.useState<null | number>(null)
+    const [wordInProgress, setWordInProgress] = React.useState<string>('')
+    const [isDoneDisabled, setDoneDisabled] = React.useState<boolean>(true)
+    const [isWrongWord, setWrongWord] = React.useState<boolean>(false)
+    const [isWordAlreadyUsed, setWordAlreadyUsed] = React.useState<boolean>(false)
+
+    React.useEffect(() => {
+        const centerRaw = Math.ceil(playGroundSize / 2)
+        const wordStartCell = playGroundSize * (centerRaw - 1)
+        const cellLetters: (string | null)[] = new Array(playGroundSize ** 2).fill(null)
+        startWord.split('').forEach((item, i) => {
+            cellLetters[wordStartCell + i] = item
+        })
+        setCells(cellLetters.map((item, i, arr) => {
+            let isAvailableToPutLetter = false
+            if (
+                !item &&
+                (arr[i - playGroundSize] || arr[i + playGroundSize] || (arr[i - 1] && i % playGroundSize !== 0) || (arr[i + 1] && i % playGroundSize !== playGroundSize - 1))
+            ) {
+                isAvailableToPutLetter = true
+            }
+            const cell = {colored: false, letter: item, isAvailableToPutLetter, isInput: false, tempLetter: null}
+            return cell
+        }))
+    }, [])
+
+    React.useEffect(() => {
+        setCells(prev => prev.map(item => item.letter).map((item, i, arr) => {
+            let isAvailableToPutLetter = false
+            if (
+                !item &&
+                (arr[i - playGroundSize] || arr[i + playGroundSize] || (arr[i - 1] && i % playGroundSize !== 0) || (arr[i + 1] && i % playGroundSize !== playGroundSize - 1))
+            ) {
+                isAvailableToPutLetter = true
+            }
+            const cell = {colored: false, letter: item, isAvailableToPutLetter, isInput: false, tempLetter: null}
+            return cell
+        }))
+    }, [currentPlayerNumber])
+
+    const onCellClick = (index: number) => {
+        if (!isLetterPut && cells[index].isAvailableToPutLetter){
+            setCells(prev => {
+                const newCells = prev.map(item => ({...item, isInput: false}))//[...prev]
+                newCells[index] = { ...newCells[index], isInput: true }
+                return newCells
+            })
+        }
+        if (
+            isLetterPut && (cells[index].letter || cells[index].tempLetter) &&
+            (!cells.some(item => item.colored) ||
+                (index - playGroundSize === lastColored || index + playGroundSize === lastColored || (index - 1 === lastColored && index % playGroundSize !== 0) || (index + 1 === lastColored && index % playGroundSize !== playGroundSize - 1))
+            )
+        ) {
+            console.log('color cell', index)
+            setLastColored(index)
+            setWordInProgress(prev => prev + (cells[index].tempLetter || cells[index].letter))
+            setCells(prev => {
+                const newColored = [...prev]
+                newColored[index] = { ...newColored[index], colored: true }
+                return newColored
+            })
+        }
+    }
+    React.useEffect(() => {
+        if (cells.some(item => item.colored && item.tempLetter)){
+            setDoneDisabled(false)
+        }
+    }, [cells])
+    React.useEffect(() => {
+        setTimeout(() => {
+            setWrongWord(false)
+        }, 2000)
+    }, [isWrongWord])
+    React.useEffect(() => {
+        setTimeout(() => {
+            setWordAlreadyUsed(false)
+        }, 2000)
+    }, [isWordAlreadyUsed])
+    const onTapLetter = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+        setCells(prev => {
+            const newColored = [...prev]
+            newColored[index] = { ...newColored[index], isInput: false, tempLetter: e.target.value }
+            return newColored
+        })
+        setLetterPut(true)
+    }
+    const onCancel = () => {
+        setCells(prev => prev.map(item => ({...item, tempLetter: null, colored: false, isInput: false})))
+        setLetterPut(false)
+        setDoneDisabled(true)
+        setWordInProgress('')
+    }
+    const onDone = async () => {
+        const isWordExist = await checkWord(wordInProgress)
+        const isAlreadyUsed = checkWordAlreadyUsed([...player1.words, ...player2.words, startWord], wordInProgress)
+        console.log('isWordExist', isWordExist)
+        console.log('isAlreadyUsed', isAlreadyUsed)
+        if (isWordExist && !isAlreadyUsed){
+            dispatch(actions.incrementPlayerScore(currentPlayerNumber, wordInProgress.split('').length))
+            setCells(prev => prev.map(item => {
+                return {...item, letter: item.tempLetter ?? item.letter, tempLetter: null, colored: false}
+            }))
+            setDoneDisabled(true)
+            setLastColored(null)
+            setLetterPut(false)
+            setWordInProgress('')
+            dispatch(actions.changeCurrentPlayer())
+        } else {
+            if (isAlreadyUsed){
+                setWordAlreadyUsed(true)
+            } else{
+                setWrongWord(true)
+            }
+        }
+    }
+    return {
+        onCancel,
+        onTapLetter,
+        onCellClick,
+        cells,
+        isLetterPut,
+        playGroundSize,
+        onDone,
+        wordInProgress,
+        isDoneDisabled,
+        isWrongWord,
+        isWordAlreadyUsed,
+        currentPlayerNumber,
+        player1,
+        player2
+    }
+}
