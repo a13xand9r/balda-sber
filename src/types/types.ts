@@ -16,6 +16,7 @@ export interface PageStateType {
     rules: null
     finish: null
     victory: null
+    multiPlayerSettings: null
 }
 
 export type RandomPlayMessage = {
@@ -33,17 +34,49 @@ export type FriendPlayMessage = {
         roomId: number
     }
 }
-export type StartGameMessage = {
-    type: 'START',
+
+export type OpponentFoundMessage = {
+    type: 'FOUND',
     payload: {
         opponentName: string
         opponentId: string
         roomId: string
     }
 }
+export type StartGameMessage = {
+    type: 'START',
+}
+export type ChangePlaygroundSizeMessage = {
+    type: 'CHANGE_PLAYGROUND_SIZE',
+    payload: {
+        opponentId: string
+        size: number
+    }
+}
+export type ReadyMessage = {
+    type: 'READY'
+    payload: {
+        opponentId: string
+    }
+}
+export type StartWordMessage = {
+    type: 'START_WORD'
+    payload: {
+        startWord: string
+    }
+}
 
-export type SendMessage = RandomPlayMessage | FriendPlayMessage
-export type GetMessage = StartGameMessage
+export type SendMessage =
+    RandomPlayMessage |
+    FriendPlayMessage |
+    ChangePlaygroundSizeMessage |
+    ReadyMessage
+
+export type GetMessage =
+    OpponentFoundMessage |
+    StartGameMessage |
+    ChangePlaygroundSizeMessage |
+    StartWordMessage
 
 export type OnlineOpponent = {
     name: string,

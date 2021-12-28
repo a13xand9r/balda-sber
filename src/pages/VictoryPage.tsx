@@ -3,10 +3,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { getWord } from '../api/getWord'
 import { AppHeader } from '../components/AppHeader'
+import { PageContainer } from '../components/SettingsContent'
 import { usePushScreen } from '../hooks/usePushScreen'
 import { useStore } from '../hooks/useStore'
 import { actions } from '../store/store'
-import { PageContainer } from './SettingsPage'
 
 const StyledButton = styled(Button)`
     margin: 0.5rem auto;
