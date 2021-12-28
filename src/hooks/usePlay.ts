@@ -56,6 +56,10 @@ export const usePlay = () => {
         }))
     }, [currentPlayerNumber])
 
+    React.useEffect(() => {
+        cells.every(item => !!item.letter) && pushScreen('victory')
+    }, [currentPlayerNumber])
+
     const onCellClick = (index: number) => {
         if (!isLetterPut && cells[index].isAvailableToPutLetter){
             setCells(prev => {
@@ -116,6 +120,7 @@ export const usePlay = () => {
         console.log('isAlreadyUsed', isAlreadyUsed)
         if (isWordExist && !isAlreadyUsed){
             dispatch(actions.incrementPlayerScore(currentPlayerNumber, wordInProgress.split('').length))
+            dispatch(actions.addPlayerWord(currentPlayerNumber, wordInProgress))
             setCells(prev => prev.map(item => {
                 return {...item, letter: item.tempLetter ?? item.letter, tempLetter: null, colored: false}
             }))

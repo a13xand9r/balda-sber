@@ -6,6 +6,7 @@ import { AppHeader } from '../components/AppHeader'
 import { usePushScreen } from '../hooks/usePushScreen'
 import { useStore } from '../hooks/useStore'
 import { actions } from '../store/store'
+import { PageContainer } from './SettingsPage'
 
 const StyledButton = styled(Button)`
     margin: 0.5rem auto;
@@ -37,23 +38,25 @@ export const StartPage = () => {
                 back={false}
                 title='Балда онлайн'
             />
-            <StyledButton
-                onClick={onPlayClick}
-                view='primary'
-            >
-                Играть вдвоем
-            </StyledButton>
-            <StyledButton
-                onClick={onRandomClick}
-                view='primary'
-            >
-                Поиск случайного соперника
-            </StyledButton>
-            <StyledButton
-                view='primary'
-            >
-                Играть с другом онлайн
-            </StyledButton>
+            <PageContainer>
+                <StyledButton
+                    onClick={onPlayClick}
+                    view='primary'
+                >
+                    Играть вдвоем
+                </StyledButton>
+                <StyledButton
+                    onClick={onRandomClick}
+                    view='primary'
+                >
+                    Поиск случайного соперника
+                </StyledButton>
+                <StyledButton
+                    view='primary'
+                >
+                    Играть с другом онлайн
+                </StyledButton>
+            </PageContainer>
         </Container>
     )
 }

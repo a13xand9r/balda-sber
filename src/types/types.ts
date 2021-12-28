@@ -8,13 +8,14 @@ export type ActionsType = InferActionType<typeof actions>
 export type CharacterType = 'sber' | 'joy' | 'eva'
 
 export interface PageStateType {
-    start: null,
-    random: null,
-    play: null,
+    start: null
+    random: null
+    play: null
     wordsHistory: null
-    settings: null,
+    settings: null
     rules: null
     finish: null
+    victory: null
 }
 
 export type RandomPlayMessage = {

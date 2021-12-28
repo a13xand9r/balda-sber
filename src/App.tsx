@@ -6,6 +6,7 @@ import {
 import { SettingsPage } from './pages/SettingsPage'
 import { Random } from './pages/RandomPage'
 import { PlayPage } from './pages/PlayPage'
+import { VictoryPage } from './pages/VictoryPage'
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/random" element={<Random />} />
             <Route path="/play" element={<PlayPage />} />
+            <Route path="/victory" element={<VictoryPage />} />
             <Route path="/" element={<StartPage />} />
         </Routes>
     )
