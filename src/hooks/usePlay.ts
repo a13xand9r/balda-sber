@@ -1,3 +1,4 @@
+import { useWebSocket } from './useWebSocket';
 import { actions } from './../store/store';
 import { checkWordAlreadyUsed } from './../utils';
 import { checkWord } from './../api/checkWord';
@@ -7,7 +8,7 @@ import { usePushScreen } from './usePushScreen'
 import { useStore } from './useStore'
 
 export const usePlay = () => {
-    const [{playGroundSize, startWord, currentPlayerNumber, player1, player2}, dispatch] = useStore()
+    const [{playGroundSize, startWord, currentPlayerNumber, player1, player2, ...state}, dispatch] = useStore()
     const pushScreen = usePushScreen()
     const [cells, setCells] = React.useState<CellType[]>(() => new Array(playGroundSize ** 2).fill({
         colored: false,
@@ -21,6 +22,33 @@ export const usePlay = () => {
     const [isDoneDisabled, setDoneDisabled] = React.useState<boolean>(true)
     const [isWrongWord, setWrongWord] = React.useState<boolean>(false)
     const [isWordAlreadyUsed, setWordAlreadyUsed] = React.useState<boolean>(false)
+
+    const nextMove = (newCells?: CellType[]) => {
+        if (newCells) {
+            setCells(newCells)
+        } else {
+            setCells(prev => prev.map(item => {
+                return {...item, letter: item.tempLetter ?? item.letter, tempLetter: null, colored: false}
+            }))
+            dispatch(actions.incrementPlayerScore(currentPlayerNumber, wordInProgress.length))
+            dispatch(actions.addPlayerWord(currentPlayerNumber, wordInProgress))
+            setDoneDisabled(true)
+            setLastColored(null)
+            setLetterPut(false)
+            setWordInProgress('')
+        }
+        dispatch(actions.changeCurrentPlayer())
+    }
+
+    const {
+        socket,
+        onWordDone
+    } = useWebSocket(
+        { playGroundSize, startWord, currentPlayerNumber, player1, player2, ...state },
+        dispatch,
+        pushScreen,
+        nextMove
+    )
 
     React.useEffect(() => {
         const centerRaw = Math.ceil(playGroundSize / 2)
@@ -60,28 +88,34 @@ export const usePlay = () => {
         cells.every(item => !!item.letter) && pushScreen('victory')
     }, [currentPlayerNumber])
 
+    React.useEffect(() => {
+        player1.words.length && onWordDone(cells, wordInProgress)
+    }, [player1.words])
+
     const onCellClick = (index: number) => {
-        if (!isLetterPut && cells[index].isAvailableToPutLetter){
-            setCells(prev => {
-                const newCells = prev.map(item => ({...item, isInput: false}))//[...prev]
-                newCells[index] = { ...newCells[index], isInput: true }
-                return newCells
-            })
-        }
-        if (
-            isLetterPut && (cells[index].letter || cells[index].tempLetter) &&
-            (!cells.some(item => item.colored) ||
-                (index - playGroundSize === lastColored || index + playGroundSize === lastColored || (index - 1 === lastColored && index % playGroundSize !== 0) || (index + 1 === lastColored && index % playGroundSize !== playGroundSize - 1))
-            )
-        ) {
-            console.log('color cell', index)
-            setLastColored(index)
-            setWordInProgress(prev => prev + (cells[index].tempLetter || cells[index].letter))
-            setCells(prev => {
-                const newColored = [...prev]
-                newColored[index] = { ...newColored[index], colored: true }
-                return newColored
-            })
+        if (!state.isMultiplayer || currentPlayerNumber === 1) {
+            if (!isLetterPut && cells[index].isAvailableToPutLetter) {
+                setCells(prev => {
+                    const newCells = prev.map(item => ({ ...item, isInput: false }))//[...prev]
+                    newCells[index] = { ...newCells[index], isInput: true }
+                    return newCells
+                })
+            }
+            if (
+                isLetterPut && (cells[index].letter || cells[index].tempLetter) &&
+                (!cells.some(item => item.colored) ||
+                    (index - playGroundSize === lastColored || index + playGroundSize === lastColored || (index - 1 === lastColored && index % playGroundSize !== 0) || (index + 1 === lastColored && index % playGroundSize !== playGroundSize - 1))
+                )
+            ) {
+                console.log('color cell', index)
+                setLastColored(index)
+                setWordInProgress(prev => prev + (cells[index].tempLetter || cells[index].letter))
+                setCells(prev => {
+                    const newColored = [...prev]
+                    newColored[index] = { ...newColored[index], colored: true }
+                    return newColored
+                })
+            }
         }
     }
     React.useEffect(() => {
@@ -119,16 +153,7 @@ export const usePlay = () => {
         console.log('isWordExist', isWordExist)
         console.log('isAlreadyUsed', isAlreadyUsed)
         if (isWordExist && !isAlreadyUsed){
-            dispatch(actions.incrementPlayerScore(currentPlayerNumber, wordInProgress.split('').length))
-            dispatch(actions.addPlayerWord(currentPlayerNumber, wordInProgress))
-            setCells(prev => prev.map(item => {
-                return {...item, letter: item.tempLetter ?? item.letter, tempLetter: null, colored: false}
-            }))
-            setDoneDisabled(true)
-            setLastColored(null)
-            setLetterPut(false)
-            setWordInProgress('')
-            dispatch(actions.changeCurrentPlayer())
+            nextMove()
         } else {
             if (isAlreadyUsed){
                 setWordAlreadyUsed(true)
@@ -137,6 +162,7 @@ export const usePlay = () => {
             }
         }
     }
+    console.log('render player2 score', player2.score)
     return {
         onCancel,
         onTapLetter,

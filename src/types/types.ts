@@ -65,18 +65,37 @@ export type StartWordMessage = {
         startWord: string
     }
 }
+export type WordDoneMessage = {
+    type: 'WORD_DONE'
+    payload: {
+        opponentId: string
+        cells: CellType[]
+        newWord: string
+    }
+}
+export type ChangeCurrentPlayerMessage = {
+    type: 'SET_CURRENT_PLAYER'
+    payload: {
+        opponentId: string
+        currentPlayer: 1 | 2
+    }
+}
 
 export type SendMessage =
     RandomPlayMessage |
     FriendPlayMessage |
     ChangePlaygroundSizeMessage |
-    ReadyMessage
+    ReadyMessage |
+    WordDoneMessage |
+    ChangeCurrentPlayerMessage
 
 export type GetMessage =
     OpponentFoundMessage |
     StartGameMessage |
     ChangePlaygroundSizeMessage |
-    StartWordMessage
+    StartWordMessage |
+    WordDoneMessage |
+    ChangeCurrentPlayerMessage
 
 export type OnlineOpponent = {
     name: string,

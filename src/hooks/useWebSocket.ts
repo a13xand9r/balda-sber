@@ -1,4 +1,4 @@
-import { PageStateType, StateType, ActionsType, SendMessage, GetMessage } from './../types/types';
+import { PageStateType, StateType, ActionsType, SendMessage, GetMessage, CellType } from './../types/types';
 import React, { Dispatch } from 'react'
 import { actions } from '../store/store';
 
@@ -7,7 +7,11 @@ export const useWebSocket = (
     state: StateType,
     dispatch: Dispatch<ActionsType>,
     pushScreen: (to: keyof PageStateType | '' | -1) => void,
+    // setCells?: (cells: CellType[]) => void
+    nextMove?: (cells?: CellType[]) => void
 ) => {
+
+    // const onMessage = 
 
     const socket = React.useRef<WebSocket>()
     React.useEffect(() => {
@@ -34,32 +38,8 @@ export const useWebSocket = (
                 console.log('reconnecting...')
                 wsConnect()
             }
-            socket.current.onmessage = (event) => {
-                console.log('message', event)
-                const message = JSON.parse(event.data) as GetMessage
-                switch (message.type) {
-                    case 'FOUND':
-                        dispatch(actions.setOpponent({
-                            name: message.payload.opponentName,
-                            userId: message.payload.opponentId,
-                            roomId: Number(message.payload.roomId)
-                        }))
-                        break
-                    case 'START':
-                        pushScreen('play')
-                        break
-                    case 'START_WORD':
-                        dispatch(actions.setStartWord(message.payload.startWord))
-                        break
-                    case 'CHANGE_PLAYGROUND_SIZE':
-                        dispatch(actions.setPlayGroundSize(message.payload.size))
-                        break
-                    default:
-                        break
-                }
-            }
         }
-        wsConnect()
+        state.isMultiplayer && wsConnect()
         return () => {
             if (socket.current) {
                 socket.current.onclose = () => {
@@ -70,6 +50,43 @@ export const useWebSocket = (
         }
     }, [])
 
+    React.useEffect(() => {
+        if (socket.current) socket.current.onmessage = (event) => {
+            const message = JSON.parse(event.data) as GetMessage
+            console.log('WS message', message)
+            switch (message.type) {
+                case 'FOUND':
+                    dispatch(actions.setOpponent({
+                        name: message.payload.opponentName,
+                        userId: message.payload.opponentId,
+                        roomId: Number(message.payload.roomId)
+                    }))
+                    break
+                case 'START':
+                    pushScreen('play')
+                    break
+                case 'START_WORD':
+                    dispatch(actions.setStartWord(message.payload.startWord))
+                    break
+                case 'CHANGE_PLAYGROUND_SIZE':
+                    dispatch(actions.setPlayGroundSize(message.payload.size))
+                    break
+                case 'WORD_DONE':
+                    console.log('currentPlayerNumber', state.currentPlayerNumber)
+                    dispatch(actions.addPlayerWord(state.currentPlayerNumber, message.payload.newWord))
+                    console.log('INCREMENT SCORE')
+                    dispatch(actions.incrementPlayerScore(state.currentPlayerNumber, message.payload.newWord.length))
+                    nextMove && nextMove(message.payload.cells)
+                    break
+                case 'SET_CURRENT_PLAYER':
+                    dispatch(actions.setCurrentPlayer(message.payload.currentPlayer))
+                    break
+                default:
+                    break
+            }
+        }
+    }, [state.currentPlayerNumber, socket.current])
+
     const onReady = () => {
         const sendMessage: SendMessage = {
             type: 'READY',
@@ -79,9 +96,22 @@ export const useWebSocket = (
         }
         socket.current?.send(JSON.stringify(sendMessage))
     }
+    const onWordDone = (cells: CellType[], newWord: string) => {
+        console.log('send cells', cells)
+        const sendMessage: SendMessage = {
+            type: 'WORD_DONE',
+            payload: {
+                cells,
+                opponentId: state.onlineOpponent?.userId as string,
+                newWord
+            }
+        }
+        socket.current?.send(JSON.stringify(sendMessage))
+    }
 
     return {
         socket: socket.current,
-        onReady
+        onReady,
+        onWordDone
     }
 }

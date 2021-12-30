@@ -1,4 +1,4 @@
-import { Player } from './../types/types';
+import { Player, CellType } from './../types/types';
 import { ActionsType, CharacterType, OnlineOpponent, StateType } from '../types/types'
 import {v4} from 'uuid'
 
@@ -21,7 +21,8 @@ export const initialState = {
         score: 0
     } as Player,
     currentPlayerNumber: 1 as 1 | 2,
-    isMultiplayer: false
+    isMultiplayer: false,
+    // cells: [] as CellType[]
 }
 
 export const reducer = (state: StateType, action: ActionsType): StateType => {
@@ -46,19 +47,29 @@ export const reducer = (state: StateType, action: ActionsType): StateType => {
             newState[`player${action.playerNumber}`].name = action.name
             return newState
         case 'INCREMENT_PLAYER_SCORE':
-            const newStateScore = {...state}
-            newStateScore[`player${action.playerNumber}`].score = newStateScore[`player${action.playerNumber}`].score + action.increment
+            console.log('state player', state[`player${action.playerNumber}`])
+            const newStateScore = { ...state }
+            newStateScore[`player${action.playerNumber}`] = {
+                ...newStateScore[`player${action.playerNumber}`],
+                score: newStateScore[`player${action.playerNumber}`].score + action.increment
+            }
+            console.log('newStateScore player', newStateScore[`player${action.playerNumber}`])
+            console.log('increment', action.increment)
             return newStateScore
         case 'ADD_PLAYER_WORD':
             const newStateWord = {...state}
             newStateWord[`player${action.playerNumber}`].words = [...newStateWord[`player${action.playerNumber}`].words, action.word]
             return newStateWord
+        case 'SET_CURRENT_PLAYER':
+            return {...state, currentPlayerNumber: action.playerNumber}
         case 'CHANGE_CURRENT_PLAYER':
             return {...state, currentPlayerNumber: state.currentPlayerNumber === 1 ? 2 : 1}
         case 'SET_MULTIPLAYER':
             return {...state, isMultiplayer: action.isMultiplayer}
         case 'SET_PLAYGROUND_SIZE':
             return {...state, playGroundSize: action.size}
+        // case 'SET_CELLS':
+        //     return {...state, cells: action.cells}
         default: return state
     }
 }
@@ -72,7 +83,9 @@ export const actions = {
     setPlayerName: (playerNumber: 1 | 2, name: string) => ({ type: 'SET_PLAYER_NAME', playerNumber, name } as const),
     incrementPlayerScore: (playerNumber: 1 | 2, increment: number) => ({ type: 'INCREMENT_PLAYER_SCORE', playerNumber, increment } as const),
     addPlayerWord: (playerNumber: 1 | 2, word: string) => ({ type: 'ADD_PLAYER_WORD', playerNumber, word } as const),
+    setCurrentPlayer: (playerNumber: 1 | 2) => ({ type: 'SET_CURRENT_PLAYER', playerNumber } as const),
     changeCurrentPlayer: () => ({ type: 'CHANGE_CURRENT_PLAYER' } as const),
     setMultiPlayer: (isMultiplayer: boolean) => ({ type: 'SET_MULTIPLAYER', isMultiplayer } as const),
     setPlayGroundSize: (size: number) => ({ type: 'SET_PLAYGROUND_SIZE', size } as const),
+    // setCells: (cells: CellType[]) => ({ type: 'SET_CELLS', cells } as const),
 }

@@ -1,10 +1,8 @@
 import React from 'react'
-import { getWord } from '../api/getWord'
 import { SettingsContent } from '../components/SettingsContent'
 import { usePushScreen } from '../hooks/usePushScreen'
 import { useStore } from '../hooks/useStore'
 import { useWebSocket } from '../hooks/useWebSocket'
-import { actions } from '../store/store'
 import { SendMessage } from '../types/types'
 
 export const MultiPlayerSettingsPage = () => {
