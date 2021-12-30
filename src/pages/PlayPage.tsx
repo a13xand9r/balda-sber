@@ -5,6 +5,7 @@ import { AppHeader } from '../components/AppHeader'
 import { usePlay } from '../hooks/usePlay'
 import { CSSTransition } from 'react-transition-group'
 import '../transition.css'
+import { accent } from '@sberdevices/plasma-tokens'
 
 const PlayGround = styled.div<{ playSize: number }>`
     margin: 3rem auto;
@@ -27,6 +28,12 @@ const PlayCell = styled.div<{ isSelected: boolean, isAvailable: boolean }>`
     height: 3rem;
     background-color: ${props => props.isSelected ? 'red' : props.isAvailable ? 'blue' : 'black'};
     border-radius: 8%;
+    &:focus{
+        outline: none;
+        /* box-shadow: 0px 0px 32px -4px rgba(88, 0, 214, 0.43); */
+        box-shadow: 0px 0px 32px 13px rgba(127, 67, 211, 0.43);
+        box-shadow: 0px 0px 32px 13px ${accent};
+    }
 `
 
 const PlayContainer = styled(Container)`
@@ -88,8 +95,10 @@ export const PlayPage = () => {
         item.isInput ?
             <StyledTextField autoFocus onChange={(e) => onTapLetter(e, i)} /> :
             <PlayCell
-                isAvailable={cells[i].isAvailableToPutLetter}
-                isSelected={cells[i].colored}
+                tabIndex={(item.isAvailableToPutLetter || item.letter) ? 2 : undefined}
+                // tabIndex={0}
+                isAvailable={item.isAvailableToPutLetter}
+                isSelected={item.colored}
                 // style={{color: coloredCells[i] ? 'red' : 'aqua'}}
                 // onMouseOver={() => console.log('mouse',i)}
                 // onTouchMove={() => console.log('touch',i)}

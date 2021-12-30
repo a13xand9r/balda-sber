@@ -43,22 +43,22 @@ export const reducer = (state: StateType, action: ActionsType): StateType => {
             return { ...state, startWord: action.word }
         case 'SET_PLAYER_NAME':
             const newState = {...state}
-            // if (action.playerNumber === 1)
             newState[`player${action.playerNumber}`].name = action.name
             return newState
         case 'INCREMENT_PLAYER_SCORE':
-            console.log('state player', state[`player${action.playerNumber}`])
             const newStateScore = { ...state }
             newStateScore[`player${action.playerNumber}`] = {
                 ...newStateScore[`player${action.playerNumber}`],
                 score: newStateScore[`player${action.playerNumber}`].score + action.increment
             }
-            console.log('newStateScore player', newStateScore[`player${action.playerNumber}`])
-            console.log('increment', action.increment)
             return newStateScore
         case 'ADD_PLAYER_WORD':
             const newStateWord = {...state}
-            newStateWord[`player${action.playerNumber}`].words = [...newStateWord[`player${action.playerNumber}`].words, action.word]
+            // newStateWord[`player${action.playerNumber}`].words = [...newStateWord[`player${action.playerNumber}`].words, action.word]
+            newStateWord[`player${action.playerNumber}`] = {
+                ...state[`player${action.playerNumber}`],
+                words: [...state[`player${action.playerNumber}`].words, action.word]
+            }
             return newStateWord
         case 'SET_CURRENT_PLAYER':
             return {...state, currentPlayerNumber: action.playerNumber}
