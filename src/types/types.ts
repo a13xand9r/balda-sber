@@ -17,6 +17,7 @@ export interface PageStateType {
     finish: null
     victory: null
     multiPlayerSettings: null
+    opponentDisconnected: null
 }
 
 export type RandomPlayMessage = {
@@ -80,6 +81,12 @@ export type ChangeCurrentPlayerMessage = {
         currentPlayer: 1 | 2
     }
 }
+export type FinishGameMessage = {
+    type: 'FINISH_GAME'
+}
+export type OpponentDisconnectedMessage = {
+    type: 'OPPONENT_DISCONNECTED'
+}
 
 export type SendMessage =
     RandomPlayMessage |
@@ -87,7 +94,8 @@ export type SendMessage =
     ChangePlaygroundSizeMessage |
     ReadyMessage |
     WordDoneMessage |
-    ChangeCurrentPlayerMessage
+    ChangeCurrentPlayerMessage |
+    FinishGameMessage
 
 export type GetMessage =
     OpponentFoundMessage |
@@ -95,7 +103,8 @@ export type GetMessage =
     ChangePlaygroundSizeMessage |
     StartWordMessage |
     WordDoneMessage |
-    ChangeCurrentPlayerMessage
+    ChangeCurrentPlayerMessage |
+    OpponentDisconnectedMessage
 
 export type OnlineOpponent = {
     name: string,

@@ -17,6 +17,7 @@ export const StartPage = () => {
     const pushScreen = usePushScreen()
     const [state, dispatch] = useStore()
     React.useEffect(() => {
+        dispatch(actions.resetGame())
         getWord(state.playGroundSize).then(res => dispatch(actions.setStartWord(res)))
     }, [])
     const [value, setValue] = React.useState(0)
@@ -30,7 +31,11 @@ export const StartPage = () => {
     }
     const onRandomClick = () => {
         dispatch(actions.setMultiPlayer(true))
-        pushScreen('settings')
+        if (!state.name){
+            pushScreen('settings')
+        } else {
+            pushScreen('random')
+        }
     }
     return (
         <Container>

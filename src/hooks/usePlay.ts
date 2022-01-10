@@ -42,7 +42,8 @@ export const usePlay = () => {
 
     const {
         socket,
-        onWordDone
+        onWordDone,
+        onFinishGame
     } = useWebSocket(
         { playGroundSize, startWord, currentPlayerNumber, player1, player2, ...state },
         dispatch,
@@ -85,7 +86,10 @@ export const usePlay = () => {
     }, [currentPlayerNumber])
 
     React.useEffect(() => {
-        cells.every(item => !!item.letter) && pushScreen('victory')
+        if (cells.every(item => !!item.letter)) {
+            onFinishGame()
+            pushScreen('victory')
+        }
     }, [currentPlayerNumber])
 
     React.useEffect(() => {

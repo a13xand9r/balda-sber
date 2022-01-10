@@ -18,26 +18,13 @@ const FlexContainer = styled.div`
     margin: 1rem auto;
 `
 
-export const VictoryPage = () => {
+export const OpponentDisconnected = () => {
     const pushScreen = usePushScreen()
-    const [{player1, player2}, dispatch] = useStore()
-    const winner = React.useMemo(() => {
-        if (player1.score > player2.score) return player1
-        if (player2.score > player1.score) return player2
-        return 'Ничья'
-    }, [player1, player2])
+    const [{player1, player2}] = useStore()
     return (
         <Container>
-            <AppHeader
-                back={false}
-                title='Конец игры'
-            />
             <PageContainer>
-                <Headline2>{
-                    winner === 'Ничья' ?
-                    'Ничья' :
-                    `Победитель - ${ winner.name }`
-                }</Headline2>
+                <Headline1>Соперник отключился</Headline1>
                 <FlexContainer>
                     <div>
                         <Headline4>{player1.name} - {player1.score}</Headline4>

@@ -1,6 +1,6 @@
-import { Player, CellType } from './../types/types';
+import { Player } from './../types/types';
 import { ActionsType, CharacterType, OnlineOpponent, StateType } from '../types/types'
-import {v4} from 'uuid'
+import { v4 } from 'uuid'
 
 
 export const initialState = {
@@ -22,6 +22,7 @@ export const initialState = {
     } as Player,
     currentPlayerNumber: 1 as 1 | 2,
     isMultiplayer: false,
+    isOpponentOnline: null as null | boolean
     // cells: [] as CellType[]
 }
 
@@ -29,20 +30,39 @@ export const reducer = (state: StateType, action: ActionsType): StateType => {
     switch (action.type) {
         case 'SET_CHARACTER':
             return { ...state, character: action.characterId }
+        case 'RESET_GAME':
+            return {
+                ...state,
+                onlineOpponent: null,
+                playGroundSize: 5,
+                isMultiplayer: false,
+                isOpponentOnline: null,
+                player1: {
+                    name: state.name,
+                    score: 0,
+                    words: []
+                },
+                player2: {
+                    name: '',
+                    score: 0,
+                    words: []
+                },
+            }
         case 'SET_NAME_1':
-            return { ...state, name: action.name, player1: {...state.player1, name: action.name} }
+            return { ...state, name: action.name, player1: { ...state.player1, name: action.name } }
         case 'SET_NAME_2':
-            return { ...state, player2: {...state.player2, name: action.name} }
+            return { ...state, player2: { ...state.player2, name: action.name } }
         case 'SET_OPPONENT':
             return {
                 ...state,
+                isOpponentOnline: true,
                 onlineOpponent: action.opponent,
                 player2: { ...state.player2, name: action.opponent.name }
             }
         case 'SET_START_WORD':
             return { ...state, startWord: action.word }
         case 'SET_PLAYER_NAME':
-            const newState = {...state}
+            const newState = { ...state }
             newState[`player${action.playerNumber}`].name = action.name
             return newState
         case 'INCREMENT_PLAYER_SCORE':
@@ -53,7 +73,7 @@ export const reducer = (state: StateType, action: ActionsType): StateType => {
             }
             return newStateScore
         case 'ADD_PLAYER_WORD':
-            const newStateWord = {...state}
+            const newStateWord = { ...state }
             // newStateWord[`player${action.playerNumber}`].words = [...newStateWord[`player${action.playerNumber}`].words, action.word]
             newStateWord[`player${action.playerNumber}`] = {
                 ...state[`player${action.playerNumber}`],
@@ -61,15 +81,15 @@ export const reducer = (state: StateType, action: ActionsType): StateType => {
             }
             return newStateWord
         case 'SET_CURRENT_PLAYER':
-            return {...state, currentPlayerNumber: action.playerNumber}
+            return { ...state, currentPlayerNumber: action.playerNumber }
         case 'CHANGE_CURRENT_PLAYER':
-            return {...state, currentPlayerNumber: state.currentPlayerNumber === 1 ? 2 : 1}
+            return { ...state, currentPlayerNumber: state.currentPlayerNumber === 1 ? 2 : 1 }
         case 'SET_MULTIPLAYER':
-            return {...state, isMultiplayer: action.isMultiplayer}
+            return { ...state, isMultiplayer: action.isMultiplayer }
         case 'SET_PLAYGROUND_SIZE':
-            return {...state, playGroundSize: action.size}
-        // case 'SET_CELLS':
-        //     return {...state, cells: action.cells}
+            return { ...state, playGroundSize: action.size }
+        case 'SET_OPPONENT_ONLINE':
+            return { ...state, isOpponentOnline: action.isOpponentOnline }
         default: return state
     }
 }
@@ -87,5 +107,7 @@ export const actions = {
     changeCurrentPlayer: () => ({ type: 'CHANGE_CURRENT_PLAYER' } as const),
     setMultiPlayer: (isMultiplayer: boolean) => ({ type: 'SET_MULTIPLAYER', isMultiplayer } as const),
     setPlayGroundSize: (size: number) => ({ type: 'SET_PLAYGROUND_SIZE', size } as const),
+    setOpponentOnline: (isOpponentOnline: null | boolean) => ({ type: 'SET_OPPONENT_ONLINE', isOpponentOnline } as const),
+    resetGame: () => ({ type: 'RESET_GAME' } as const),
     // setCells: (cells: CellType[]) => ({ type: 'SET_CELLS', cells } as const),
 }

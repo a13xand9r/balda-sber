@@ -11,7 +11,7 @@ export const useWebSocket = (
     nextMove?: (cells?: CellType[]) => void
 ) => {
 
-    const [ws, setWs] = React.useState({})
+    const [wsConnect, setWsConnect] = React.useState({})
 
     const socket = React.useRef<WebSocket>()
     React.useEffect(() => {
@@ -25,7 +25,7 @@ export const useWebSocket = (
 
             socket.current.onopen = () => {
                 console.log('socket started')
-                setWs({})
+                setWsConnect({})
                 socket.current?.send(JSON.stringify({
                     type: 'RANDOM',
                     payload: {
@@ -83,11 +83,20 @@ export const useWebSocket = (
                 case 'SET_CURRENT_PLAYER':
                     dispatch(actions.setCurrentPlayer(message.payload.currentPlayer))
                     break
+                case 'OPPONENT_DISCONNECTED':
+                    dispatch(actions.setOpponentOnline(false))
+                    break
                 default:
                     break
             }
         }
-    }, [state.currentPlayerNumber, ws])
+    }, [state.currentPlayerNumber, wsConnect])
+
+    React.useEffect(() => {
+        if (state.isOpponentOnline === false){
+            pushScreen('opponentDisconnected')
+        }
+    }, [state.isOpponentOnline])
 
     const onReady = () => {
         const sendMessage: SendMessage = {
@@ -110,10 +119,17 @@ export const useWebSocket = (
         }
         socket.current?.send(JSON.stringify(sendMessage))
     }
+    const onFinishGame = () => {
+        const sendMessage: SendMessage = {
+            type: 'FINISH_GAME'
+        }
+        socket.current?.send(JSON.stringify(sendMessage))
+    }
 
     return {
         socket: socket.current,
         onReady,
-        onWordDone
+        onWordDone,
+        onFinishGame
     }
 }

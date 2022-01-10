@@ -8,6 +8,7 @@ import { Random } from './pages/RandomPage'
 import { PlayPage } from './pages/PlayPage'
 import { VictoryPage } from './pages/VictoryPage'
 import { MultiPlayerSettingsPage } from './pages/MultiPlayerSettingsPage'
+import { OpponentDisconnected } from './pages/OpponentDisconnected'
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/play" element={<PlayPage />} />
             <Route path="/victory" element={<VictoryPage />} />
             <Route path="/multiPlayerSettings" element={<VictoryPage />} />
+            <Route path="/opponentDisconnected" element={<OpponentDisconnected />} />
             <Route path="/" element={<StartPage />} />
         </Routes>
     )
