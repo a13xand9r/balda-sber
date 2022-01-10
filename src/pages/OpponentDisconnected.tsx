@@ -1,12 +1,9 @@
-import { Body1, Button, Container, Headline1, Headline2, Headline4 } from '@sberdevices/plasma-ui'
+import { Body1, Button, Container, Headline1, Headline4 } from '@sberdevices/plasma-ui'
 import React from 'react'
 import styled from 'styled-components'
-import { getWord } from '../api/getWord'
-import { AppHeader } from '../components/AppHeader'
 import { PageContainer } from '../components/SettingsContent'
 import { usePushScreen } from '../hooks/usePushScreen'
 import { useStore } from '../hooks/useStore'
-import { actions } from '../store/store'
 
 const StyledButton = styled(Button)`
     margin: 0.5rem auto;

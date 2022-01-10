@@ -57,9 +57,9 @@ export const StartPage = () => {
                     Поиск случайного соперника
                 </StyledButton>
                 <StyledButton
-                    view='primary'
+                    view='secondary'
                 >
-                    Играть с другом онлайн
+                    Правила
                 </StyledButton>
             </PageContainer>
         </Container>
