@@ -1,7 +1,6 @@
 import { IconCross, IconDone, IconEdit } from '@sberdevices/plasma-icons'
 import { Button, Card, Container, Headline1, Headline3, TextBox, TextField } from '@sberdevices/plasma-ui'
 import styled from 'styled-components'
-import { AppHeader } from '../components/AppHeader'
 import { usePlay } from '../hooks/usePlay'
 import { CSSTransition } from 'react-transition-group'
 import '../transition.css'
@@ -122,10 +121,6 @@ export const PlayPage = () => {
     ))
     return (
         <PlayContainer>
-            <AppHeader
-                back={false}
-                title='Балда онлайн'
-            />
             <PlayersContainer>
                 <NameContainer>{player1.name} - {player1.score}{currentPlayerNumber === 1 && <StyledIconEdit />}</NameContainer>
                 <NameContainer>{player2.name} - {player2.score}{currentPlayerNumber === 2 && <StyledIconEdit />}</NameContainer>
