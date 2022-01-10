@@ -11,7 +11,7 @@ export const useWebSocket = (
     nextMove?: (cells?: CellType[]) => void
 ) => {
 
-    // const onMessage = 
+    const [ws, setWs] = React.useState({})
 
     const socket = React.useRef<WebSocket>()
     React.useEffect(() => {
@@ -25,6 +25,7 @@ export const useWebSocket = (
 
             socket.current.onopen = () => {
                 console.log('socket started')
+                setWs({})
                 socket.current?.send(JSON.stringify({
                     type: 'RANDOM',
                     payload: {
@@ -51,6 +52,7 @@ export const useWebSocket = (
     }, [])
 
     React.useEffect(() => {
+        console.log('useEffect WSMessage, socket.current =', socket.current)
         if (socket.current) socket.current.onmessage = (event) => {
             const message = JSON.parse(event.data) as GetMessage
             console.log('WS message', message)
@@ -85,7 +87,7 @@ export const useWebSocket = (
                     break
             }
         }
-    }, [state.currentPlayerNumber, socket.current])
+    }, [state.currentPlayerNumber, ws])
 
     const onReady = () => {
         const sendMessage: SendMessage = {
