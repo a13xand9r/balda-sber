@@ -2,7 +2,7 @@ import { useWebSocket } from './useWebSocket';
 import { actions } from './../store/store';
 import { checkWordAlreadyUsed } from './../utils';
 import { checkWord } from './../api/checkWord';
-import React from 'react'
+import React, { createRef } from 'react'
 import { CellType } from '../types/types'
 import { usePushScreen } from './usePushScreen'
 import { useStore } from './useStore'
@@ -166,7 +166,24 @@ export const usePlay = () => {
             }
         }
     }
-    console.log('render player2 score', player2.score)
+
+    const cellRefs = React.useRef([])
+
+    cellRefs.current = cells.map((_, i) => cellRefs.current[i] ?? createRef())
+
+    const isFocusedRef = React.useRef(false)
+    React.useEffect(() => {
+        const indexWithTempLetter = cells.findIndex(cell => cell.tempLetter)
+        if (indexWithTempLetter !== -1 && !isFocusedRef.current){
+            isFocusedRef.current = true
+            //@ts-ignore
+            cellRefs.current[indexWithTempLetter].current.focus()
+        }
+        if (indexWithTempLetter === -1 && isFocusedRef.current){
+            isFocusedRef.current = false
+        }
+    }, [cells])
+
     return {
         onCancel,
         onTapLetter,
@@ -181,6 +198,7 @@ export const usePlay = () => {
         isWordAlreadyUsed,
         currentPlayerNumber,
         player1,
-        player2
+        player2,
+        cellRefs
     }
 }

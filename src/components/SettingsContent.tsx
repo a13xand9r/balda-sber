@@ -90,7 +90,6 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onButtonClic
                     {
                         (!state.isMultiplayer || !state.onlineOpponent) &&
                         <>
-                            {/* <input></input> */}
                             <NameInput
                                 onKeyDown={handleEnter}
                                 value={name1}

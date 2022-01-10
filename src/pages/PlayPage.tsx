@@ -5,6 +5,8 @@ import { usePlay } from '../hooks/usePlay'
 import { CSSTransition } from 'react-transition-group'
 import '../transition.css'
 import { accent } from '@sberdevices/plasma-tokens'
+import { createRef } from 'react'
+import React from 'react'
 
 const PlayGround = styled.div<{ playSize: number }>`
     margin: 3rem auto;
@@ -88,13 +90,17 @@ export const PlayPage = () => {
         isWordAlreadyUsed,
         currentPlayerNumber,
         player1,
-        player2
+        player2,
+        cellRefs
     } = usePlay()
+
+
     const playCells = cells.map((item, i) => (
         item.isInput ?
             <StyledTextField autoFocus onChange={(e) => onTapLetter(e, i)} /> :
             <PlayCell
                 tabIndex={(item.isAvailableToPutLetter || item.letter) ? 2 : undefined}
+                ref={cellRefs.current[i]}
                 // tabIndex={0}
                 isAvailable={item.isAvailableToPutLetter}
                 isSelected={item.colored}
