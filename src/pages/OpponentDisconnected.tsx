@@ -45,7 +45,7 @@ export const OpponentDisconnected = () => {
                 </FlexContainer>
                 <StyledButton
                     view='primary'
-                    onClick={() => pushScreen('start')}
+                    onClick={() => pushScreen('')}
                 >
                     На главную
                 </StyledButton>
