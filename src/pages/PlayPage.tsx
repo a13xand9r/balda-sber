@@ -5,8 +5,6 @@ import { usePlay } from '../hooks/usePlay'
 import { CSSTransition } from 'react-transition-group'
 import '../transition.css'
 import { accent } from '@sberdevices/plasma-tokens'
-import { createRef } from 'react'
-import React from 'react'
 
 const PlayGround = styled.div<{ playSize: number }>`
     margin: 3rem auto;
@@ -16,7 +14,6 @@ const PlayGround = styled.div<{ playSize: number }>`
 `
 const ButtonsContainer = styled.div`
     display: flex;
-    /* width: 100%; */
     width: 30%;
     margin: 0 auto;
     justify-content: space-around;
@@ -31,8 +28,6 @@ const PlayCell = styled.div<{ isSelected: boolean, isAvailable: boolean }>`
     border-radius: 8%;
     &:focus{
         outline: none;
-        /* box-shadow: 0px 0px 32px -4px rgba(88, 0, 214, 0.43); */
-        box-shadow: 0px 0px 32px 13px rgba(127, 67, 211, 0.43);
         box-shadow: 0px 0px 32px 13px ${accent};
     }
 `
@@ -41,16 +36,22 @@ const PlayContainer = styled(Container)`
     margin: 0;
     overflow: hidden;
 `
-const StyledTextField = styled(TextField)`
+const LetterInput = styled.input`
     display: flex;
     justify-content: center;
     align-items: center;
     width: 3rem;
-    height: 2.8rem;
+    height: 3rem;
+    padding-left: 1rem;
+    outline: none;
+    border-radius: 15px;
+    border: none;
+    background-color: #76808a90;
+    caret-color: ${accent};
     line-height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
 `
 
 const PlayersContainer = styled.div`
@@ -97,7 +98,7 @@ export const PlayPage = () => {
 
     const playCells = cells.map((item, i) => (
         item.isInput ?
-            <StyledTextField autoFocus onChange={(e) => onTapLetter(e, i)} /> :
+            <LetterInput autoFocus autoCapitalize='none' onChange={(e) => onTapLetter(e, i)} /> :
             <PlayCell
                 tabIndex={(item.isAvailableToPutLetter || item.letter) ? 2 : undefined}
                 ref={cellRefs.current[i]}

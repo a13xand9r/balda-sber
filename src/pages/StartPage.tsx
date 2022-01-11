@@ -1,4 +1,5 @@
-import { Button, Container } from '@sberdevices/plasma-ui'
+import { accent, secondary } from '@sberdevices/plasma-tokens'
+import { Button, Container, TextField } from '@sberdevices/plasma-ui'
 import React from 'react'
 import styled from 'styled-components'
 import { getWord } from '../api/getWord'
@@ -11,6 +12,24 @@ import { actions } from '../store/store'
 const StyledButton = styled(Button)`
     margin: 0.5rem auto;
     width: 90%;
+`
+
+const LetterInput = styled.input`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    height: 3rem;
+    padding-left: 1rem;
+    outline: none;
+    border-radius: 15px;
+    border: none;
+    background-color: #76808a90;
+    caret-color: ${accent};
+    line-height: 100%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
 `
 
 export const StartPage = () => {
@@ -43,6 +62,7 @@ export const StartPage = () => {
                 back={false}
                 title='Балда онлайн'
             />
+            <LetterInput autoFocus />
             <PageContainer>
                 <StyledButton
                     onClick={onPlayClick}
