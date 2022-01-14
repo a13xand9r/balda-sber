@@ -1,5 +1,5 @@
 import { IconCross, IconDone, IconEdit } from '@sberdevices/plasma-icons'
-import { Button, Card, Container, Headline1, Headline3, TextBox, TextField } from '@sberdevices/plasma-ui'
+import { Button, Card, Headline1, Headline3, TextBox } from '@sberdevices/plasma-ui'
 import styled from 'styled-components'
 import { usePlay } from '../hooks/usePlay'
 import { CSSTransition } from 'react-transition-group'
@@ -8,6 +8,7 @@ import { accent } from '@sberdevices/plasma-tokens'
 import { getTimerPercentage } from '../utils'
 import { PlayersWords } from '../components/playerWords/PlayersWords'
 import { PageContainer } from '../components/SettingsContent'
+import { isSberBoxLike } from '@sberdevices/plasma-temple'
 
 const PlayGround = styled.div<{ playSize: number }>`
     margin: 1.5rem auto;
@@ -31,7 +32,7 @@ const PlayCell = styled.div<{ isSelected: boolean, isAvailable: boolean }>`
     border-radius: 8%;
     &:focus{
         outline: none;
-        box-shadow: 0px 0px 32px 13px ${accent};
+        box-shadow: ${isSberBoxLike() ? `0px 0px 32px 13px ${accent}` : `0px 0px 16px 7px ${accent}`} ;
     }
 `
 
@@ -43,11 +44,12 @@ const LetterInput = styled.input`
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 8%;
     width: 3rem;
     height: 3rem;
     padding-left: 1rem;
     outline: none;
-    border-radius: 15px;
+    /* border-radius: 15px; */
     border: none;
     background-color: #76808a90;
     caret-color: ${accent};
@@ -61,21 +63,24 @@ const PlayersContainer = styled.div`
     display: flex;
     width: 100%;
     margin: 1rem auto;
-    justify-content: center;
+    /* justify-content: center; */
+    justify-content: space-around;
     background-color: #4c00fc76;
     box-shadow: 4px 0px 29px 4px rgba(34, 60, 80, 0.2);
     border-radius: 20px;
     padding: 10px;
+    padding-left: 33px;
+    padding-right: 33px;
 `
-const NameContainer = styled(Headline3)`
+const PlayerName = styled(Headline3)`
     position: relative;
-    margin-left: 2rem;
-    margin-right: 2rem;
+    /* margin-left: 1.5rem;
+    margin-right: 1.5rem; */
 `
 const Notification = styled(Card)`
     position: absolute;
     background-color: #808080e1;
-    top: 35%;
+    top: 75%;
     left: 0;
     right: 0;
     width: 60%;
@@ -83,13 +88,20 @@ const Notification = styled(Card)`
     text-align: center;
     padding: 0.3rem;
 `
-const StyledIconEdit = styled(IconEdit)`
+const LeftIconEdit = styled(IconEdit)`
     position: absolute;
-    left: -2rem;
+    left: -30px;
+`
+const RightIconEdit = styled(IconEdit)`
+    position: absolute;
+    right: -30px;
 `
 const WordInProgress = styled(Headline3)`
     margin-top: 0.6rem;
     height: 1.3rem;
+`
+const StyledPlayersWords = styled(PlayersWords)`
+    margin-bottom: 7rem;
 `
 const Timer = styled.div<{ timerPercentage: number }>`
     display: flex;
@@ -151,9 +163,9 @@ export const PlayPage = () => {
         <PageContainer>
             <Timer timerPercentage={getTimerPercentage(timer, timerLimit)}>{minutesText}:{secondsText}</Timer>
             <PlayersContainer>
-                <NameContainer>{player1.name}{currentPlayerNumber === 1 && <StyledIconEdit />}</NameContainer>
-                <NameContainer>{player1.score} : {player2.score}</NameContainer>
-                <NameContainer>{player2.name}{currentPlayerNumber === 2 && <StyledIconEdit />}</NameContainer>
+                <PlayerName>{player1.name}{currentPlayerNumber === 1 && <LeftIconEdit />}</PlayerName>
+                <PlayerName>{player1.score} : {player2.score}</PlayerName>
+                <PlayerName>{currentPlayerNumber === 2 && <RightIconEdit />}{player2.name}</PlayerName>
             </PlayersContainer>
             <PlayGround playSize={playGroundSize}>
                 {playCells}
@@ -175,9 +187,7 @@ export const PlayPage = () => {
                     <IconCross />
                 </Button>
             </ButtonsContainer>
-            {/* <div style={{height: '1.5rem'}}> */}
-                <WordInProgress>{wordInProgress}</WordInProgress>
-            {/* </div> */}
+            <WordInProgress>{wordInProgress}</WordInProgress>
             <CSSTransition
                 in={isWrongWord}
                 timeout={300}
@@ -202,10 +212,7 @@ export const PlayPage = () => {
                     </TextBox>
                 </Notification>
             </CSSTransition>
-            <PlayersWords />
-            <br />
-            <br />
-            <br />
+            <StyledPlayersWords />
         </PageContainer>
     )
 }
