@@ -6,18 +6,20 @@ import { CSSTransition } from 'react-transition-group'
 import '../transition.css'
 import { accent } from '@sberdevices/plasma-tokens'
 import { getTimerPercentage } from '../utils'
+import { PlayersWords } from '../components/playerWords/PlayersWords'
+import { PageContainer } from '../components/SettingsContent'
 
 const PlayGround = styled.div<{ playSize: number }>`
-    margin: 3rem auto;
+    margin: 1.5rem auto;
     display: grid;
     grid-template-columns: repeat(${props => props.playSize}, 1fr);
     grid-gap: 0.3rem;
 `
 const ButtonsContainer = styled.div`
     display: flex;
-    width: 30%;
+    width: 100%;
     margin: 0 auto;
-    justify-content: space-around;
+    justify-content: center;
 `
 const PlayCell = styled.div<{ isSelected: boolean, isAvailable: boolean }>`
     display: flex;
@@ -33,10 +35,10 @@ const PlayCell = styled.div<{ isSelected: boolean, isAvailable: boolean }>`
     }
 `
 
-const PlayContainer = styled(Container)`
-    margin: 0;
-    overflow: hidden;
-`
+// const PlayContainer = styled(Container)`
+//     margin: 0;
+//     overflow: hidden;
+// `
 const LetterInput = styled.input`
     display: flex;
     justify-content: center;
@@ -59,13 +61,16 @@ const PlayersContainer = styled.div`
     display: flex;
     width: 100%;
     margin: 1rem auto;
-    justify-content: space-around;
+    justify-content: center;
+    background-color: #4c00fc76;
+    box-shadow: 4px 0px 29px 4px rgba(34, 60, 80, 0.2);
+    border-radius: 20px;
+    padding: 10px;
 `
 const NameContainer = styled(Headline3)`
-    /* display: flex;
-    justify-content: space-around;
-    align-items: center; */
     position: relative;
+    margin-left: 2rem;
+    margin-right: 2rem;
 `
 const Notification = styled(Card)`
     width: 60%;
@@ -124,39 +129,26 @@ export const PlayPage = () => {
             <PlayCell
                 tabIndex={(item.isAvailableToPutLetter || item.letter) ? 2 : undefined}
                 ref={cellRefs.current[i]}
-                // tabIndex={0}
                 isAvailable={item.isAvailableToPutLetter}
                 isSelected={item.colored}
-                // style={{color: coloredCells[i] ? 'red' : 'aqua'}}
-                // onMouseOver={() => console.log('mouse',i)}
-                // onTouchMove={() => console.log('touch',i)}
-                // onClick={() => console.log('click', i)}
-                // onPointerDown={() => console.log('down', i)}
-                // onPointerMoveCapture={() => console.log('down', i)}
-                // onPointerOverCapture={() => paintCell(i)}
-                // onPointerMove={() => paintCell(i)}
-                // onPointerDown={() => paintCell(i)}
-                // onPointerOverCapture={() => paintCell(i)}
-                // onTouchMoveCapture={() => paintCell(i)}
                 draggable={true}
                 onClick={() => onCellClick(i)}
-                // onDragOver={() => paintCell(i)}
-                // onTouchMove={() => paintCell(i)}
-                // onPointerOver={() => console.log('over', i)}
                 key={i}
             >
                 <Headline1>{cells[i].tempLetter || cells[i].letter}</Headline1>
             </PlayCell>
     ))
     return (
-        <PlayContainer>
+        <PageContainer>
             <Timer timerPercentage={getTimerPercentage(timer, timerLimit)}>{minutesText}:{secondsText}</Timer>
             <PlayersContainer>
-                <NameContainer>{player1.name} - {player1.score}{currentPlayerNumber === 1 && <StyledIconEdit />}</NameContainer>
-                <NameContainer>{player2.name} - {player2.score}{currentPlayerNumber === 2 && <StyledIconEdit />}</NameContainer>
+                <NameContainer>{player1.name}{currentPlayerNumber === 1 && <StyledIconEdit />}</NameContainer>
+                <NameContainer>{player1.score} : {player2.score}</NameContainer>
+                <NameContainer>{player2.name}{currentPlayerNumber === 2 && <StyledIconEdit />}</NameContainer>
             </PlayersContainer>
             <ButtonsContainer>
                 <Button
+                    style={{marginRight: '1rem'}}
                     onClick={onDone}
                     disabled={isDoneDisabled}
                     view='primary'
@@ -164,6 +156,7 @@ export const PlayPage = () => {
                     <IconDone />
                 </Button>
                 <Button
+                    style={{marginLeft: '1rem'}}
                     onClick={onCancel}
                     view='warning'
                 >
@@ -198,6 +191,10 @@ export const PlayPage = () => {
                     </TextBox>
                 </Notification>
             </CSSTransition>
-        </PlayContainer>
+            <PlayersWords />
+            <br />
+            <br />
+            <br />
+        </PageContainer>
     )
 }
