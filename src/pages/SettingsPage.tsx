@@ -8,7 +8,7 @@ import { actions } from '../store/store'
 export const SettingsPage = () => {
     const pushScreen = usePushScreen()
     const [state, dispatch] = useStore()
-    const onButtonClick = (name1: string, name2: string) => {
+    const onFormSubmit = (name1: string, name2: string) => {
         dispatch(actions.setName1(name1))
         dispatch(actions.setName2(name2))
         if (state.isMultiplayer) {
@@ -25,7 +25,7 @@ export const SettingsPage = () => {
         <SettingsContent
             state={state}
             dispatch={dispatch}
-            onButtonClick={onButtonClick}
+            onFormSubmit={onFormSubmit}
         />
     )
 }

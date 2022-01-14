@@ -1,5 +1,4 @@
-import { accent, secondary } from '@sberdevices/plasma-tokens'
-import { Button, Container, TextField } from '@sberdevices/plasma-ui'
+import { Button, Container } from '@sberdevices/plasma-ui'
 import React from 'react'
 import styled from 'styled-components'
 import { getWord } from '../api/getWord'
@@ -14,24 +13,6 @@ const StyledButton = styled(Button)`
     width: 90%;
 `
 
-const LetterInput = styled.input`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 3rem;
-    height: 3rem;
-    padding-left: 1rem;
-    outline: none;
-    border-radius: 15px;
-    border: none;
-    background-color: #76808a90;
-    caret-color: ${accent};
-    line-height: 100%;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: white;
-`
-
 export const StartPage = () => {
     const pushScreen = usePushScreen()
     const [state, dispatch] = useStore()
@@ -39,11 +20,11 @@ export const StartPage = () => {
         dispatch(actions.resetGame())
         getWord(state.playGroundSize).then(res => dispatch(actions.setStartWord(res)))
     }, [])
-    const [value, setValue] = React.useState(0)
-    const onChange = (value: number) => {
-        console.log('change')
-        setValue(value)
-    }
+    // const [value, setValue] = React.useState(0)
+    // const onChange = (value: number) => {
+    //     console.log('change')
+    //     setValue(value)
+    // }
     const onPlayClick = () => {
         dispatch(actions.setMultiPlayer(false))
         pushScreen('settings')
@@ -62,7 +43,6 @@ export const StartPage = () => {
                 back={false}
                 title='Балда онлайн'
             />
-            <LetterInput autoFocus />
             <PageContainer>
                 <StyledButton
                     onClick={onPlayClick}

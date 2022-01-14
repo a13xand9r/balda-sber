@@ -22,7 +22,9 @@ export const initialState = {
     } as Player,
     currentPlayerNumber: 1 as 1 | 2,
     isMultiplayer: false,
-    isOpponentOnline: null as null | boolean
+    isOpponentOnline: null as null | boolean,
+    isTimer: false,
+    timerLimit: 15
     // cells: [] as CellType[]
 }
 
@@ -90,6 +92,10 @@ export const reducer = (state: StateType, action: ActionsType): StateType => {
             return { ...state, playGroundSize: action.size }
         case 'SET_OPPONENT_ONLINE':
             return { ...state, isOpponentOnline: action.isOpponentOnline }
+        case 'SET_TIMER':
+            return { ...state, isTimer: action.flag }
+        case 'SET_TIMER_LIMIT':
+            return { ...state, timerLimit: action.limit }
         default: return state
     }
 }
@@ -109,5 +115,7 @@ export const actions = {
     setPlayGroundSize: (size: number) => ({ type: 'SET_PLAYGROUND_SIZE', size } as const),
     setOpponentOnline: (isOpponentOnline: null | boolean) => ({ type: 'SET_OPPONENT_ONLINE', isOpponentOnline } as const),
     resetGame: () => ({ type: 'RESET_GAME' } as const),
+    setTimer: (flag: boolean) => ({ type: 'SET_TIMER', flag } as const),
+    setTimerLimit: (limit: number) => ({ type: 'SET_TIMER_LIMIT', limit } as const),
     // setCells: (cells: CellType[]) => ({ type: 'SET_CELLS', cells } as const),
 }

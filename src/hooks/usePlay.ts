@@ -22,34 +22,65 @@ export const usePlay = () => {
     const [isDoneDisabled, setDoneDisabled] = React.useState<boolean>(true)
     const [isWrongWord, setWrongWord] = React.useState<boolean>(false)
     const [isWordAlreadyUsed, setWordAlreadyUsed] = React.useState<boolean>(false)
+    const [timer, setTimer] = React.useState<number>(state.timerLimit)
 
-    const nextMove = (newCells?: CellType[]) => {
+    const nextMove = (isWordDone: boolean, newCells?: CellType[]) => {
         if (newCells) {
             setCells(newCells)
         } else {
             setCells(prev => prev.map(item => {
-                return {...item, letter: item.tempLetter ?? item.letter, tempLetter: null, colored: false}
+                return {
+                    ...item,
+                    letter: (isWordDone && item.tempLetter) ? item.tempLetter : item.letter,
+                    tempLetter: null,
+                    colored: false
+                }
             }))
-            dispatch(actions.incrementPlayerScore(currentPlayerNumber, wordInProgress.length))
-            dispatch(actions.addPlayerWord(currentPlayerNumber, wordInProgress))
+            isWordDone && dispatch(actions.incrementPlayerScore(currentPlayerNumber, wordInProgress.length))
+            isWordDone && dispatch(actions.addPlayerWord(currentPlayerNumber, wordInProgress))
             setDoneDisabled(true)
             setLastColored(null)
             setLetterPut(false)
             setWordInProgress('')
         }
+        setTimer(15)
         dispatch(actions.changeCurrentPlayer())
     }
 
     const {
         socket,
         onWordDone,
-        onFinishGame
+        onFinishGame,
+        onTimerDone
     } = useWebSocket(
         { playGroundSize, startWord, currentPlayerNumber, player1, player2, ...state },
         dispatch,
         pushScreen,
         nextMove
     )
+
+    const interval = React.useRef<NodeJS.Timeout>()
+
+    React.useEffect(() => {
+        interval.current = setInterval(() => {
+            setTimer(prev => prev - 1)
+        }, 1000)
+        return () => {
+            clearInterval(interval.current as NodeJS.Timeout)
+        }
+    }, [currentPlayerNumber])
+
+    React.useEffect(() => {
+        if (timer === 0) {
+            if (state.isMultiplayer){
+                if (currentPlayerNumber === 1){
+                    onTimerDone()
+                }
+            } else {
+                nextMove(false)
+            }
+        }
+    }, [timer])
 
     React.useEffect(() => {
         const centerRaw = Math.ceil(playGroundSize / 2)
@@ -93,6 +124,7 @@ export const usePlay = () => {
     }, [currentPlayerNumber])
 
     React.useEffect(() => {
+        console.log('player1.words useEffect')
         player1.words.length && onWordDone(cells, wordInProgress)
     }, [player1.words])
 
@@ -157,7 +189,7 @@ export const usePlay = () => {
         console.log('isWordExist', isWordExist)
         console.log('isAlreadyUsed', isAlreadyUsed)
         if (isWordExist && !isAlreadyUsed){
-            nextMove()
+            nextMove(true)
         } else {
             if (isAlreadyUsed){
                 setWordAlreadyUsed(true)
@@ -199,6 +231,8 @@ export const usePlay = () => {
         currentPlayerNumber,
         player1,
         player2,
-        cellRefs
+        cellRefs,
+        timer,
+        timerLimit: state.timerLimit
     }
 }

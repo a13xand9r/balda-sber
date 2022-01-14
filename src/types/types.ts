@@ -87,6 +87,9 @@ export type FinishGameMessage = {
 export type OpponentDisconnectedMessage = {
     type: 'OPPONENT_DISCONNECTED'
 }
+export type TimerDoneMessage = {
+    type: 'TIMER_DONE'
+}
 
 export type SendMessage =
     RandomPlayMessage |
@@ -95,7 +98,8 @@ export type SendMessage =
     ReadyMessage |
     WordDoneMessage |
     ChangeCurrentPlayerMessage |
-    FinishGameMessage
+    FinishGameMessage |
+    TimerDoneMessage
 
 export type GetMessage =
     OpponentFoundMessage |
@@ -104,7 +108,8 @@ export type GetMessage =
     StartWordMessage |
     WordDoneMessage |
     ChangeCurrentPlayerMessage |
-    OpponentDisconnectedMessage
+    OpponentDisconnectedMessage |
+    TimerDoneMessage
 
 export type OnlineOpponent = {
     name: string,

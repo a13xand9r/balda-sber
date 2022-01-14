@@ -13,7 +13,7 @@ export const MultiPlayerSettingsPage = () => {
         socket,
         onReady
     } = useWebSocket(state, dispatch, pushScreen)
-    const onButtonClick = () => {
+    const onFormSubmit = () => {
         onReady()
         setDisabledButton(true)
     }
@@ -35,7 +35,7 @@ export const MultiPlayerSettingsPage = () => {
         <SettingsContent
             state={state}
             dispatch={dispatch}
-            onButtonClick={onButtonClick}
+            onFormSubmit={onFormSubmit}
             disabled={isDisabledButton}
         />
         {

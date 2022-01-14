@@ -5,6 +5,7 @@ import { usePlay } from '../hooks/usePlay'
 import { CSSTransition } from 'react-transition-group'
 import '../transition.css'
 import { accent } from '@sberdevices/plasma-tokens'
+import { getTimerPercentage } from '../utils'
 
 const PlayGround = styled.div<{ playSize: number }>`
     margin: 3rem auto;
@@ -76,6 +77,19 @@ const StyledIconEdit = styled(IconEdit)`
     position: absolute;
     left: -2rem;
 `
+const Timer = styled.div<{ timerPercentage: number }>`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 6rem;
+    padding: 0.3rem;
+    position: relative;
+    border-radius: 1rem;
+    margin-top: 0.8rem;
+    background: linear-gradient(to right, #00e1ff97 ${props => props.timerPercentage}%, #ffffff18 ${props => props.timerPercentage}%);
+`
+
+
 export const PlayPage = () => {
     const {
         cells,
@@ -92,7 +106,9 @@ export const PlayPage = () => {
         currentPlayerNumber,
         player1,
         player2,
-        cellRefs
+        cellRefs,
+        timer,
+        timerLimit
     } = usePlay()
 
 
@@ -128,6 +144,7 @@ export const PlayPage = () => {
     ))
     return (
         <PlayContainer>
+            <Timer timerPercentage={getTimerPercentage(timer, timerLimit)}>{timer}</Timer>
             <PlayersContainer>
                 <NameContainer>{player1.name} - {player1.score}{currentPlayerNumber === 1 && <StyledIconEdit />}</NameContainer>
                 <NameContainer>{player2.name} - {player2.score}{currentPlayerNumber === 2 && <StyledIconEdit />}</NameContainer>

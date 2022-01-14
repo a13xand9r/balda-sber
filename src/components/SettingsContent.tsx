@@ -60,10 +60,10 @@ export const PageContainer = styled.div`
 type Props = {
     state: StateType,
     dispatch: Dispatch<ActionsType>,
-    onButtonClick: (name1: string, name2: string) => void
+    onFormSubmit: (name1: string, name2: string) => void
     disabled?: boolean
 }
-export const SettingsContent: React.FC<Props> = ({ state, dispatch, onButtonClick, disabled }) => {
+export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit, disabled }) => {
     const pushScreen = usePushScreen()
     const [name1, setName1] = React.useState(state.player1.name)
     const [name2, setName2] = React.useState(state.player2.name)
@@ -85,7 +85,10 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onButtonClic
                 onBackCallback={() => pushScreen(-1)}
                 title='Настройки'
             />
-            <form style={{ width: '100%' }} onSubmit={() => onButtonClick(name1, name2)}>
+            <form style={{ width: '100%' }} onSubmit={(e) => {
+                e.preventDefault()
+                onFormSubmit(name1, name2)
+            }}>
                 <PageContainer>
                     {
                         (!state.isMultiplayer || !state.onlineOpponent) &&
@@ -122,8 +125,6 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onButtonClic
                                 tabIndex={isSberBoxLike() ? 1 : 0}
                             >
                                 <Radiobox
-                                    value='low'
-                                    name='low'
                                     tabIndex={-1}
                                     label='4x4'
                                     checked={state.playGroundSize === 4}
@@ -139,8 +140,6 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onButtonClic
                                 tabIndex={isSberBoxLike() ? 1 : 0}
                             >
                                 <Radiobox
-                                    value='low'
-                                    name='low'
                                     tabIndex={-1}
                                     label='5x5'
                                     checked={state.playGroundSize === 5}
@@ -156,8 +155,6 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onButtonClic
                                 tabIndex={isSberBoxLike() ? 1 : 0}
                             >
                                 <Radiobox
-                                    value='low'
-                                    name='low'
                                     tabIndex={-1}
                                     label='6x6'
                                     checked={state.playGroundSize === 6}
@@ -173,8 +170,6 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onButtonClic
                                 tabIndex={isSberBoxLike() ? 1 : 0}
                             >
                                 <Radiobox
-                                    value='low'
-                                    name='low'
                                     tabIndex={-1}
                                     label='7x7'
                                     checked={state.playGroundSize === 7}
@@ -190,8 +185,6 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onButtonClic
                                 tabIndex={isSberBoxLike() ? 1 : 0}
                             >
                                 <Radiobox
-                                    value='low'
-                                    name='low'
                                     tabIndex={-1}
                                     label='8x8'
                                     checked={state.playGroundSize === 8}

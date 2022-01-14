@@ -8,7 +8,7 @@ export const useWebSocket = (
     dispatch: Dispatch<ActionsType>,
     pushScreen: (to: keyof PageStateType | '' | -1) => void,
     // setCells?: (cells: CellType[]) => void
-    nextMove?: (cells?: CellType[]) => void
+    nextMove?: (isWordDone: boolean, cells?: CellType[]) => void
 ) => {
 
     const [wsConnect, setWsConnect] = React.useState({})
@@ -52,7 +52,6 @@ export const useWebSocket = (
     }, [])
 
     React.useEffect(() => {
-        console.log('useEffect WSMessage, socket.current =', socket.current)
         if (socket.current) socket.current.onmessage = (event) => {
             const message = JSON.parse(event.data) as GetMessage
             console.log('WS message', message)
@@ -78,13 +77,16 @@ export const useWebSocket = (
                     dispatch(actions.addPlayerWord(state.currentPlayerNumber, message.payload.newWord))
                     console.log('INCREMENT SCORE')
                     dispatch(actions.incrementPlayerScore(state.currentPlayerNumber, message.payload.newWord.length))
-                    nextMove && nextMove(message.payload.cells)
+                    nextMove && nextMove(true, message.payload.cells)
                     break
                 case 'SET_CURRENT_PLAYER':
                     dispatch(actions.setCurrentPlayer(message.payload.currentPlayer))
                     break
                 case 'OPPONENT_DISCONNECTED':
                     dispatch(actions.setOpponentOnline(false))
+                    break
+                case 'TIMER_DONE':
+                    nextMove && nextMove(false)
                     break
                 default:
                     break
@@ -125,11 +127,18 @@ export const useWebSocket = (
         }
         socket.current?.send(JSON.stringify(sendMessage))
     }
+    const onTimerDone = () => {
+        const sendMessage: SendMessage = {
+            type: 'TIMER_DONE'
+        }
+        socket.current?.send(JSON.stringify(sendMessage))
+    }
 
     return {
         socket: socket.current,
         onReady,
         onWordDone,
-        onFinishGame
+        onFinishGame,
+        onTimerDone
     }
 }
