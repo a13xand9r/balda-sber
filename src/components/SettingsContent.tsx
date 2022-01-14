@@ -7,6 +7,7 @@ import { AppHeader } from './AppHeader'
 import { usePushScreen } from '../hooks/usePushScreen'
 import { actions } from '../store/store'
 import { ActionsType, StateType } from '../types/types'
+import { IconPersone } from '@sberdevices/plasma-icons'
 
 const NameInput = styled(TextField)`
     margin: 0.5rem auto;
@@ -94,6 +95,7 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit
                         (!state.isMultiplayer || !state.onlineOpponent) &&
                         <>
                             <NameInput
+                                contentLeft={<IconPersone color="inherit" size="s" />}
                                 onKeyDown={handleEnter}
                                 value={name1}
                                 required
@@ -103,6 +105,7 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit
                             {
                                 !state.isMultiplayer &&
                                 <NameInput
+                                    contentLeft={<IconPersone color="inherit" size="s" />}
                                     onKeyDown={handleEnter}
                                     required
                                     label={'Имя второго игрока'}
