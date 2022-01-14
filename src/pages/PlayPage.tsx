@@ -73,6 +73,11 @@ const NameContainer = styled(Headline3)`
     margin-right: 2rem;
 `
 const Notification = styled(Card)`
+    position: absolute;
+    background-color: #808080e1;
+    top: 35%;
+    left: 0;
+    right: 0;
     width: 60%;
     margin: auto;
     text-align: center;
@@ -81,6 +86,10 @@ const Notification = styled(Card)`
 const StyledIconEdit = styled(IconEdit)`
     position: absolute;
     left: -2rem;
+`
+const WordInProgress = styled(Headline3)`
+    margin-top: 0.6rem;
+    height: 1.3rem;
 `
 const Timer = styled.div<{ timerPercentage: number }>`
     display: flex;
@@ -146,6 +155,9 @@ export const PlayPage = () => {
                 <NameContainer>{player1.score} : {player2.score}</NameContainer>
                 <NameContainer>{player2.name}{currentPlayerNumber === 2 && <StyledIconEdit />}</NameContainer>
             </PlayersContainer>
+            <PlayGround playSize={playGroundSize}>
+                {playCells}
+            </PlayGround>
             <ButtonsContainer>
                 <Button
                     style={{marginRight: '1rem'}}
@@ -163,10 +175,9 @@ export const PlayPage = () => {
                     <IconCross />
                 </Button>
             </ButtonsContainer>
-            <PlayGround playSize={playGroundSize}>
-                {playCells}
-            </PlayGround>
-            <Headline1 style={{textAlign: 'center'}}>{wordInProgress}</Headline1>
+            {/* <div style={{height: '1.5rem'}}> */}
+                <WordInProgress>{wordInProgress}</WordInProgress>
+            {/* </div> */}
             <CSSTransition
                 in={isWrongWord}
                 timeout={300}
