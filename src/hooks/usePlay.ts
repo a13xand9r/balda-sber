@@ -43,7 +43,7 @@ export const usePlay = () => {
             setLetterPut(false)
             setWordInProgress('')
         }
-        setTimer(15)
+        setTimer(120)
         dispatch(actions.changeCurrentPlayer())
     }
 

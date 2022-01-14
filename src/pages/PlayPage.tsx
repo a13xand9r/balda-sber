@@ -111,6 +111,12 @@ export const PlayPage = () => {
         timerLimit
     } = usePlay()
 
+    const minutes = Math.floor(timer / 60)
+    const seconds = timer - 60*minutes
+
+    const minutesText = `0${minutes}`
+    const secondsText = `${seconds < 10 ? '0' : ''}${seconds}`
+
 
     const playCells = cells.map((item, i) => (
         item.isInput ?
@@ -144,7 +150,7 @@ export const PlayPage = () => {
     ))
     return (
         <PlayContainer>
-            <Timer timerPercentage={getTimerPercentage(timer, timerLimit)}>{timer}</Timer>
+            <Timer timerPercentage={getTimerPercentage(timer, timerLimit)}>{minutesText}:{secondsText}</Timer>
             <PlayersContainer>
                 <NameContainer>{player1.name} - {player1.score}{currentPlayerNumber === 1 && <StyledIconEdit />}</NameContainer>
                 <NameContainer>{player2.name} - {player2.score}{currentPlayerNumber === 2 && <StyledIconEdit />}</NameContainer>
