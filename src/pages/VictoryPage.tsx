@@ -8,7 +8,7 @@ import { usePushScreen } from '../hooks/usePushScreen'
 import { useStore } from '../hooks/useStore'
 
 const StyledButton = styled(Button)`
-    margin: 0.5rem auto;
+    margin: 1.5rem auto;
     width: 90%;
 `
 
@@ -27,7 +27,9 @@ export const VictoryPage = () => {
                 title='Конец игры'
             />
             <PageContainer>
-                <Headline2>{
+                <Headline2
+                    style={{margin: '1.5rem'}}
+                >{
                     winner === 'Ничья' ?
                     'Ничья' :
                     `Победитель - ${ winner.name }`
