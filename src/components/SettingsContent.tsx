@@ -96,6 +96,7 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit
                         (!state.isMultiplayer || !state.onlineOpponent) &&
                         <>
                             <NameInput
+                                lang='ru'
                                 contentLeft={<IconPersone color="inherit" size="s" />}
                                 onKeyDown={handleEnter}
                                 value={name1}
@@ -106,6 +107,7 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit
                             {
                                 !state.isMultiplayer &&
                                 <NameInput
+                                    lang='ru'
                                     contentLeft={<IconPersone color="inherit" size="s" />}
                                     onKeyDown={handleEnter}
                                     required

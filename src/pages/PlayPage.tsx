@@ -142,7 +142,7 @@ export const PlayPage = () => {
 
     const playCells = cells.map((item, i) => (
         item.isInput ?
-            <LetterInput autoFocus autoCapitalize='none' onChange={(e) => onTapLetter(e, i)} /> :
+            <LetterInput lang='ru' autoFocus autoCapitalize='none' onChange={(e) => onTapLetter(e, i)} /> :
             <PlayCell
                 tabIndex={(item.isAvailableToPutLetter || item.letter) ? 2 : undefined}
                 ref={cellRefs.current[i]}
