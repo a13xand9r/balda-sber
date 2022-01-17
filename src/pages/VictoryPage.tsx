@@ -1,16 +1,11 @@
-import { Button, Container, Headline2 } from '@sberdevices/plasma-ui'
+import { Container, Headline2 } from '@sberdevices/plasma-ui'
 import React from 'react'
-import styled from 'styled-components'
 import { AppHeader } from '../components/AppHeader'
 import { PlayersWords } from '../components/playerWords/PlayersWords'
 import { PageContainer } from '../components/SettingsContent'
 import { usePushScreen } from '../hooks/usePushScreen'
 import { useStore } from '../hooks/useStore'
-
-const StyledButton = styled(Button)`
-    margin: 1.5rem auto;
-    width: 90%;
-`
+import { StyledButton } from './StartPage'
 
 export const VictoryPage = () => {
     const pushScreen = usePushScreen()

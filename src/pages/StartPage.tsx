@@ -8,9 +8,9 @@ import { usePushScreen } from '../hooks/usePushScreen'
 import { useStore } from '../hooks/useStore'
 import { actions } from '../store/store'
 
-const StyledButton = styled(Button)`
-    margin: 0.5rem auto;
-    width: 90%;
+export const StyledButton = styled(Button)`
+    margin: 1rem auto;
+    width: 100%;
 `
 
 export const StartPage = () => {
@@ -25,6 +25,9 @@ export const StartPage = () => {
     //     console.log('change')
     //     setValue(value)
     // }
+    const onRulesClick = () => {
+        pushScreen('rules')
+    }
     const onPlayClick = () => {
         dispatch(actions.setMultiPlayer(false))
         pushScreen('settings')
@@ -58,6 +61,7 @@ export const StartPage = () => {
                 </StyledButton>
                 <StyledButton
                     view='secondary'
+                    onClick={onRulesClick}
                 >
                     Правила
                 </StyledButton>
