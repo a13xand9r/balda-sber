@@ -28,18 +28,13 @@ const PlayCell = styled.div<{ isSelected: boolean, isAvailable: boolean }>`
     align-items: center;
     width: 3rem;
     height: 3rem;
-    background-color: ${props => props.isSelected ? 'red' : props.isAvailable ? 'blue' : 'black'};
+    background: ${props => props.isSelected ? '#ce11fdf9' : props.isAvailable ? 'linear-gradient(45deg, rgb(128, 0, 255), rgb(9, 144, 182))' : 'black'};
     border-radius: 8%;
     &:focus{
         outline: none;
-        box-shadow: ${isSberBoxLike() ? `0px 0px 32px 13px ${accent}` : `0px 0px 16px 7px ${accent}`} ;
+        box-shadow: ${isSberBoxLike() ? `0px 0px 32px 13px ${accent}` : `0px 0px 16px -2px ${accent}`} ;
     }
 `
-
-// const PlayContainer = styled(Container)`
-//     margin: 0;
-//     overflow: hidden;
-// `
 const LetterInput = styled.input`
     display: flex;
     justify-content: center;
@@ -65,8 +60,8 @@ const PlayersContainer = styled.div`
     margin: 1rem auto;
     /* justify-content: center; */
     justify-content: space-around;
-    background-color: #4c00fc76;
-    box-shadow: 4px 0px 29px 4px rgba(34, 60, 80, 0.2);
+    background: linear-gradient(45deg, rgb(153, 0, 189) 1%, rgb(0, 107, 137) 100%);
+    box-shadow: 4px 0px 29px 4px rgba(34, 60, 80, 0.842);
     border-radius: 20px;
     padding: 10px;
     padding-left: 33px;
@@ -112,7 +107,8 @@ const Timer = styled.div<{ timerPercentage: number }>`
     position: relative;
     border-radius: 1rem;
     margin-top: 0.8rem;
-    background: linear-gradient(to right, #00e1ff97 ${props => props.timerPercentage}%, #ffffff18 ${props => props.timerPercentage}%);
+    background: linear-gradient(to right, #0059ff96 ${props => props.timerPercentage}%, #ffffff18 ${props => props.timerPercentage}%);
+    box-shadow: 4px 0px 29px 4px rgba(34, 60, 80, 0.842);
 `
 
 

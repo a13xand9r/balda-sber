@@ -52,6 +52,7 @@ export const PageContainer = styled.div`
     flex-direction: column;
     align-items: center;
     margin: 0.5rem auto;
+    margin-bottom: 8rem;
     text-align: center;
     width: 30rem;
     @media (max-width: 700px){

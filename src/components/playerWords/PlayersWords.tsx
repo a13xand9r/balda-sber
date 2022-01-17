@@ -1,4 +1,4 @@
-import { Body1, Headline4 } from '@sberdevices/plasma-ui'
+import { Body1, Card, CardBody, CardContent, Headline4 } from '@sberdevices/plasma-ui'
 import styled from 'styled-components'
 import { useStore } from '../../hooks/useStore'
 
@@ -11,27 +11,33 @@ const FlexContainer = styled.div`
 `
 
 export const PlayersWords = () => {
-    const [{player1, player2}] = useStore()
+    const [{ player1, player2 }] = useStore()
     return (
-        <FlexContainer>
-            <div>
-                <Headline4>{player1.name} - {player1.score}</Headline4>
-                <br />
-                {
-                    player1.words.map(word => (
-                        <Body1>{word}</Body1>
-                    ))
-                }
-            </div>
-            <div>
-                <Headline4>{player2.name} - {player2.score}</Headline4>
-                <br />
-                {
-                    player2.words.map(word => (
-                        <Body1>{word}</Body1>
-                    ))
-                }
-            </div>
-        </FlexContainer>
+        <Card style={{width: '100%'}}>
+            <CardBody>
+                <CardContent style={{ height: '100%' }} cover={false}>
+                    <FlexContainer>
+                        <div>
+                            <Headline4>{player1.name} - {player1.score}</Headline4>
+                            <br />
+                            {
+                                player1.words.map(word => (
+                                    <Body1>{word}</Body1>
+                                ))
+                            }
+                        </div>
+                        <div>
+                            <Headline4>{player2.name} - {player2.score}</Headline4>
+                            <br />
+                            {
+                                player2.words.map(word => (
+                                    <Body1>{word}</Body1>
+                                ))
+                            }
+                        </div>
+                    </FlexContainer>
+                </CardContent>
+            </CardBody>
+        </Card>
     )
 }
