@@ -12,9 +12,12 @@ const StyledDiv = styled.div`
   width: 5rem;
   height: 5rem;
   position: fixed;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  top: 47%;
+  /* left: 50%;
+  transform: translate(-50%, -50%); */
+  top: 42%;
+  left: 0;
+  right: 0;
+  margin: auto;
 `
 
 export const Loader = () => {

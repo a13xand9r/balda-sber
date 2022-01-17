@@ -1,18 +1,31 @@
-import { Body1, Button, Container, TextField } from '@sberdevices/plasma-ui'
+import { Container, Headline3 } from '@sberdevices/plasma-ui'
 import React from 'react'
+import styled from 'styled-components'
 import { AppHeader } from '../components/AppHeader'
 import { Loader } from '../components/Loader'
 import { usePushScreen } from '../hooks/usePushScreen'
 import { useStore } from '../hooks/useStore'
 import { useWebSocket } from '../hooks/useWebSocket'
 
+const StyledHeadline = styled(Headline3)`
+    width: 90%;
+    display: inline-block;
+    border-radius: 10px;
+    background-color: #0000009e;
+    padding: 20px;
+    position: fixed;
+    top: 42%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    text-align: center;
+`
+
 export const Random = () => {
     const pushScreen = usePushScreen()
     const [state, dispatch] = useStore()
 
-    const {
-        socket
-    } = useWebSocket(
+    useWebSocket(
         state,
         dispatch,
         pushScreen
@@ -36,7 +49,7 @@ export const Random = () => {
             {
                 !state.onlineOpponent ?
                 <Loader /> :
-                <Body1>Соперник найден: {state.onlineOpponent.name}</Body1>
+                <StyledHeadline>Соперник найден: {state.onlineOpponent.name}</StyledHeadline>
             }
         </Container>
     )
