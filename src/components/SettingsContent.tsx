@@ -101,7 +101,8 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit
                                 onKeyDown={handleEnter}
                                 value={name1}
                                 required
-                                label={state.isMultiplayer ? 'Имя' : 'Имя первого игрока'}
+                                helperText={state.isMultiplayer ? 'Имя' : 'Имя первого игрока'}
+                                // label={state.isMultiplayer ? 'Имя' : 'Имя первого игрока'}
                                 onChange={(e) => e.target.value.length < 10  && setName1(e.target.value)}
                             />
                             {
@@ -111,7 +112,8 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit
                                     contentLeft={<IconPersone color="inherit" size="s" />}
                                     onKeyDown={handleEnter}
                                     required
-                                    label={'Имя второго игрока'}
+                                    // label={'Имя второго игрока'}
+                                    helperText={'Имя второго игрока'}
                                     value={name2}
                                     onChange={(e) => e.target.value.length < 10 && setName2(e.target.value)}
                                 />
