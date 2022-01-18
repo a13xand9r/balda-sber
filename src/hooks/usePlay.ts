@@ -170,6 +170,7 @@ export const usePlay = () => {
         }, 2000)
     }, [isWordAlreadyUsed])
     const onTapLetter = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+        window.scrollTo({top: 0, behavior: 'smooth'})
         setCells(prev => {
             const newColored = [...prev]
             newColored[index] = { ...newColored[index], isInput: false, tempLetter: e.target.value }
