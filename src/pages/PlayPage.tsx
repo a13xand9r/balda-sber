@@ -45,7 +45,6 @@ const LetterInput = styled.input`
     height: 3rem;
     padding-left: 1rem;
     outline: none;
-    /* border-radius: 15px; */
     border: none;
     background-color: #76808a90;
     caret-color: ${accent};
@@ -59,19 +58,23 @@ const PlayersContainer = styled.div`
     display: flex;
     width: 100%;
     margin: 1rem auto;
-    /* justify-content: center; */
-    justify-content: space-around;
+    position: relative;
+    justify-content: space-between;
     background: linear-gradient(45deg, rgb(153, 0, 189) 1%, rgb(0, 107, 137) 100%);
     box-shadow: 4px 0px 29px 4px rgba(34, 60, 80, 0.842);
     border-radius: 20px;
     padding: 10px;
-    padding-left: 33px;
-    padding-right: 33px;
+    padding-left: 2.2rem;
+    padding-right: 2.2rem;
 `
 const PlayerName = styled(Headline3)`
     position: relative;
-    /* margin-left: 1.5rem;
-    margin-right: 1.5rem; */
+`
+const Score = styled(Headline3)`
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
 `
 const Notification = styled(Card)`
     position: absolute;
@@ -174,7 +177,7 @@ export const PlayPage = () => {
             <Timer timerPercentage={getTimerPercentage(timer, timerLimit)}><Body1>{minutesText}:{secondsText}</Body1></Timer>
             <PlayersContainer>
                 <PlayerName>{player1.name}{currentPlayerNumber === 1 && <LeftIconEdit />}</PlayerName>
-                <PlayerName>{player1.score} : {player2.score}</PlayerName>
+                <Score>{player1.score} : {player2.score}</Score>
                 <PlayerName>{currentPlayerNumber === 2 && <RightIconEdit />}{player2.name}</PlayerName>
             </PlayersContainer>
             <PlayGround playSize={playGroundSize}>
