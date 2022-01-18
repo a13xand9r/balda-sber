@@ -130,7 +130,7 @@ export const PlayPage = () => {
         currentPlayerNumber,
         player1,
         player2,
-        cellRefs,
+        // cellRefs,
         timer,
         timerLimit
     } = usePlay()
@@ -147,12 +147,13 @@ export const PlayPage = () => {
             <LetterInput lang='ru' autoFocus autoCapitalize='none' onChange={(e) => onTapLetter(e, i)} /> :
             <PlayCell
                 tabIndex={(item.isAvailableToPutLetter || item.letter) ? 2 : undefined}
-                ref={cellRefs.current[i]}
+                // ref={cellRefs.current[i]}
                 isAvailable={item.isAvailableToPutLetter}
                 isSelected={item.colored}
                 draggable={true}
                 onClick={() => onCellClick(i)}
                 key={i}
+                // onFocus={(e) => e.preventDefault()}
             >
                 <Headline1>{cells[i].tempLetter || cells[i].letter}</Headline1>
             </PlayCell>

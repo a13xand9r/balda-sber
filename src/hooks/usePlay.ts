@@ -170,7 +170,7 @@ export const usePlay = () => {
         }, 2000)
     }, [isWordAlreadyUsed])
     const onTapLetter = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-        window.scrollTo({top: 0, behavior: 'smooth'})
+        // window.scrollTo({top: 0, behavior: 'smooth'})
         setCells(prev => {
             const newColored = [...prev]
             newColored[index] = { ...newColored[index], isInput: false, tempLetter: e.target.value }
@@ -200,22 +200,22 @@ export const usePlay = () => {
         }
     }
 
-    const cellRefs = React.useRef([])
+    // const cellRefs = React.useRef([])
 
-    cellRefs.current = cells.map((_, i) => cellRefs.current[i] ?? createRef())
+    // cellRefs.current = cells.map((_, i) => cellRefs.current[i] ?? createRef())
 
-    const isFocusedRef = React.useRef(false)
-    React.useEffect(() => {
-        const indexWithTempLetter = cells.findIndex(cell => cell.tempLetter)
-        if (indexWithTempLetter !== -1 && !isFocusedRef.current){
-            isFocusedRef.current = true
-            //@ts-ignore
-            cellRefs.current[indexWithTempLetter].current.focus()
-        }
-        if (indexWithTempLetter === -1 && isFocusedRef.current){
-            isFocusedRef.current = false
-        }
-    }, [cells])
+    // const isFocusedRef = React.useRef(false)
+    // React.useEffect(() => {
+    //     const indexWithTempLetter = cells.findIndex(cell => cell.tempLetter)
+    //     if (indexWithTempLetter !== -1 && !isFocusedRef.current){
+    //         isFocusedRef.current = true
+    //         //@ts-ignore
+    //         cellRefs.current[indexWithTempLetter].current.focus()
+    //     }
+    //     if (indexWithTempLetter === -1 && isFocusedRef.current){
+    //         isFocusedRef.current = false
+    //     }
+    // }, [cells])
 
     return {
         onCancel,
@@ -232,7 +232,7 @@ export const usePlay = () => {
         currentPlayerNumber,
         player1,
         player2,
-        cellRefs,
+        // cellRefs,
         timer,
         timerLimit: state.timerLimit
     }
