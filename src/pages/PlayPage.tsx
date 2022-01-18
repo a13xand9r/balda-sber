@@ -136,16 +136,24 @@ export const PlayPage = () => {
     } = usePlay()
 
     const minutes = Math.floor(timer / 60)
-    const seconds = timer - 60*minutes
+    const seconds = timer - 60 * minutes
 
     const minutesText = `0${minutes}`
     const secondsText = `${seconds < 10 ? '0' : ''}${seconds}`
 
 
     const playCells = cells.map((item, i) => (
-        item.isInput ?
-            <LetterInput lang='ru' autoFocus autoCapitalize='none' onChange={(e) => onTapLetter(e, i)} /> :
-            <PlayCell
+        item.isInput
+            ? <LetterInput
+                lang='ru'
+                autoFocus
+                autoCapitalize='none'
+                onChange={(e) => {
+                    e.preventDefault()
+                    onTapLetter(e, i)
+                }}
+            />
+            : <PlayCell
                 tabIndex={(item.isAvailableToPutLetter || item.letter) ? 2 : undefined}
                 // ref={cellRefs.current[i]}
                 isAvailable={item.isAvailableToPutLetter}
@@ -153,7 +161,7 @@ export const PlayPage = () => {
                 draggable={true}
                 onClick={() => onCellClick(i)}
                 key={i}
-                // onFocus={(e) => e.preventDefault()}
+            // onFocus={(e) => e.preventDefault()}
             >
                 <Headline1>{cells[i].tempLetter || cells[i].letter}</Headline1>
             </PlayCell>
@@ -171,7 +179,7 @@ export const PlayPage = () => {
             </PlayGround>
             <ButtonsContainer>
                 <Button
-                    style={{marginRight: '1rem'}}
+                    style={{ marginRight: '1rem' }}
                     onClick={onDone}
                     disabled={isDoneDisabled}
                     view='primary'
@@ -179,7 +187,7 @@ export const PlayPage = () => {
                     <IconDone />
                 </Button>
                 <Button
-                    style={{marginLeft: '1rem'}}
+                    style={{ marginLeft: '1rem' }}
                     onClick={onCancel}
                     view='warning'
                 >
