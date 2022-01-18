@@ -86,11 +86,11 @@ const Notification = styled(Card)`
 `
 const LeftIconEdit = styled(IconEdit)`
     position: absolute;
-    left: -30px;
+    left: -1.7rem;
 `
 const RightIconEdit = styled(IconEdit)`
     position: absolute;
-    right: -30px;
+    right: -1.7rem;
 `
 const WordInProgress = styled(Headline3)`
     margin: 0.6rem;
