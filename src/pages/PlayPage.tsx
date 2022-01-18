@@ -1,5 +1,5 @@
 import { IconCross, IconDone, IconEdit } from '@sberdevices/plasma-icons'
-import { Button, Card, Headline1, Headline3, TextBox } from '@sberdevices/plasma-ui'
+import { Body1, Button, Card, Headline1, Headline3, TextBox } from '@sberdevices/plasma-ui'
 import styled from 'styled-components'
 import { usePlay } from '../hooks/usePlay'
 import { CSSTransition } from 'react-transition-group'
@@ -160,7 +160,7 @@ export const PlayPage = () => {
     ))
     return (
         <PageContainer>
-            <Timer timerPercentage={getTimerPercentage(timer, timerLimit)}>{minutesText}:{secondsText}</Timer>
+            <Timer timerPercentage={getTimerPercentage(timer, timerLimit)}><Body1>{minutesText}:{secondsText}</Body1></Timer>
             <PlayersContainer>
                 <PlayerName>{player1.name}{currentPlayerNumber === 1 && <LeftIconEdit />}</PlayerName>
                 <PlayerName>{player1.score} : {player2.score}</PlayerName>
