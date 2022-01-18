@@ -28,7 +28,8 @@ const PlayCell = styled.div<{ isSelected: boolean, isAvailable: boolean }>`
     align-items: center;
     width: 3rem;
     height: 3rem;
-    background: ${props => props.isSelected ? '#ce11fdf9' : props.isAvailable ? 'linear-gradient(45deg, rgb(128, 0, 255), rgb(9, 144, 182))' : 'black'};
+    /* background: #ce11fdf9; */
+    background: ${props => props.isSelected ? accent : props.isAvailable ? 'linear-gradient(45deg, rgb(128, 0, 255), rgb(9, 144, 182))' : 'black'};
     border-radius: 8%;
     &:focus{
         outline: none;
@@ -92,7 +93,7 @@ const RightIconEdit = styled(IconEdit)`
     right: -30px;
 `
 const WordInProgress = styled(Headline3)`
-    margin-top: 0.6rem;
+    margin: 0.6rem;
     height: 1.3rem;
 `
 const StyledPlayersWords = styled(PlayersWords)`
@@ -107,7 +108,8 @@ const Timer = styled.div<{ timerPercentage: number }>`
     position: relative;
     border-radius: 1rem;
     margin-top: 0.8rem;
-    background: linear-gradient(to right, #0059ff96 ${props => props.timerPercentage}%, #ffffff18 ${props => props.timerPercentage}%);
+    background: #0059ff96;
+    background: linear-gradient(to right, ${accent} ${props => props.timerPercentage}%, #ffffff18 ${props => props.timerPercentage}%);
     box-shadow: 4px 0px 29px 4px rgba(34, 60, 80, 0.842);
 `
 
