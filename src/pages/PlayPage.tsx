@@ -161,7 +161,10 @@ export const PlayPage = () => {
                 draggable={true}
                 onClick={() => onCellClick(i)}
                 key={i}
-            // onFocus={(e) => e.preventDefault()}
+                onFocus={(e) => {
+                    e.preventDefault()
+                    window.scrollTo({top: 0})
+                }}
             >
                 <Headline1>{cells[i].tempLetter || cells[i].letter}</Headline1>
             </PlayCell>
