@@ -168,36 +168,6 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit
                                     onChange={() => dispatch(actions.setPlayGroundSize(6))}
                                 />
                             </PlayGroundSizeContainer>
-
-                            <PlayGroundSizeContainer
-                                onClick={() => {
-                                    if (isSberBoxLike()) dispatch(actions.setPlayGroundSize(7))
-                                }}
-                                tabIndex={isSberBoxLike() ? 1 : 0}
-                            >
-                                <Radiobox
-                                    tabIndex={-1}
-                                    label='7x7'
-                                    checked={state.playGroundSize === 7}
-                                    defaultChecked={state.playGroundSize === 7}
-                                    onChange={() => dispatch(actions.setPlayGroundSize(7))}
-                                />
-                            </PlayGroundSizeContainer>
-
-                            <PlayGroundSizeContainer
-                                onClick={() => {
-                                    if (isSberBoxLike()) dispatch(actions.setPlayGroundSize(8))
-                                }}
-                                tabIndex={isSberBoxLike() ? 1 : 0}
-                            >
-                                <Radiobox
-                                    tabIndex={-1}
-                                    label='8x8'
-                                    checked={state.playGroundSize === 8}
-                                    defaultChecked={state.playGroundSize === 8}
-                                    onChange={() => dispatch(actions.setPlayGroundSize(8))}
-                                />
-                            </PlayGroundSizeContainer>
                         </>
                     }
                     <StyledButton
