@@ -201,24 +201,24 @@ export const usePlay = () => {
         }
     }
 
-    const cellRefs = React.useRef([])
+    // const cellRefs = React.useRef([])
 
-    cellRefs.current = cells.map((_, i) => cellRefs.current[i] ?? createRef())
+    // cellRefs.current = cells.map((_, i) => cellRefs.current[i] ?? createRef())
 
-    const isFocusedRef = React.useRef(false)
-    React.useEffect(() => {
-        const indexWithTempLetter = cells.findIndex(cell => cell.tempLetter)
-        if (indexWithTempLetter !== -1 && !isFocusedRef.current){
-            isFocusedRef.current = true
-            //@ts-ignore
-            cellRefs.current[indexWithTempLetter].current.focus()
+    // const isFocusedRef = React.useRef(false)
+    // React.useEffect(() => {
+    //     const indexWithTempLetter = cells.findIndex(cell => cell.tempLetter)
+    //     if (indexWithTempLetter !== -1 && !isFocusedRef.current){
+    //         isFocusedRef.current = true
+    //         //@ts-ignore
+    //         cellRefs.current[indexWithTempLetter].current.focus()
 
-            // if (isSberBoxLike()) window.scrollTo({top: 0})
-        }
-        if (indexWithTempLetter === -1 && isFocusedRef.current){
-            isFocusedRef.current = false
-        }
-    }, [cells])
+    //         // if (isSberBoxLike()) window.scrollTo({top: 0})
+    //     }
+    //     if (indexWithTempLetter === -1 && isFocusedRef.current){
+    //         isFocusedRef.current = false
+    //     }
+    // }, [cells])
 
     return {
         onCancel,
@@ -235,7 +235,7 @@ export const usePlay = () => {
         currentPlayerNumber,
         player1,
         player2,
-        cellRefs,
+        // cellRefs,
         timer,
         timerLimit: state.timerLimit
     }

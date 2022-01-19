@@ -133,7 +133,7 @@ export const PlayPage = () => {
         currentPlayerNumber,
         player1,
         player2,
-        cellRefs,
+        // cellRefs,
         timer,
         timerLimit
     } = usePlay()
@@ -153,7 +153,7 @@ export const PlayPage = () => {
                 key={i}
                 autoCapitalize='none'
                 onChange={(e) => {
-                    e.preventDefault()
+                    // e.preventDefault()
                     onTapLetter(e, i)
                 }}
             />
