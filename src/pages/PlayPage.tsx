@@ -1,5 +1,5 @@
 import { IconCross, IconDone, IconEdit } from '@sberdevices/plasma-icons'
-import { Body1, Button, Card, Headline1, Headline3, TextBox } from '@sberdevices/plasma-ui'
+import { Body1, Button, Card, CardBody, CardContent, Headline1, Headline3, TextBox } from '@sberdevices/plasma-ui'
 import styled from 'styled-components'
 import { usePlay } from '../hooks/usePlay'
 import { CSSTransition } from 'react-transition-group'
@@ -78,9 +78,10 @@ const Score = styled(Headline3)`
 `
 const Notification = styled(Card)`
     position: absolute;
-    background-color: #808080e8;
+    background-color: #222222f0;
     box-shadow: 0px 0px 31px -3px rgba(34, 60, 80, 0.2);
-    top: 75%;
+    top: 45%;
+    padding: 2rem;
     left: 0;
     right: 0;
     width: 60%;
@@ -201,11 +202,15 @@ export const PlayPage = () => {
                 classNames='notification'
                 unmountOnExit
             >
-                <Notification>
-                    <TextBox>
-                        Такого слова нет в словаре
-                    </TextBox>
-                </Notification>
+            <Notification>
+                <CardBody>
+                    <CardContent style={{ height: '100%' }} cover={false}>
+                        <TextBox>
+                            Такого слова нет в словаре
+                        </TextBox>
+                    </CardContent>
+                </CardBody>
+            </Notification>
             </CSSTransition>
             <CSSTransition
                 in={isWordAlreadyUsed}
