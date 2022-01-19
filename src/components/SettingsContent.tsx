@@ -103,7 +103,7 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit
                                 required
                                 helperText={state.isMultiplayer ? 'Имя' : 'Имя первого игрока'}
                                 // label={state.isMultiplayer ? 'Имя' : 'Имя первого игрока'}
-                                onChange={(e) => e.target.value.length < 10  && setName1(e.target.value)}
+                                onChange={(e) => e.target.value.length < 9  && setName1(e.target.value)}
                             />
                             {
                                 !state.isMultiplayer &&
@@ -115,7 +115,7 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit
                                     // label={'Имя второго игрока'}
                                     helperText={'Имя второго игрока'}
                                     value={name2}
-                                    onChange={(e) => e.target.value.length < 10 && setName2(e.target.value)}
+                                    onChange={(e) => e.target.value.length < 9 && setName2(e.target.value)}
                                 />
                             }
                         </>

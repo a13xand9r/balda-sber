@@ -64,8 +64,8 @@ const PlayersContainer = styled.div`
     box-shadow: 4px 0px 29px 4px rgba(34, 60, 80, 0.842);
     border-radius: 20px;
     padding: 10px;
-    padding-left: 2.2rem;
-    padding-right: 2.2rem;
+    padding-left: ${isSberBoxLike() ? '3' : '2.2'}rem;
+    padding-right: ${isSberBoxLike() ? '3' : '2.2'}rem;;
 `
 const PlayerName = styled(Headline3)`
     position: relative;
@@ -78,7 +78,8 @@ const Score = styled(Headline3)`
 `
 const Notification = styled(Card)`
     position: absolute;
-    background-color: #808080e1;
+    background-color: #808080e8;
+    box-shadow: 0px 0px 31px -3px rgba(34, 60, 80, 0.2);
     top: 75%;
     left: 0;
     right: 0;
