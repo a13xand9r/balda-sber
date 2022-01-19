@@ -81,7 +81,7 @@ const Notification = styled(Card)`
     background-color: #222222f0;
     box-shadow: 0px 0px 31px -3px rgba(34, 60, 80, 0.2);
     top: 45%;
-    padding: 2rem;
+    /* padding: 2rem; */
     left: 0;
     right: 0;
     width: 60%;
@@ -219,9 +219,13 @@ export const PlayPage = () => {
                 unmountOnExit
             >
                 <Notification>
-                    <TextBox>
-                        Такое слово уже использовалось
-                    </TextBox>
+                    <CardBody>
+                        <CardContent style={{ height: '100%' }} cover={false}>
+                            <TextBox>
+                                Такое слово уже использовалось
+                            </TextBox>
+                        </CardContent>
+                    </CardBody>
                 </Notification>
             </CSSTransition>
             <StyledPlayersWords />
