@@ -111,7 +111,7 @@ const Timer = styled.div<{ timerPercentage: number }>`
     position: relative;
     border-radius: 1rem;
     margin-top: 0.8rem;
-    background: #0059ff96;
+    /* background: #0059ff96; */
     background: linear-gradient(to right, ${accent} ${props => props.timerPercentage}%, #ffffff18 ${props => props.timerPercentage}%);
     box-shadow: 4px 0px 29px 4px rgba(34, 60, 80, 0.842);
 `
@@ -150,6 +150,7 @@ export const PlayPage = () => {
             ? <LetterInput
                 lang='ru'
                 autoFocus
+                key={i}
                 autoCapitalize='none'
                 onChange={(e) => {
                     e.preventDefault()
@@ -158,16 +159,15 @@ export const PlayPage = () => {
             />
             : <PlayCell
                 tabIndex={(item.isAvailableToPutLetter || item.letter) ? 2 : undefined}
-                ref={cellRefs.current[i]}
+                // ref={cellRefs.current[i]}
                 isAvailable={item.isAvailableToPutLetter}
                 isSelected={item.colored}
-                draggable={true}
                 onClick={() => onCellClick(i)}
                 key={i}
-                onFocus={(e) => {
-                    e.preventDefault()
-                    window.scrollTo({top: 0})
-                }}
+                // onFocus={(e) => {
+                //     e.preventDefault()
+                //     window.scrollTo({top: 0})
+                // }}
             >
                 <Headline1>{cells[i].tempLetter || cells[i].letter}</Headline1>
             </PlayCell>
