@@ -3,6 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { AppHeader } from '../components/AppHeader'
 import { Loader } from '../components/Loader'
+import { PageContainer } from '../components/SettingsContent'
 import { usePushScreen } from '../hooks/usePushScreen'
 import { useStore } from '../hooks/useStore'
 import { useWebSocket } from '../hooks/useWebSocket'
@@ -46,11 +47,13 @@ export const Random = () => {
                 onBackCallback={() => pushScreen(-1)}
                 title='Ищем соперника...'
             />
-            {
-                !state.onlineOpponent ?
-                <Loader /> :
-                <StyledHeadline>Соперник найден: {state.onlineOpponent.name}</StyledHeadline>
-            }
+            <PageContainer>
+                {
+                    !state.onlineOpponent ?
+                        <Loader /> :
+                        <StyledHeadline>Соперник найден: {state.onlineOpponent.name}</StyledHeadline>
+                }
+            </PageContainer>
         </Container>
     )
 }

@@ -7,10 +7,10 @@ const StyledDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 0.3rem;
   background-color: #0000009e;
-  width: 5rem;
-  height: 5rem;
+  width: 80px;
+  height: 80px;
   position: fixed;
   top: 42%;
   left: 0;

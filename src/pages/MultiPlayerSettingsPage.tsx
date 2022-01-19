@@ -1,9 +1,13 @@
+import { Container } from '@sberdevices/plasma-ui'
 import React from 'react'
-import { SettingsContent } from '../components/SettingsContent'
+import { AppHeader } from '../components/AppHeader'
+import { Notification } from '../components/Notification'
+import { PageContainer, SettingsContent } from '../components/SettingsContent'
 import { usePushScreen } from '../hooks/usePushScreen'
 import { useStore } from '../hooks/useStore'
 import { useWebSocket } from '../hooks/useWebSocket'
 import { SendMessage } from '../types/types'
+import { PlayersContainer, PlayerName, Score } from './PlayPage'
 
 export const MultiPlayerSettingsPage = () => {
     const pushScreen = usePushScreen()
@@ -31,16 +35,28 @@ export const MultiPlayerSettingsPage = () => {
     }, [state.playGroundSize])
 
     return (
-        <>
-        <SettingsContent
-            state={state}
-            dispatch={dispatch}
-            onFormSubmit={onFormSubmit}
-            disabled={isDisabledButton}
-        />
-        {
-            isDisabledButton && 'Ждём готовности соперника...'
-        }
-        </>
+        <Container>
+            <AppHeader
+                back={true}
+                onBackCallback={() => pushScreen(-1)}
+                title='Настройки'
+            />
+            <PageContainer>
+                <PlayersContainer>
+                    <PlayerName>{state.player1.name}</PlayerName>
+                    <Score>:</Score>
+                    <PlayerName>{state.player2.name}</PlayerName>
+                </PlayersContainer>
+                <SettingsContent
+                    state={state}
+                    dispatch={dispatch}
+                    onFormSubmit={onFormSubmit}
+                    disabled={isDisabledButton}
+                />
+                {
+                    isDisabledButton && <Notification>'Ждём готовности соперника...'</Notification>
+                }
+            </PageContainer>
+        </Container>
     )
 }

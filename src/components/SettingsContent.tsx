@@ -46,11 +46,17 @@ const PlayGroundSizeContainer = styled.div`
     outline: none;
   }
 `
-
+const StyledForm = styled.form`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
 export const PageContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* justify-content: center; */
     margin: 0.5rem auto;
     margin-bottom: 8rem;
     text-align: center;
@@ -66,7 +72,6 @@ type Props = {
     disabled?: boolean
 }
 export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit, disabled }) => {
-    const pushScreen = usePushScreen()
     const [name1, setName1] = React.useState(state.player1.name)
     const [name2, setName2] = React.useState(state.player2.name)
 
@@ -82,16 +87,11 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit
 
     return (
         <Container>
-            <AppHeader
-                back={true}
-                onBackCallback={() => pushScreen(-1)}
-                title='Настройки'
-            />
-            <form style={{ width: '100%' }} onSubmit={(e) => {
+            <StyledForm onSubmit={(e) => {
                 e.preventDefault()
                 onFormSubmit(name1, name2)
             }}>
-                <PageContainer>
+                {/* <PageContainer> */}
                     {
                         (!state.isMultiplayer || !state.onlineOpponent) &&
                         <>
@@ -184,8 +184,8 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit
                                 'Далее'
                         }
                     </StyledButton>
-                </PageContainer>
-            </form>
+                {/* </PageContainer> */}
+            </StyledForm>
         </Container>
     )
 }

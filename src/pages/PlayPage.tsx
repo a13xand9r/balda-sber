@@ -1,5 +1,5 @@
 import { IconCross, IconDone, IconEdit } from '@sberdevices/plasma-icons'
-import { Body1, Button, Card, CardBody, CardContent, Headline1, Headline3, TextBox } from '@sberdevices/plasma-ui'
+import { Body1, Button, detectDevice, Headline1, Headline3 } from '@sberdevices/plasma-ui'
 import styled from 'styled-components'
 import { usePlay } from '../hooks/usePlay'
 import { CSSTransition } from 'react-transition-group'
@@ -9,9 +9,10 @@ import { getTimerPercentage } from '../utils'
 import { PlayersWords } from '../components/playerWords/PlayersWords'
 import { PageContainer } from '../components/SettingsContent'
 import { isSberBoxLike } from '@sberdevices/plasma-temple'
+import { Notification } from '../components/Notification'
 
 const PlayGround = styled.div<{ playSize: number }>`
-    margin: 1.5rem auto;
+    margin: ${detectDevice() === 'mobile' ? '1.5rem' : '0.5rem'} auto;
     display: grid;
     grid-template-columns: repeat(${props => props.playSize}, 1fr);
     grid-gap: 0.3rem;
@@ -54,7 +55,7 @@ const LetterInput = styled.input`
     color: white;
 `
 
-const PlayersContainer = styled.div`
+export const PlayersContainer = styled.div`
     display: flex;
     width: 100%;
     margin: 1rem auto;
@@ -67,27 +68,14 @@ const PlayersContainer = styled.div`
     padding-left: ${isSberBoxLike() ? '3' : '2.2'}rem;
     padding-right: ${isSberBoxLike() ? '3' : '2.2'}rem;;
 `
-const PlayerName = styled(Headline3)`
+export const PlayerName = styled(Headline3)`
     position: relative;
 `
-const Score = styled(Headline3)`
+export const Score = styled(Headline3)`
     position: absolute;
     left: 0;
     right: 0;
     margin: auto;
-`
-const Notification = styled(Card)`
-    position: absolute;
-    background-color: #222222f0;
-    box-shadow: 0px 0px 31px -3px rgba(34, 60, 80, 0.2);
-    top: 45%;
-    /* padding: 2rem; */
-    left: 0;
-    right: 0;
-    width: 60%;
-    margin: auto;
-    text-align: center;
-    padding: 0.3rem;
 `
 const LeftIconEdit = styled(IconEdit)`
     position: absolute;
@@ -202,15 +190,9 @@ export const PlayPage = () => {
                 classNames='notification'
                 unmountOnExit
             >
-            <Notification>
-                <CardBody>
-                    <CardContent style={{ height: '100%' }} cover={false}>
-                        <TextBox>
-                            Такого слова нет в словаре
-                        </TextBox>
-                    </CardContent>
-                </CardBody>
-            </Notification>
+                <Notification>
+                    Такого слова нет в словаре
+                </Notification>
             </CSSTransition>
             <CSSTransition
                 in={isWordAlreadyUsed}
@@ -219,13 +201,7 @@ export const PlayPage = () => {
                 unmountOnExit
             >
                 <Notification>
-                    <CardBody>
-                        <CardContent style={{ height: '100%' }} cover={false}>
-                            <TextBox>
-                                Такое слово уже использовалось
-                            </TextBox>
-                        </CardContent>
-                    </CardBody>
+                    Такое слово уже использовалось
                 </Notification>
             </CSSTransition>
             <StyledPlayersWords />
