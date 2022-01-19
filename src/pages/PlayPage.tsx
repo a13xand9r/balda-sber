@@ -133,7 +133,7 @@ export const PlayPage = () => {
         currentPlayerNumber,
         player1,
         player2,
-        // cellRefs,
+        cellRefs,
         timer,
         timerLimit
     } = usePlay()
@@ -159,7 +159,7 @@ export const PlayPage = () => {
             />
             : <PlayCell
                 tabIndex={(item.isAvailableToPutLetter || item.letter) ? 2 : undefined}
-                // ref={cellRefs.current[i]}
+                ref={cellRefs.current[i]}
                 isAvailable={item.isAvailableToPutLetter}
                 isSelected={item.colored}
                 onClick={() => onCellClick(i)}
