@@ -101,6 +101,7 @@ export const usePlay = () => {
             const cell = {colored: false, letter: item, isAvailableToPutLetter, isInput: false, tempLetter: null}
             return cell
         }))
+        window.scrollTo({top: 0, behavior: 'smooth'})
     }, [])
 
     React.useEffect(() => {
@@ -171,7 +172,6 @@ export const usePlay = () => {
         }, 2000)
     }, [isWordAlreadyUsed])
     const onTapLetter = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-        // window.scrollTo({top: 0, behavior: 'smooth'})
         setCells(prev => {
             const newColored = [...prev]
             newColored[index] = { ...newColored[index], isInput: false, tempLetter: e.target.value }
@@ -184,6 +184,7 @@ export const usePlay = () => {
         setLetterPut(false)
         setDoneDisabled(true)
         setWordInProgress('')
+        window.scrollTo({top: 0, behavior: 'smooth'})
     }
     const onDone = async () => {
         const isWordExist = await checkWord(wordInProgress)
@@ -199,6 +200,7 @@ export const usePlay = () => {
                 setWrongWord(true)
             }
         }
+        window.scrollTo({top: 0, behavior: 'smooth'})
     }
 
     const cellRefs = React.useRef([])
@@ -212,8 +214,6 @@ export const usePlay = () => {
             isFocusedRef.current = true
             //@ts-ignore
             cellRefs.current[indexWithTempLetter].current.focus()
-
-            // if (isSberBoxLike()) window.scrollTo({top: 0})
         }
         if (indexWithTempLetter === -1 && isFocusedRef.current){
             isFocusedRef.current = false

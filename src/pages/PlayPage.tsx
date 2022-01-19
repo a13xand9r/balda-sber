@@ -152,10 +152,7 @@ export const PlayPage = () => {
                 autoFocus
                 key={i}
                 autoCapitalize='none'
-                onChange={(e) => {
-                    // e.preventDefault()
-                    onTapLetter(e, i)
-                }}
+                onChange={(e) => onTapLetter(e, i)}
             />
             : <PlayCell
                 tabIndex={(item.isAvailableToPutLetter || item.letter) ? 2 : undefined}
@@ -164,10 +161,6 @@ export const PlayPage = () => {
                 isSelected={item.colored}
                 onClick={() => onCellClick(i)}
                 key={i}
-                // onFocus={(e) => {
-                //     e.preventDefault()
-                //     window.scrollTo({top: 0})
-                // }}
             >
                 <Headline1>{cells[i].tempLetter || cells[i].letter}</Headline1>
             </PlayCell>
