@@ -1,35 +1,34 @@
-import { detectDevice } from '@sberdevices/plasma-ui'
 import { Card, CardBody, CardContent, Container, TextBox } from '@sberdevices/plasma-ui'
-import styled from 'styled-components'
 import { AppHeader } from '../components/AppHeader'
 import { usePushScreen } from '../hooks/usePushScreen'
 import { useAssistant } from '../hooks/useAssistant'
-import { useEffect } from 'react'
 import { PageContainer } from '../components/SettingsContent'
 import { StyledButton } from './StartPage'
-
-const StartTextBox = styled(TextBox)`
-    text-align: start;
-`
+import React from 'react'
+import { SmartAppData } from '../types/types'
 
 export const RulesPage = () => {
     const pushScreen = usePushScreen()
     const assistant = useAssistant()
 
-    useEffect(() => {
-        if (assistant){
-            assistant.on('data', ({ smart_app_data }: any) => {
-                if (smart_app_data) {
-                    switch (smart_app_data.type) {
-                        case 'NAVIGATION_BACK':
-                            pushScreen(-1)
-                            break;
-                        default:
-                    }
-                }
-            })
-        }
-    }, [assistant])
+    // React.useEffect(() => {
+    //     if (assistant){
+    //         assistant.on('data', ({ smart_app_data }: any) => {
+    //             const smartAppData = smart_app_data as SmartAppData
+    //             if (smartAppData) {
+    //                 switch (smartAppData.type) {
+    //                     case 'NAVIGATION_BACK':
+    //                         pushScreen(-1)
+    //                         break;
+    //                     case 'UNDERSTAND':
+    //                         pushScreen(-1)
+    //                         break;
+    //                     default:
+    //                 }
+    //             }
+    //         })
+    //     }
+    // }, [assistant])
 
     return (
         <Container style={{marginBottom: '5rem'}}>

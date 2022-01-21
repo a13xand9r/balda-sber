@@ -10,9 +10,9 @@ import { actions } from '../store/store'
 export const SettingsPage = () => {
     const pushScreen = usePushScreen()
     const [state, dispatch] = useStore()
-    const onFormSubmit = (name1: string, name2: string) => {
-        dispatch(actions.setName1(name1))
-        dispatch(actions.setName2(name2))
+    const onFormSubmit = (name1?: string, name2?: string) => {
+        dispatch(actions.setName1(name1 as string))
+        dispatch(actions.setName2(name2 as string))
         if (state.isMultiplayer) {
             pushScreen('random')
         } else {
@@ -32,6 +32,7 @@ export const SettingsPage = () => {
             />
             <PageContainer>
                 <SettingsContent
+                    pushScreen={pushScreen}
                     state={state}
                     dispatch={dispatch}
                     onFormSubmit={onFormSubmit}

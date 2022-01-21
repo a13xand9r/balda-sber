@@ -48,6 +48,7 @@ export const MultiPlayerSettingsPage = () => {
                     <PlayerName>{state.player2.name}</PlayerName>
                 </PlayersContainer>
                 <SettingsContent
+                    pushScreen={pushScreen}
                     state={state}
                     dispatch={dispatch}
                     onFormSubmit={onFormSubmit}

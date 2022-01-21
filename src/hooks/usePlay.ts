@@ -4,9 +4,10 @@ import { actions } from './../store/store';
 import { checkWordAlreadyUsed } from './../utils';
 import { checkWord } from './../api/checkWord';
 import React, { createRef } from 'react'
-import { CellType } from '../types/types'
+import { CellType, SmartAppData } from '../types/types'
 import { usePushScreen } from './usePushScreen'
 import { useStore } from './useStore'
+import { useAssistant } from './useAssistant';
 
 export const usePlay = () => {
     const [{playGroundSize, startWord, currentPlayerNumber, player1, player2, ...state}, dispatch] = useStore()
@@ -49,7 +50,6 @@ export const usePlay = () => {
     }
 
     const {
-        socket,
         onWordDone,
         onFinishGame,
         onTimerDone
@@ -189,8 +189,6 @@ export const usePlay = () => {
     const onDone = async () => {
         const isWordExist = await checkWord(wordInProgress)
         const isAlreadyUsed = checkWordAlreadyUsed([...player1.words, ...player2.words, startWord], wordInProgress)
-        console.log('isWordExist', isWordExist)
-        console.log('isAlreadyUsed', isAlreadyUsed)
         if (isWordExist && !isAlreadyUsed){
             nextMove(true)
         } else {
@@ -219,6 +217,23 @@ export const usePlay = () => {
             isFocusedRef.current = false
         }
     }, [cells])
+
+    const assistant = useAssistant()
+    React.useEffect(() => {
+        if (assistant){
+            assistant.on('data', ({ smart_app_data }: any) => {
+                const smartAppData = smart_app_data as SmartAppData
+                if (smartAppData) {
+                    switch (smartAppData.type) {
+                        case 'RESET_WORD':
+                            onCancel()
+                            break
+                        default:
+                    }
+                }
+            })
+        }
+    }, [assistant])
 
     return {
         onCancel,

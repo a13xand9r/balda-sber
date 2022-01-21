@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { PlayersWords } from '../components/playerWords/PlayersWords'
 import { PageContainer } from '../components/SettingsContent'
 import { usePushScreen } from '../hooks/usePushScreen'
-import { useStore } from '../hooks/useStore'
 
 const StyledButton = styled(Button)`
     margin: 1.5rem auto;
@@ -13,7 +12,6 @@ const StyledButton = styled(Button)`
 
 export const OpponentDisconnected = () => {
     const pushScreen = usePushScreen()
-    // const [{player1, player2}] = useStore()
     return (
         <Container>
             <PageContainer>

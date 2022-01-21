@@ -4,9 +4,11 @@ import styled from 'styled-components'
 import { getWord } from '../api/getWord'
 import { AppHeader } from '../components/AppHeader'
 import { PageContainer } from '../components/SettingsContent'
+import { useAssistant } from '../hooks/useAssistant'
 import { usePushScreen } from '../hooks/usePushScreen'
 import { useStore } from '../hooks/useStore'
 import { actions } from '../store/store'
+import { SmartAppData } from '../types/types'
 
 export const StyledButton = styled(Button)`
     margin: 1rem auto;
@@ -16,15 +18,11 @@ export const StyledButton = styled(Button)`
 export const StartPage = () => {
     const pushScreen = usePushScreen()
     const [state, dispatch] = useStore()
+    const assistant = useAssistant()
     React.useEffect(() => {
         dispatch(actions.resetGame())
         getWord(state.playGroundSize).then(res => dispatch(actions.setStartWord(res)))
     }, [])
-    // const [value, setValue] = React.useState(0)
-    // const onChange = (value: number) => {
-    //     console.log('change')
-    //     setValue(value)
-    // }
     const onRulesClick = () => {
         pushScreen('rules')
     }
@@ -32,7 +30,7 @@ export const StartPage = () => {
         dispatch(actions.setMultiPlayer(false))
         pushScreen('settings')
     }
-    const onRandomClick = () => {
+    const onOnlineClick = () => {
         dispatch(actions.setMultiPlayer(true))
         if (!state.name){
             pushScreen('settings')
@@ -40,6 +38,27 @@ export const StartPage = () => {
             pushScreen('random')
         }
     }
+    React.useEffect(() => {
+        if (assistant){
+            assistant.on('data', ({ smart_app_data }: any) => {
+                const smartAppData = smart_app_data as SmartAppData
+                if (smartAppData) {
+                    switch (smartAppData.type) {
+                        case 'NAVIGATION_PLAY':
+                            onPlayClick()
+                            break;
+                        case 'NAVIGATION_PLAY_ONLINE':
+                            onOnlineClick()
+                            break;
+                        case 'NAVIGATION_RULES':
+                            onRulesClick()
+                            break;
+                        default:
+                    }
+                }
+            })
+        }
+    }, [assistant])
     return (
         <Container>
             <AppHeader
@@ -54,7 +73,7 @@ export const StartPage = () => {
                     Играть вдвоем
                 </StyledButton>
                 <StyledButton
-                    onClick={onRandomClick}
+                    onClick={onOnlineClick}
                     view='primary'
                 >
                     Поиск случайного соперника

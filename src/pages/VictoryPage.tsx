@@ -3,8 +3,10 @@ import React from 'react'
 import { AppHeader } from '../components/AppHeader'
 import { PlayersWords } from '../components/playerWords/PlayersWords'
 import { PageContainer } from '../components/SettingsContent'
+import { useAssistant } from '../hooks/useAssistant'
 import { usePushScreen } from '../hooks/usePushScreen'
 import { useStore } from '../hooks/useStore'
+import { SmartAppData } from '../types/types'
 import { StyledButton } from './StartPage'
 
 export const VictoryPage = () => {
@@ -15,6 +17,23 @@ export const VictoryPage = () => {
         if (player2.score > player1.score) return player2
         return 'Ничья'
     }, [player1, player2])
+
+    const assistant = useAssistant()
+    React.useEffect(() => {
+        if (assistant){
+            assistant.on('data', ({ smart_app_data }: any) => {
+                const smartAppData = smart_app_data as SmartAppData
+                if (smartAppData) {
+                    switch (smartAppData.type) {
+                        case 'NAVIGATION_GO_MAIN':
+                            pushScreen('start')
+                            break
+                        default:
+                    }
+                }
+            })
+        }
+    }, [assistant])
     return (
         <Container>
             <AppHeader

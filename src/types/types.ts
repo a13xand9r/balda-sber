@@ -138,3 +138,53 @@ export type Player = {
     words: string[]
     score: number
 }
+
+export type SmartAppData =
+    {
+        type: 'SET_FIRST_NAME'
+        payload: {
+            name: string
+        }
+    } |
+    {
+        type: 'SET_SECOND_NAME'
+        payload: {
+            name: string
+        }
+    } |
+    {
+        type: 'SET_PLAYGROUND_SIZE'
+        payload: {
+            size: number
+        }
+    } |
+    {
+        type: 'READY'
+    } |
+    {
+        type: 'UNDERSTAND'
+    } |
+    {
+        type: 'RESET_WORD'
+    } |
+    {
+        type: 'WORD_DONE'
+    } |
+    {
+        type: 'NAVIGATION_NEXT'
+    } |
+    {
+        type: 'NAVIGATION_RULES'
+    } |
+    {
+        type: 'NAVIGATION_PLAY'
+    } |
+    {
+        type: 'NAVIGATION_PLAY_ONLINE'
+    } |
+    {
+        type: 'NAVIGATION_GO_MAIN'
+    } |
+    {
+        type: 'NAVIGATION_BACK'
+    }

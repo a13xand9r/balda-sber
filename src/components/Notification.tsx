@@ -1,5 +1,5 @@
-import { Card, CardBody, CardContent, Spinner, TextBox } from '@sberdevices/plasma-ui'
-import React, { ReactNode } from 'react'
+import { Card, CardBody, CardContent, TextBox } from '@sberdevices/plasma-ui'
+import { ReactNode } from 'react'
 import styled from 'styled-components'
 
 
@@ -8,7 +8,6 @@ const StyledCard = styled(Card)`
     background-color: #222222f0;
     box-shadow: 0px 0px 31px -3px rgba(34, 60, 80, 0.2);
     top: 45%;
-    /* padding: 2rem; */
     left: 0;
     right: 0;
     width: 60%;
