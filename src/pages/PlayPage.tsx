@@ -7,10 +7,22 @@ import '../transition.css'
 import { accent } from '@sberdevices/plasma-tokens'
 import { getTimerPercentage } from '../utils'
 import { PlayersWords } from '../components/playerWords/PlayersWords'
-import { PageContainer } from '../components/SettingsContent'
 import { isSberBoxLike } from '@sberdevices/plasma-temple'
 import { Notification } from '../components/Notification'
 import { OnePlayerWords } from '../components/playerWords/OnePlayerWords'
+
+export const PlayPageContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0.5rem auto;
+    margin-bottom: ${isSberBoxLike() ? '0' : '8'}rem;
+    text-align: center;
+    width: 30rem;
+    @media (max-width: 700px){
+        width: 90vw;
+    }
+`
 
 const PlayGround = styled.div<{ playSize: number }>`
     margin: ${detectDevice() === 'mobile' ? '1.5rem' : '0.5rem'} auto;
@@ -164,7 +176,7 @@ export const PlayPage = () => {
             </PlayCell>
     ))
     return (
-        <PageContainer>
+        <PlayPageContainer>
             <Timer timerPercentage={getTimerPercentage(timer, timerLimit)}><Body1>{minutesText}:{secondsText}</Body1></Timer>
             <PlayersContainer>
                 <PlayerName>{player1.name}{currentPlayerNumber === 1 && <LeftIconEdit />}</PlayerName>
@@ -220,6 +232,6 @@ export const PlayPage = () => {
                 !isSberBoxLike() &&
                 <StyledPlayersWords />
             }
-        </PageContainer>
+        </PlayPageContainer>
     )
 }

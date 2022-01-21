@@ -15,7 +15,7 @@ export const AppHeader: React.FC<Props> = ({title, back, onBackCallback, minimiz
             title={title}
             back={(back && !isSberBoxLike()) || undefined}
             onBackClick={onBackCallback}
-            logo='./img/balda_logo.png'
+            logo='./img/balda_logo_round.png'
             // minimize={minimize || undefined}
         />
     )
