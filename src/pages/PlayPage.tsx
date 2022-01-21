@@ -10,6 +10,7 @@ import { PlayersWords } from '../components/playerWords/PlayersWords'
 import { PageContainer } from '../components/SettingsContent'
 import { isSberBoxLike } from '@sberdevices/plasma-temple'
 import { Notification } from '../components/Notification'
+import { OnePlayerWords } from '../components/playerWords/OnePlayerWords'
 
 const PlayGround = styled.div<{ playSize: number }>`
     margin: ${detectDevice() === 'mobile' ? '1.5rem' : '0.5rem'} auto;
@@ -92,6 +93,16 @@ const WordInProgress = styled(Headline3)`
 const StyledPlayersWords = styled(PlayersWords)`
     margin-bottom: 7rem;
 `
+const LeftPlayerWords = styled(OnePlayerWords)`
+    position: absolute;
+    top: 25%;
+    left: 1.5rem;
+`
+const RightPlayerWords = styled(OnePlayerWords)`
+    position: absolute;
+    top: 25%;
+    right: 1.5rem;
+`
 const Timer = styled.div<{ timerPercentage: number }>`
     display: flex;
     justify-content: center;
@@ -104,6 +115,12 @@ const Timer = styled.div<{ timerPercentage: number }>`
     /* background: #0059ff96; */
     background: linear-gradient(to right, ${accent} ${props => props.timerPercentage}%, #ffffff18 ${props => props.timerPercentage}%);
     box-shadow: 4px 0px 29px 4px rgba(34, 60, 80, 0.842);
+`
+
+const PlayContainer = styled.div`
+    width: 95vw;
+    display: flex;
+    justify-content: space-around;
 `
 
 
@@ -164,9 +181,13 @@ export const PlayPage = () => {
                 <Score>{player1.score} : {player2.score}</Score>
                 <PlayerName>{currentPlayerNumber === 2 && <RightIconEdit />}{player2.name}</PlayerName>
             </PlayersContainer>
-            <PlayGround playSize={playGroundSize}>
-                {playCells}
-            </PlayGround>
+            <PlayContainer>
+                { isSberBoxLike() && <OnePlayerWords player={player1}></OnePlayerWords>}
+                <PlayGround playSize={playGroundSize}>
+                    {playCells}
+                </PlayGround>
+                { isSberBoxLike() &&<OnePlayerWords player={player2}></OnePlayerWords>}
+            </PlayContainer>
             <ButtonsContainer>
                 <Button
                     style={{ marginRight: '1rem' }}
@@ -205,7 +226,10 @@ export const PlayPage = () => {
                     Такое слово уже использовалось
                 </Notification>
             </CSSTransition>
-            <StyledPlayersWords />
+            {
+                !isSberBoxLike() &&
+                <StyledPlayersWords />
+            }
         </PageContainer>
     )
 }
