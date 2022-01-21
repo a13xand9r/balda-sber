@@ -181,7 +181,7 @@ export const usePlay = () => {
         }, 2000)
     }, [isWordAlreadyUsed])
     const onTapLetter = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-        if (e.target.value.match(/[А-Яа-яЁё ]/)) {
+        if (e.target.value.match(/[А-Яа-яЁё]/)) {
             setCells(prev => {
                 const newColored = [...prev]
                 newColored[index] = { ...newColored[index], isInput: false, tempLetter: e.target.value }

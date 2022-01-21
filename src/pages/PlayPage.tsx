@@ -185,10 +185,12 @@ export const PlayPage = () => {
             </PlayersContainer>
             <PlayContainer>
                 { isSberBoxLike() && <OnePlayerWords player={player1}></OnePlayerWords>}
+                <OnePlayerWords player={player1}></OnePlayerWords>
                 <PlayGround playSize={playGroundSize}>
                     {playCells}
                 </PlayGround>
-                { isSberBoxLike() &&<OnePlayerWords player={player2}></OnePlayerWords>}
+                { isSberBoxLike() && <OnePlayerWords player={player2}></OnePlayerWords>}
+                <OnePlayerWords player={player2}></OnePlayerWords>
             </PlayContainer>
             <ButtonsContainer>
                 <Button
@@ -228,10 +230,10 @@ export const PlayPage = () => {
                     Такое слово уже использовалось
                 </Notification>
             </CSSTransition>
-            {
+            {/* {
                 !isSberBoxLike() &&
                 <StyledPlayersWords />
-            }
+            } */}
         </PlayPageContainer>
     )
 }
