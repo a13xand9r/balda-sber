@@ -138,6 +138,7 @@ export const PlayPage = () => {
     const playCells = cells.map((item, i) => (
         item.isInput
             ? <LetterInput
+                value=''
                 lang='ru'
                 autoFocus
                 key={i}
