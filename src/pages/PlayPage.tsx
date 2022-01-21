@@ -93,16 +93,6 @@ const WordInProgress = styled(Headline3)`
 const StyledPlayersWords = styled(PlayersWords)`
     margin-bottom: 7rem;
 `
-const LeftPlayerWords = styled(OnePlayerWords)`
-    position: absolute;
-    top: 25%;
-    left: 1.5rem;
-`
-const RightPlayerWords = styled(OnePlayerWords)`
-    position: absolute;
-    top: 25%;
-    right: 1.5rem;
-`
 const Timer = styled.div<{ timerPercentage: number }>`
     display: flex;
     justify-content: center;
@@ -118,7 +108,7 @@ const Timer = styled.div<{ timerPercentage: number }>`
 `
 
 const PlayContainer = styled.div`
-    width: 95vw;
+    width: 90vw;
     display: flex;
     justify-content: space-around;
 `

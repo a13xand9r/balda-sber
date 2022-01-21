@@ -1,5 +1,5 @@
 import { secondary } from '@sberdevices/plasma-tokens'
-import { Body1, Card, CardBody, CardContent, Footnote1 } from '@sberdevices/plasma-ui'
+import { Body1, Card, CardBody, CardContent, Footnote1, Headline4 } from '@sberdevices/plasma-ui'
 import styled from 'styled-components'
 import { Player } from '../../types/types'
 
@@ -17,6 +17,7 @@ export const OnePlayerWords: React.FC<Props> = ({player}) => {
             <CardBody>
                 <CardContent style={{ height: '100%' }} cover={false}>
                         <div>
+                            <Headline4>Слова:</Headline4>
                             {
                                 player.words.length === 0
                                 ? <ColoredFootnote1 color='secondary'>Нет слов</ColoredFootnote1>
