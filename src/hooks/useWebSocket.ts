@@ -73,9 +73,7 @@ export const useWebSocket = (
                     dispatch(actions.setPlayGroundSize(message.payload.size))
                     break
                 case 'WORD_DONE':
-                    console.log('currentPlayerNumber', state.currentPlayerNumber)
                     dispatch(actions.addPlayerWord(state.currentPlayerNumber, message.payload.newWord))
-                    console.log('INCREMENT SCORE')
                     dispatch(actions.incrementPlayerScore(state.currentPlayerNumber, message.payload.newWord.length))
                     nextMove && nextMove(true, message.payload.cells)
                     break

@@ -7,6 +7,7 @@ import { actions } from '../store/store'
 import { ActionsType, PageStateType, SmartAppData, StateType } from '../types/types'
 import { IconPersone } from '@sberdevices/plasma-icons'
 import { useAssistant } from '../hooks/useAssistant'
+import { badWordsValidation } from '../utils'
 
 const NameInput = styled(TextField)`
     margin: 0.5rem auto;
@@ -65,6 +66,8 @@ type Props = {
 export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit, disabled, pushScreen }) => {
     const [name1, setName1] = React.useState(state.player1.name)
     const [name2, setName2] = React.useState(state.player2.name)
+    const [isBadName1, setIsBadName1] = React.useState(false)
+    const [isBadName2, setIsBadName2] = React.useState(false)
 
     const handleEnter = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key.toLowerCase() === "enter") {
@@ -82,6 +85,14 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit
     name1Ref.current = name1
     name2Ref.current = name2
 
+    const submitForm = (e?: React.FormEvent<HTMLFormElement>) => {
+        e?.preventDefault()
+        if (badWordsValidation(name1Ref.current as string)) setIsBadName1(true)
+        if (badWordsValidation(name2Ref.current as string)) setIsBadName2(true)
+        if (!badWordsValidation(name1Ref.current as string) && !badWordsValidation(name2Ref.current as string))
+            onFormSubmit(name1Ref.current, name2Ref.current)
+    }
+
     const assistant = useAssistant()
     React.useEffect(() => {
         if (assistant) {
@@ -94,7 +105,7 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit
                             break
                         case 'NAVIGATION_NEXT':
                             if (name1Ref.current && (name2Ref.current && !state.isMultiplayer || state.isMultiplayer))
-                            onFormSubmit(name1Ref.current as string, name2Ref.current as string)
+                            submitForm()
                             break
                         case 'READY':
                             onFormSubmit()
@@ -106,12 +117,18 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit
         }
     }, [assistant])
 
+    const onName1Change = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.target.value.length < 9 && setName1(e.target.value)
+        setIsBadName1(false)
+    }
+    const onName2Change = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.target.value.length < 9 && setName2(e.target.value)
+        setIsBadName2(false)
+    }
+
     return (
         <Container>
-            <StyledForm onSubmit={(e) => {
-                e.preventDefault()
-                onFormSubmit(name1, name2)
-            }}>
+            <StyledForm onSubmit={submitForm}>
                 {
                     (!state.isMultiplayer || !state.onlineOpponent) &&
                     <>
@@ -121,9 +138,10 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit
                             onKeyDown={handleEnter}
                             value={name1}
                             required
-                            helperText={state.isMultiplayer ? 'Имя' : 'Имя первого игрока'}
+                            helperText={isBadName1 ? 'Такое имя нельзя использовать' : state.isMultiplayer ? 'Имя' : 'Имя первого игрока'}
+                            style={{color: isBadName1 ? 'red' : 'inherit'}}
                             // label={state.isMultiplayer ? 'Имя' : 'Имя первого игрока'}
-                            onChange={(e) => e.target.value.length < 9 && setName1(e.target.value)}
+                            onChange={onName1Change}
                         />
                         {
                             !state.isMultiplayer &&
@@ -133,9 +151,10 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit
                                 onKeyDown={handleEnter}
                                 required
                                 // label={'Имя второго игрока'}
-                                helperText={'Имя второго игрока'}
+                                helperText={isBadName2 ? 'Такое имя нельзя использовать' : 'Имя второго игрока'}
+                                style={{color: isBadName2 ? 'red' : 'inherit'}}
                                 value={name2}
-                                onChange={(e) => e.target.value.length < 9 && setName2(e.target.value)}
+                                onChange={onName2Change}
                             />
                         }
                     </>
