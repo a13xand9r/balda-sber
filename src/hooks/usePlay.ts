@@ -195,7 +195,7 @@ export const usePlay = () => {
         setLetterPut(false)
         setDoneDisabled(true)
         setWordInProgress('')
-        playAudio('./sounds/cancel.mp3')
+        playAudio('./sounds/cancel.mp3', 0.5)
         window.scrollTo({top: 0, behavior: 'smooth'})
     }
     const onDone = async () => {
