@@ -26,6 +26,12 @@ export const usePlay = () => {
     const [isWordAlreadyUsed, setWordAlreadyUsed] = React.useState<boolean>(false)
     const [timer, setTimer] = React.useState<number>(state.timerLimit)
 
+    const playAudio = (src: string, volume = 1) => {
+        let audio = new Audio(src)
+        audio.volume = volume
+        audio.play()
+    }
+
     const nextMove = (isWordDone: boolean, newCells?: CellType[]) => {
         if (newCells) {
             setCells(newCells)
@@ -47,6 +53,9 @@ export const usePlay = () => {
         }
         setTimer(120)
         dispatch(actions.changeCurrentPlayer())
+        if (isWordDone){
+            playAudio('./sounds/good.mp3')
+        } else playAudio('./sounds/bad.mp3')
     }
 
     const {
@@ -186,6 +195,7 @@ export const usePlay = () => {
         setLetterPut(false)
         setDoneDisabled(true)
         setWordInProgress('')
+        playAudio('./sounds/cancel.mp3')
         window.scrollTo({top: 0, behavior: 'smooth'})
     }
     const onDone = async () => {
@@ -199,6 +209,7 @@ export const usePlay = () => {
             } else{
                 setWrongWord(true)
             }
+            playAudio('./sounds/bad.mp3')
         }
         window.scrollTo({top: 0, behavior: 'smooth'})
     }
