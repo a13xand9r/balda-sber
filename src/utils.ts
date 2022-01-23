@@ -36,5 +36,5 @@ export const badWords = [
 ]
 
 export const badWordsValidation = (name: string) => {
-    return !!badWords.find(word => name.includes(word))
+    return !!badWords.find(word => name.toLowerCase().includes(word))
 }
