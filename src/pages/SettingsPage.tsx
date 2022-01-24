@@ -10,6 +10,7 @@ import { actions } from '../store/store'
 export const SettingsPage = () => {
     const pushScreen = usePushScreen()
     const [state, dispatch] = useStore()
+    const [isSubmitDisable, setIsSubmitDisable] = React.useState(false)
     const onFormSubmit = (name1?: string, name2?: string) => {
         dispatch(actions.setName1(name1 as string))
         dispatch(actions.setName2(name2 as string))
@@ -21,7 +22,11 @@ export const SettingsPage = () => {
     }
 
     React.useEffect(() => {
-        getWord(state.playGroundSize).then(res => dispatch(actions.setStartWord(res)))
+        setIsSubmitDisable(true)
+        getWord(state.playGroundSize).then(res => {
+            dispatch(actions.setStartWord(res))
+            setIsSubmitDisable(false)
+        })
     }, [state.playGroundSize])
     return (
         <Container>
@@ -34,6 +39,7 @@ export const SettingsPage = () => {
                 <SettingsContent
                     pushScreen={pushScreen}
                     state={state}
+                    disabled={isSubmitDisable}
                     dispatch={dispatch}
                     onFormSubmit={onFormSubmit}
                 />
