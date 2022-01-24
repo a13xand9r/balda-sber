@@ -54,7 +54,7 @@ export const usePlay = () => {
         dispatch(actions.changeCurrentPlayer())
         if (isWordDone){
             playAudio('./sounds/good.mp3')
-        } else playAudio('./sounds/alarm.mp3')
+        } else playAudio('./sounds/alarm.mp3', 0.6)
     }
 
     const {
@@ -81,7 +81,7 @@ export const usePlay = () => {
 
     React.useEffect(() => {
         if (timer === 3){
-            playAudio('./sounds/timer.mp3')
+            playAudio('./sounds/timer.mp3', 0.6)
         }
         if (timer === 0) {
             if (state.isMultiplayer){
