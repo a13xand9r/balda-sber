@@ -80,6 +80,9 @@ export const usePlay = () => {
     }, [currentPlayerNumber])
 
     React.useEffect(() => {
+        if (timer === 3){
+            playAudio('./sounds/timer.mp3')
+        }
         if (timer === 0) {
             if (state.isMultiplayer){
                 if (currentPlayerNumber === 1){
