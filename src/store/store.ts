@@ -45,7 +45,7 @@ export const reducer = (state: StateType, action: ActionsType): StateType => {
                     words: []
                 },
                 player2: {
-                    name: '',
+                    name: state.isMultiplayer ? '' : state.player2.name,
                     score: 0,
                     words: []
                 },
