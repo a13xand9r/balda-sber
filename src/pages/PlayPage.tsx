@@ -10,6 +10,8 @@ import { PlayersWords } from '../components/playerWords/PlayersWords'
 import { isSberBoxLike } from '@sberdevices/plasma-temple'
 import { Notification } from '../components/Notification'
 import { OnePlayerWords } from '../components/playerWords/OnePlayerWords'
+import { StyledButton } from './StartPage'
+import React from 'react'
 
 export const PlayPageContainer = styled.div`
     display: flex;
@@ -144,7 +146,9 @@ export const PlayPage = () => {
         player2,
         cellRefs,
         timer,
-        timerLimit
+        timerLimit,
+        character,
+        goToMain
     } = usePlay()
 
     const minutes = Math.floor(timer / 60)
@@ -153,6 +157,7 @@ export const PlayPage = () => {
     const minutesText = `0${minutes}`
     const secondsText = `${seconds < 10 ? '0' : ''}${seconds}`
 
+    const [isAreYouSure, setIsAreYouSure] = React.useState(false)
 
     const playCells = cells.map((item, i) => (
         item.isInput
@@ -232,6 +237,40 @@ export const PlayPage = () => {
                 !isSberBoxLike() &&
                 <StyledPlayersWords />
             }
+            <StyledButton
+                view='primary'
+                onClick={() => setIsAreYouSure(true)}
+            >
+                На главную
+            </StyledButton>
+            <CSSTransition
+                in={isAreYouSure}
+                timeout={300}
+                classNames='notification'
+                unmountOnExit
+            >
+                <Notification>
+                    <>
+                        {character === 'joy' ? 'Ты уверен?' : 'Вы уверены?'} Игра закончится
+                        <div>
+                            <Button
+                                view='secondary'
+                                style={{ margin: '1rem' }}
+                                onClick={goToMain}
+                            >
+                                Да
+                            </Button>
+                            <Button
+                                view='secondary'
+                                style={{ margin: '1rem' }}
+                                onClick={() => setIsAreYouSure(false)}
+                            >
+                                Нет
+                            </Button>
+                        </div>
+                    </>
+                </Notification>
+            </CSSTransition>
         </PlayPageContainer>
     )
 }

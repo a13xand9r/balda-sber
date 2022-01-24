@@ -248,6 +248,8 @@ export const usePlay = () => {
         }
     }, [assistant])
 
+    const goToMain = () => pushScreen('')
+
     return {
         onCancel,
         onTapLetter,
@@ -265,6 +267,8 @@ export const usePlay = () => {
         player2,
         cellRefs,
         timer,
-        timerLimit: state.timerLimit
+        timerLimit: state.timerLimit,
+        character: state.character,
+        goToMain
     }
 }

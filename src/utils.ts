@@ -1,6 +1,6 @@
 
 export const checkWordAlreadyUsed = (usedWords: string[], currentWord: string) => {
-    const word = usedWords.find(item => item === currentWord)
+    const word = usedWords.find(item => item.toLocaleLowerCase() === currentWord.toLocaleLowerCase())
     return word ? true : false
 }
 
@@ -36,5 +36,5 @@ export const badWords = [
 ]
 
 export const badWordsValidation = (name: string) => {
-    return !!badWords.find(word => name.toLowerCase().includes(word))
+    return !!badWords.find(word => name.toLocaleLowerCase().includes(word))
 }
