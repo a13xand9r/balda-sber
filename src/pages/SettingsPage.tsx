@@ -12,8 +12,8 @@ export const SettingsPage = () => {
     const [state, dispatch] = useStore()
     const [isSubmitDisable, setIsSubmitDisable] = React.useState(false)
     const onFormSubmit = (name1?: string, name2?: string) => {
-        dispatch(actions.setName1(name1 as string))
-        dispatch(actions.setName2(name2 as string))
+        dispatch(actions.setName1(name1?.trim() as string))
+        dispatch(actions.setName2(name2?.trim() as string))
         if (state.isMultiplayer) {
             pushScreen('random')
         } else {

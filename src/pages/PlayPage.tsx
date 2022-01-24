@@ -80,8 +80,8 @@ export const PlayersContainer = styled.div`
     box-shadow: 4px 0px 29px 4px rgba(34, 60, 80, 0.842);
     border-radius: 20px;
     padding: 10px;
-    padding-left: ${isSberBoxLike() ? '3' : '2.2'}rem;
-    padding-right: ${isSberBoxLike() ? '3' : '2.2'}rem;;
+    padding-left: ${isSberBoxLike() ? '3' : '2.05'}rem;
+    padding-right: ${isSberBoxLike() ? '3' : '2.05'}rem;;
 `
 export const PlayerName = styled(Headline3)`
     position: relative;
