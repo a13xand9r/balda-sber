@@ -1,6 +1,6 @@
 
 export const checkWordAlreadyUsed = (usedWords: string[], currentWord: string) => {
-    const word = usedWords.find(item => item.toLocaleLowerCase() === currentWord.toLocaleLowerCase())
+    const word = usedWords.find(item => item.toLocaleLowerCase().trim() === currentWord.toLocaleLowerCase().trim())
     return word ? true : false
 }
 

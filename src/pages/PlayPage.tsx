@@ -158,6 +158,12 @@ export const PlayPage = () => {
     const secondsText = `${seconds < 10 ? '0' : ''}${seconds}`
 
     const [isAreYouSure, setIsAreYouSure] = React.useState(false)
+    const areYouSureNoRefs = React.useRef<HTMLButtonElement>(null)
+    React.useEffect(() => {
+        if (isAreYouSure){
+            areYouSureNoRefs.current && areYouSureNoRefs.current.focus()
+        }
+    }, [isAreYouSure])
 
     const playCells = cells.map((item, i) => (
         item.isInput
@@ -264,6 +270,7 @@ export const PlayPage = () => {
                                 view='secondary'
                                 style={{ margin: '1rem' }}
                                 onClick={() => setIsAreYouSure(false)}
+                                ref={areYouSureNoRefs}
                             >
                                 Нет
                             </Button>
