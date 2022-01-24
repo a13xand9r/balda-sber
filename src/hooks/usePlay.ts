@@ -151,7 +151,7 @@ export const usePlay = () => {
                 })
             }
             if (
-                isLetterPut && (cells[index].letter || cells[index].tempLetter) &&
+                isLetterPut && (cells[index].letter || cells[index].tempLetter) && !cells[index].colored &&
                 (!cells.some(item => item.colored) ||
                     (index - playGroundSize === lastColored || index + playGroundSize === lastColored || (index - 1 === lastColored && index % playGroundSize !== 0) || (index + 1 === lastColored && index % playGroundSize !== playGroundSize - 1))
                 )
