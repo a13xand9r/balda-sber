@@ -24,6 +24,7 @@ export const usePlay = () => {
     const [isWrongWord, setWrongWord] = React.useState<boolean>(false)
     const [isWordAlreadyUsed, setWordAlreadyUsed] = React.useState<boolean>(false)
     const [timer, setTimer] = React.useState<number>(state.timerLimit)
+    const [timerDoneCounter, setTimerDoneCounter] = React.useState<number>(0)
 
     const playAudio = (src: string, volume = 1) => {
         let audio = new Audio(src)
@@ -50,11 +51,15 @@ export const usePlay = () => {
             setLetterPut(false)
             setWordInProgress('')
         }
-        setTimer(120)
+        setTimer(state.timerLimit)
         dispatch(actions.changeCurrentPlayer())
         if (isWordDone){
             playAudio('./sounds/good.mp3')
-        } else playAudio('./sounds/alarm.mp3', 0.6)
+            setTimerDoneCounter(0)
+        } else {
+            playAudio('./sounds/alarm.mp3', 0.6)
+            setTimerDoneCounter(prev => prev + 1)
+        }
     }
 
     const {
@@ -78,6 +83,10 @@ export const usePlay = () => {
             clearInterval(interval.current as NodeJS.Timeout)
         }
     }, [currentPlayerNumber])
+
+    React.useEffect(() => {
+        if (timerDoneCounter >= 2) pushScreen('victory')
+    }, [timerDoneCounter])
 
     React.useEffect(() => {
         if (timer === 3){

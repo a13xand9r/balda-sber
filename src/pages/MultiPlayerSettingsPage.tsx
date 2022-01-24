@@ -55,7 +55,7 @@ export const MultiPlayerSettingsPage = () => {
                     disabled={isDisabledButton}
                 />
                 {
-                    isDisabledButton && <Notification>'Ждём готовности соперника...'</Notification>
+                    isDisabledButton && <Notification>Ждём готовности соперника...</Notification>
                 }
             </PageContainer>
         </Container>
