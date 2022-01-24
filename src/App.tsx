@@ -10,8 +10,19 @@ import { VictoryPage } from './pages/VictoryPage'
 import { MultiPlayerSettingsPage } from './pages/MultiPlayerSettingsPage'
 import { OpponentDisconnected } from './pages/OpponentDisconnected'
 import { RulesPage } from './pages/RulesPage'
+import React from 'react'
+import { useAssistant } from './hooks/useAssistant'
 
 function App() {
+    const assistant = useAssistant()
+    React.useEffect(() => {
+        if (assistant){
+            assistant.sendAction({
+                type: 'START_APP',
+                payload: {}
+            })
+        }
+    }, [assistant])
     return (
         <Routes>
             <Route path="/settings" element={<SettingsPage />} />

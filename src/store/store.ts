@@ -32,6 +32,8 @@ export const reducer = (state: StateType, action: ActionsType): StateType => {
     switch (action.type) {
         case 'SET_CHARACTER':
             return { ...state, character: action.characterId }
+        case 'SET_USER_ID':
+            return { ...state, userId: action.userId }
         case 'RESET_GAME':
             return {
                 ...state,
@@ -116,6 +118,7 @@ export const reducer = (state: StateType, action: ActionsType): StateType => {
 
 export const actions = {
     setCharacter: (characterId: CharacterType) => ({ type: 'SET_CHARACTER', characterId } as const),
+    setUserId: (userId: string) => ({ type: 'SET_USER_ID', userId } as const),
     setName1: (name: string) => ({ type: 'SET_NAME_1', name } as const),
     setName2: (name: string) => ({ type: 'SET_NAME_2', name } as const),
     setOpponent: (opponent: OnlineOpponent) => ({ type: 'SET_OPPONENT', opponent } as const),
