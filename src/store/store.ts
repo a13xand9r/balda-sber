@@ -50,6 +50,20 @@ export const reducer = (state: StateType, action: ActionsType): StateType => {
                     words: []
                 },
             }
+        case 'RESET_WORDS':
+            return {
+                ...state,
+                player1: {
+                    name: state.name,
+                    score: 0,
+                    words: []
+                },
+                player2: {
+                    name: state.player2.name,
+                    score: 0,
+                    words: []
+                },
+            }
         case 'SET_NAME_1':
             return { ...state, name: action.name, player1: { ...state.player1, name: action.name } }
         case 'SET_NAME_2':
@@ -115,6 +129,7 @@ export const actions = {
     setPlayGroundSize: (size: number) => ({ type: 'SET_PLAYGROUND_SIZE', size } as const),
     setOpponentOnline: (isOpponentOnline: null | boolean) => ({ type: 'SET_OPPONENT_ONLINE', isOpponentOnline } as const),
     resetGame: () => ({ type: 'RESET_GAME' } as const),
+    resetWords: () => ({ type: 'RESET_WORDS' } as const),
     setTimer: (flag: boolean) => ({ type: 'SET_TIMER', flag } as const),
     setTimerLimit: (limit: number) => ({ type: 'SET_TIMER_LIMIT', limit } as const),
     // setCells: (cells: CellType[]) => ({ type: 'SET_CELLS', cells } as const),

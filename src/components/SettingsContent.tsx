@@ -123,6 +123,10 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit
         }
     }, [assistant])
 
+    React.useEffect(() => {
+        dispatch(actions.resetWords())
+    }, [])
+
     const onName1Change = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.target.value.length < 9 && setName1(e.target.value)
         setIsBadName1(false)
