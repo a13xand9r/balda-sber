@@ -11,24 +11,24 @@ export const RulesPage = () => {
     const pushScreen = usePushScreen()
     const assistant = useAssistant()
 
-    // React.useEffect(() => {
-    //     if (assistant){
-    //         assistant.on('data', ({ smart_app_data }: any) => {
-    //             const smartAppData = smart_app_data as SmartAppData
-    //             if (smartAppData) {
-    //                 switch (smartAppData.type) {
-    //                     case 'NAVIGATION_BACK':
-    //                         pushScreen(-1)
-    //                         break;
-    //                     case 'UNDERSTAND':
-    //                         pushScreen(-1)
-    //                         break;
-    //                     default:
-    //                 }
-    //             }
-    //         })
-    //     }
-    // }, [assistant])
+    React.useEffect(() => {
+        if (assistant){
+            assistant.on('data', ({ smart_app_data }: any) => {
+                const smartAppData = smart_app_data as SmartAppData
+                if (smartAppData) {
+                    switch (smartAppData.type) {
+                        case 'NAVIGATION_BACK':
+                            pushScreen(-1)
+                            break;
+                        case 'UNDERSTAND':
+                            pushScreen(-1)
+                            break;
+                        default:
+                    }
+                }
+            })
+        }
+    }, [assistant])
 
     return (
         <Container style={{marginBottom: '5rem'}}>
@@ -42,7 +42,7 @@ export const RulesPage = () => {
                             </TextBox>
                             <br />
                             <TextBox>
-                                Правила игры: необходимо составлять слова, дописывая по одной букве в пустом поле. Побеждает тот, кто наберет как можно больше очков. Чем длиннее слово, тем больше очков вы получаете. Разрешается использовать только существительные слова в именительном падеже (единственное число)
+                                Правила игры: необходимо составлять слова, дописывая по одной букве в пустом поле. Побеждает тот, кто наберет как можно больше очков. Чем длиннее слово, тем больше очков получает игрок. Разрешается использовать только существительные слова в именительном падеже (единственное число)
                             </TextBox>
                             <br />
                             <TextBox>
