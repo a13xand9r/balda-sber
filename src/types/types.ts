@@ -153,6 +153,14 @@ export type SmartAppData =
         }
     } |
     {
+        type: 'SET_NAME_1'
+        name: string
+    } |
+    {
+        type: 'SET_NAME_2'
+        name: string
+    } |
+    {
         type: 'SET_PLAYGROUND_SIZE'
         payload: {
             size: number

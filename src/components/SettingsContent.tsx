@@ -100,6 +100,12 @@ export const SettingsContent: React.FC<Props> = ({ state, dispatch, onFormSubmit
                 const smartAppData = smart_app_data as SmartAppData
                 if (smartAppData) {
                     switch (smartAppData.type) {
+                        case 'SET_NAME_1':
+                            setName1(smartAppData.name)
+                            break
+                        case 'SET_NAME_2':
+                            setName2(smartAppData.name)
+                            break
                         case 'NAVIGATION_BACK':
                             pushScreen(-1)
                             break
