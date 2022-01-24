@@ -18,7 +18,7 @@ export const PlayPageContainer = styled.div`
     flex-direction: column;
     align-items: center;
     margin: 0.5rem auto;
-    margin-bottom: ${isSberBoxLike() ? '0' : '8'}rem;
+    margin-bottom: ${isSberBoxLike() ? '1' : '8'}rem;
     text-align: center;
     width: 30rem;
     @media (max-width: 700px){
