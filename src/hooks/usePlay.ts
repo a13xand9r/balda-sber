@@ -1,4 +1,3 @@
-import { isSberBoxLike } from '@sberdevices/plasma-temple';
 import { useWebSocket } from './useWebSocket';
 import { actions } from './../store/store';
 import { checkWordAlreadyUsed } from './../utils';
@@ -55,7 +54,7 @@ export const usePlay = () => {
         dispatch(actions.changeCurrentPlayer())
         if (isWordDone){
             playAudio('./sounds/good.mp3')
-        } else playAudio('./sounds/bad.mp3')
+        } else playAudio('./sounds/alarm.mp3')
     }
 
     const {
