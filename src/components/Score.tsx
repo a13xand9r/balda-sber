@@ -17,7 +17,7 @@ const StyledHeadline = styled(CardHeadline1)`
 const StyledImg = styled.img`
     position: absolute;
     /* top: -1rem; */
-    left: -2.3rem;
+    left: -2.2rem;
     width: 1.8rem;
     height: 1.8rem;
     /* width: 30px;
@@ -78,7 +78,7 @@ export const Score: React.FC<Props> = ({ defeatCount, drawCount, victoryCount, s
                     <CardContent style={{ height: '100%' }} cover={false}>
                         <StyledHeadline>
                             <StyledImg src='./img/score.png' alt="" />
-                            1000
+                            {score}
                         </StyledHeadline>
                         <TextBox>
                             Общий счёт
