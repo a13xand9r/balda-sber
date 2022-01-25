@@ -83,10 +83,13 @@ export const VictoryPage = () => {
                     'Ничья' :
                     `Победитель - ${ winner.name }`
                 }</Headline2>
-                <div style={{display: 'flex', alignItems: 'center'}}>
-                    <StyledImg src='./img/score.png' alt="" />
-                    <Headline3>+ {scoreIncrement} очков</Headline3>
-                </div>
+                {
+                    state.isMultiplayer &&
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <StyledImg src='./img/score.png' alt="" />
+                        <Headline3>+ {scoreIncrement} очков</Headline3>
+                    </div>
+                }
                 <PlayersWords />
                 <StyledButton
                     view='primary'
