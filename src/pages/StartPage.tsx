@@ -3,6 +3,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { getWord } from '../api/getWord'
 import { AppHeader } from '../components/AppHeader'
+import { Notification } from '../components/Notification'
+import { Score } from '../components/Score'
 import { PageContainer } from '../components/SettingsContent'
 import { useAssistant } from '../hooks/useAssistant'
 import { usePushScreen } from '../hooks/usePushScreen'
@@ -84,6 +86,12 @@ export const StartPage = () => {
                 >
                     Правила
                 </StyledButton>
+                {
+               state.userScore &&
+               <Score
+                    {...state.userScore}
+               />
+           }
             </PageContainer>
         </Container>
     )

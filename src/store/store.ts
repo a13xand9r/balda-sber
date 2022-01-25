@@ -36,6 +36,7 @@ export const reducer = (state: StateType, action: ActionsType): StateType => {
         case 'SET_USER_ID':
             return { ...state, userId: action.userId }
         case 'SET_USER_SCORE':
+            console.log('action', action)
             return { ...state, userScore: action.score }
         case 'RESET_GAME':
             return {
