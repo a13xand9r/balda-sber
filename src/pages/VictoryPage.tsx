@@ -1,5 +1,6 @@
-import { Container, Headline2 } from '@sberdevices/plasma-ui'
+import { Container, Headline2, Headline3, Headline4 } from '@sberdevices/plasma-ui'
 import React from 'react'
+import styled from 'styled-components'
 import { AppHeader } from '../components/AppHeader'
 import { PlayersWords } from '../components/playerWords/PlayersWords'
 import { PageContainer } from '../components/SettingsContent'
@@ -8,6 +9,13 @@ import { usePushScreen } from '../hooks/usePushScreen'
 import { useStore } from '../hooks/useStore'
 import { SmartAppData } from '../types/types'
 import { StyledButton } from './StartPage'
+
+const StyledImg = styled.img`
+    display: block;
+    margin-bottom: 0.5rem;
+    width: 1.8rem;
+    height: 1.8rem;
+`
 
 export const VictoryPage = () => {
     const pushScreen = usePushScreen()
@@ -75,6 +83,10 @@ export const VictoryPage = () => {
                     'Ничья' :
                     `Победитель - ${ winner.name }`
                 }</Headline2>
+                <div style={{display: 'flex', alignItems: 'center'}}>
+                    <StyledImg src='./img/score.png' alt="" />
+                    <Headline3>+ {scoreIncrement} очков</Headline3>
+                </div>
                 <PlayersWords />
                 <StyledButton
                     view='primary'
