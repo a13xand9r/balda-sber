@@ -117,6 +117,20 @@ export type OnlineOpponent = {
     roomId: number
 }
 
+export type GameStatus = 'Победа' | 'Поражение' | 'Ничья'
+export type Opponent = {
+    name: string
+    scoreIncrement: number
+    gameStatus: GameStatus
+}
+export type UserScore = {
+    victoryCount: number
+    defeatCount: number
+    drawCount: number
+    score: number
+    opponents: Opponent[]
+}
+
 export type CellType = {
     colored: boolean
     letter: string | null

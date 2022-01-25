@@ -11,7 +11,7 @@ import { StyledButton } from './StartPage'
 
 export const VictoryPage = () => {
     const pushScreen = usePushScreen()
-    const [{player1, player2}] = useStore()
+    const [{player1, player2, ...state}] = useStore()
     const winner = React.useMemo(() => {
         if (player1.score > player2.score) return player1
         if (player2.score > player1.score) return player2
@@ -20,7 +20,31 @@ export const VictoryPage = () => {
 
     const assistant = useAssistant()
     React.useEffect(() => {
-        if (assistant){
+        if (assistant) {
+            if (state.isMultiplayer && state.userId !== state.onlineOpponent?.userId) {
+                const scoreIncrement = winner === 'Ничья'
+                    ? Math.floor(player1.score / 2)
+                    : player1.score > player2.score
+                        ? player1.score
+                        : 0
+                const gameStatus = winner === 'Ничья'
+                    ? 'Ничья'
+                    : player1.score > player2.score
+                        ? 'Победа'
+                        : 'Поражение'
+                assistant.sendAction({
+                    type: 'ONLINE_GAME_FINISH',
+                    payload: {
+                        scoreIncrement,
+                        gameStatus,
+                        opponent: {
+                            name: player2.name,
+                            scoreIncrement,
+                            gameStatus
+                        }
+                    }
+                })
+            }
             assistant.on('data', ({ smart_app_data }: any) => {
                 const smartAppData = smart_app_data as SmartAppData
                 if (smartAppData) {

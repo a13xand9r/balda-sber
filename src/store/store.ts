@@ -1,4 +1,4 @@
-import { Player } from './../types/types';
+import { Player, UserScore } from './../types/types';
 import { ActionsType, CharacterType, OnlineOpponent, StateType } from '../types/types'
 import { v4 } from 'uuid'
 
@@ -8,6 +8,7 @@ export const initialState = {
     name: '',
     onlineOpponent: null as null | OnlineOpponent,
     userId: v4(),
+    userScore: null as UserScore | null,
     playGroundSize: 5,
     startWord: '',
     player1: {
@@ -34,6 +35,8 @@ export const reducer = (state: StateType, action: ActionsType): StateType => {
             return { ...state, character: action.characterId }
         case 'SET_USER_ID':
             return { ...state, userId: action.userId }
+        case 'SET_USER_SCORE':
+            return { ...state, userScore: action.score }
         case 'RESET_GAME':
             return {
                 ...state,
@@ -135,5 +138,5 @@ export const actions = {
     resetWords: () => ({ type: 'RESET_WORDS' } as const),
     setTimer: (flag: boolean) => ({ type: 'SET_TIMER', flag } as const),
     setTimerLimit: (limit: number) => ({ type: 'SET_TIMER_LIMIT', limit } as const),
-    // setCells: (cells: CellType[]) => ({ type: 'SET_CELLS', cells } as const),
+    setUserScore: (score: UserScore) => ({ type: 'SET_USER_SCORE', score } as const),
 }
