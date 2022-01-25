@@ -5,14 +5,19 @@ import { UserScore } from '../types/types'
 
 const StyledCard = styled(Card)`
     position: relative;
-    min-width: 8.5rem;
+    min-width: 9rem;
     margin: 0.5rem;
     text-align: center;
 `
+const StyledHeadline = styled(CardHeadline1)`
+    display: flex;
+    margin: 0 auto;
+    position: relative;
+`
 const StyledImg = styled.img`
     position: absolute;
-    top: 1rem;
-    left: 1rem;
+    /* top: -1rem; */
+    left: -2.3rem;
     width: 1.8rem;
     height: 1.8rem;
     /* width: 30px;
@@ -25,9 +30,11 @@ export const Score: React.FC<Props> = ({ defeatCount, drawCount, victoryCount, s
             {/* <Col size={2}> */}
             <StyledCard>
                 <CardBody>
-                    <StyledImg src='./img/victory.png' alt="" />
                     <CardContent style={{ height: '100%' }} cover={false}>
-                        <CardHeadline1>{victoryCount}</CardHeadline1>
+                        <StyledHeadline>
+                            <StyledImg src='./img/victory.png' alt="" />
+                            {victoryCount}
+                        </StyledHeadline>
                         <TextBox>
                             Побед
                         </TextBox>
@@ -38,9 +45,11 @@ export const Score: React.FC<Props> = ({ defeatCount, drawCount, victoryCount, s
             {/* <Col size={2}> */}
             <StyledCard>
                 <CardBody>
-                    <StyledImg src='./img/defeat.png' alt="" />
                     <CardContent style={{ height: '100%' }} cover={false}>
-                        <CardHeadline1>{defeatCount}</CardHeadline1>
+                        <StyledHeadline>
+                            <StyledImg src='./img/defeat.png' alt="" />
+                            {defeatCount}
+                        </StyledHeadline>
                         <TextBox>
                             Поражений
                         </TextBox>
@@ -51,9 +60,11 @@ export const Score: React.FC<Props> = ({ defeatCount, drawCount, victoryCount, s
             {/* <Col size={2}> */}
             <StyledCard>
                 <CardBody>
-                    <StyledImg src='./img/draw.png' alt="" />
                     <CardContent style={{ height: '100%' }} cover={false}>
-                        <CardHeadline1>{drawCount}</CardHeadline1>
+                        <StyledHeadline>
+                            <StyledImg src='./img/draw.png' alt="" />
+                            {drawCount}
+                        </StyledHeadline>
                         <TextBox>
                             Ничьи
                         </TextBox>
@@ -64,9 +75,11 @@ export const Score: React.FC<Props> = ({ defeatCount, drawCount, victoryCount, s
             {/* <Col size={2}> */}
             <StyledCard>
                 <CardBody>
-                    <StyledImg src='./img/score.png' alt="" />
                     <CardContent style={{ height: '100%' }} cover={false}>
-                        <CardHeadline1>{score}</CardHeadline1>
+                        <StyledHeadline>
+                            <StyledImg src='./img/score.png' alt="" />
+                            1000
+                        </StyledHeadline>
                         <TextBox>
                             Общий счёт
                         </TextBox>
