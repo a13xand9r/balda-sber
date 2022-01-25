@@ -18,15 +18,18 @@ export const VictoryPage = () => {
         return 'Ничья'
     }, [player1, player2])
 
+    const scoreIncrement = React.useMemo(() =>
+        winner === 'Ничья'
+        ? Math.floor(player1.score / 2)
+        : player1.score > player2.score
+            ? player1.score
+            : 0
+    , [player1, player2])
+
     const assistant = useAssistant()
     React.useEffect(() => {
         if (assistant) {
             if (state.isMultiplayer && state.userId !== state.onlineOpponent?.userId) {
-                const scoreIncrement = winner === 'Ничья'
-                    ? Math.floor(player1.score / 2)
-                    : player1.score > player2.score
-                        ? player1.score
-                        : 0
                 const gameStatus = winner === 'Ничья'
                     ? 'Ничья'
                     : player1.score > player2.score
