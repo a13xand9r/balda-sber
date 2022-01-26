@@ -2,7 +2,6 @@ import { Card, CardBody, CardContent, Container, TextBox } from '@sberdevices/pl
 import { AppHeader } from '../components/AppHeader'
 import { usePushScreen } from '../hooks/usePushScreen'
 import { useAssistant } from '../hooks/useAssistant'
-import { PageContainer } from '../components/SettingsContent'
 import { StyledButton } from './StartPage'
 import React from 'react'
 import { SmartAppData } from '../types/types'
@@ -11,6 +10,19 @@ import styled from 'styled-components'
 const StyledTextBox = styled(TextBox)`
     margin-top: 0.3rem;
     margin-bottom: 0.3rem;
+`
+
+export const PageContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0.5rem auto;
+    margin-bottom: 8rem;
+    text-align: center;
+    width: 45rem;
+    @media (max-width: 700px){
+        width: 90vw;
+    }
 `
 
 export const RulesPage = () => {
