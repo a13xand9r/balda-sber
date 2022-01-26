@@ -51,7 +51,7 @@ export const PageContainer = styled.div`
     margin: 0.5rem auto;
     margin-bottom: 8rem;
     text-align: center;
-    width: 30rem;
+    width: 41rem;
     @media (max-width: 700px){
         width: 90vw;
     }
