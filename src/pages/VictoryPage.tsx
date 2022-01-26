@@ -1,4 +1,4 @@
-import { Container, Headline2, Headline3, Headline4 } from '@sberdevices/plasma-ui'
+import { Container, Headline2, Headline3 } from '@sberdevices/plasma-ui'
 import React from 'react'
 import styled from 'styled-components'
 import { AppHeader } from '../components/AppHeader'

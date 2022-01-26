@@ -1,4 +1,4 @@
-import { IconCross, IconDone, IconEdit } from '@sberdevices/plasma-icons'
+import { IconCross, IconDone, IconEdit, IconHouse } from '@sberdevices/plasma-icons'
 import { Body1, Button, detectDevice, Headline1, Headline3 } from '@sberdevices/plasma-ui'
 import styled from 'styled-components'
 import { usePlay } from '../hooks/usePlay'
@@ -127,6 +127,12 @@ const PlayContainer = styled.div`
     justify-content: space-around;
 `
 
+const HomeButton = styled(Button)`
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+`
+
 
 export const PlayPage = () => {
     const {
@@ -243,12 +249,22 @@ export const PlayPage = () => {
                 !isSberBoxLike() &&
                 <StyledPlayersWords />
             }
-            <StyledButton
-                view='primary'
-                onClick={() => setIsAreYouSure(true)}
-            >
-                На главную
-            </StyledButton>
+            {
+                isSberBoxLike()
+                    ? <HomeButton
+                        view='secondary'
+                        onClick={() => setIsAreYouSure(true)}
+                    >
+                        <IconHouse />
+                    </HomeButton>
+                    : <StyledButton
+                        view='primary'
+                        onClick={() => setIsAreYouSure(true)
+                    }
+                    >
+                        На главную
+                    </StyledButton>
+            }
             <CSSTransition
                 in={isAreYouSure}
                 timeout={300}
@@ -261,14 +277,14 @@ export const PlayPage = () => {
                         <div>
                             <Button
                                 view='secondary'
-                                style={{ margin: '1rem' }}
+                                style={{ margin: '0.5rem' }}
                                 onClick={goToMain}
                             >
                                 Да
                             </Button>
                             <Button
                                 view='secondary'
-                                style={{ margin: '1rem' }}
+                                style={{ margin: '0.5rem' }}
                                 onClick={() => setIsAreYouSure(false)}
                                 ref={areYouSureNoRefs}
                             >
