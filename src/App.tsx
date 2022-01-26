@@ -12,6 +12,7 @@ import { OpponentDisconnected } from './pages/OpponentDisconnected'
 import { RulesPage } from './pages/RulesPage'
 import React from 'react'
 import { useAssistant } from './hooks/useAssistant'
+import { usePushScreen } from './hooks/usePushScreen'
 
 function App() {
     const assistant = useAssistant()
@@ -23,6 +24,13 @@ function App() {
             })
         }
     }, [assistant])
+
+    const pushScreen = usePushScreen()
+    React.useEffect(() => {
+        window.onpopstate = () => {
+            pushScreen('')
+        }
+    }, [])
     return (
         <Routes>
             <Route path="/settings" element={<SettingsPage />} />
