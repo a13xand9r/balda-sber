@@ -6,6 +6,12 @@ import { PageContainer } from '../components/SettingsContent'
 import { StyledButton } from './StartPage'
 import React from 'react'
 import { SmartAppData } from '../types/types'
+import styled from 'styled-components'
+
+const StyledTextBox = styled(TextBox)`
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+`
 
 export const RulesPage = () => {
     const pushScreen = usePushScreen()
@@ -34,18 +40,16 @@ export const RulesPage = () => {
         <Container style={{marginBottom: '5rem'}}>
             <AppHeader title='Правила' back={true} onBackCallback={() => pushScreen(-1)} />
             <PageContainer>
-                <Card>
+                <Card style={{marginTop: '-1rem'}}>
                     <CardBody style={{ height: '100%', alignItems: 'center' }}>
                         <CardContent style={{ height: '100%', textAlign: 'start' }} cover={false}>
-                            <TextBox>
+                            <StyledTextBox>
                                 «Балда» — лингвистическая настольная игра для 2 игроков, в которой необходимо составлять слова с помощью букв, добавляемых определённым образом на квадратное игровое поле
-                            </TextBox>
-                            <br />
-                            <TextBox>
+                            </StyledTextBox>
+                            <StyledTextBox>
                                 Правила игры: необходимо составлять слова, дописывая по одной букве в пустом поле. Побеждает тот, кто наберет как можно больше очков. Чем длиннее слово, тем больше очков получает игрок. Разрешается использовать только существительные слова в именительном падеже (единственное число)
-                            </TextBox>
-                            <br />
-                            <TextBox>
+                            </StyledTextBox>
+                            <StyledTextBox>
                                 Порядок следующий:
                                 <ol style={{marginLeft: '1.5rem', marginTop: '0.5rem'}}>
                                     <li>Ставим букву в доступную ячейку</li>
@@ -53,7 +57,7 @@ export const RulesPage = () => {
                                     <li>Подтверждаем, и если такое слово есть в словаре, ждём хода соперника</li>
                                     <li>Если 2 игрока не смогли придумать слово в пределах одного хода, игра заканчивается</li>
                                 </ol>
-                            </TextBox>
+                            </StyledTextBox>
                         </CardContent>
                     </CardBody>
                 </Card>
