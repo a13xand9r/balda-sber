@@ -25,7 +25,8 @@ export const initialState = {
     isMultiplayer: false,
     isOpponentOnline: null as null | boolean,
     isTimer: false,
-    timerLimit: 120
+    timerLimit: 120,
+    isDecrementScore: false
     // cells: [] as CellType[]
 }
 

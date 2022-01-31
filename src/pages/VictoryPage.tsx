@@ -10,7 +10,7 @@ import { useStore } from '../hooks/useStore'
 import { SmartAppData } from '../types/types'
 import { StyledButton } from './StartPage'
 
-const StyledImg = styled.img`
+export const StyledImg = styled.img`
     display: block;
     margin-bottom: 0.5rem;
     width: 1.8rem;
@@ -31,7 +31,7 @@ export const VictoryPage = () => {
         ? Math.floor(player1.score / 2)
         : player1.score > player2.score
             ? player1.score
-            : 0
+            : -Math.floor(player2.score / 5)
     , [player1, player2])
 
     const assistant = useAssistant()
@@ -87,7 +87,7 @@ export const VictoryPage = () => {
                     state.isMultiplayer &&
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <StyledImg src='./img/score.png' alt="" />
-                        <Headline3>+ {scoreIncrement} очков</Headline3>
+                        <Headline3>{scoreIncrement >= 0 && '+'} {scoreIncrement} очков</Headline3>
                     </div>
                 }
                 <PlayersWords />
