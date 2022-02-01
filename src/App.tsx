@@ -28,16 +28,15 @@ function App() {
     }, [assistant])
 
     const pushScreen = usePushScreen()
-    const goMain = React.useMemo(() => () => pushScreen(''), [pushScreen])
     React.useEffect(() => {
         console.log(location);
+        const goMain = () => pushScreen('')
+        const closeApp = () => assistant.close()
         if (location.pathname === '/' || location.pathname === '/start'){
-            window.removeEventListener('popstate', goMain)
+            window.onpopstate = closeApp
         } else {
-            window.addEventListener('popstate', goMain)
-        }
-        return () => {
-            window.removeEventListener('popstate', goMain)
+            window.onpopstate = goMain
+            console.log(window);
         }
     }, [location])
     return (
