@@ -1,7 +1,8 @@
 import { StartPage } from './pages/StartPage'
 import {
     Routes,
-    Route
+    Route,
+    useLocation
 } from 'react-router-dom'
 import { SettingsPage } from './pages/SettingsPage'
 import { Random } from './pages/RandomPage'
@@ -16,6 +17,7 @@ import { usePushScreen } from './hooks/usePushScreen'
 
 function App() {
     const assistant = useAssistant()
+    const location = useLocation()
     React.useEffect(() => {
         if (assistant) {
             assistant.sendAction({
@@ -26,10 +28,15 @@ function App() {
     }, [assistant])
 
     const pushScreen = usePushScreen()
+    const goMain = React.useMemo(() => () => pushScreen(''), [pushScreen])
     React.useEffect(() => {
-        const goMain = () => pushScreen('')
         window.addEventListener('popstate', goMain)
     }, [])
+    React.useEffect(() => {
+        console.log(location);
+        if (location.pathname === '/' || location.pathname === '/start')
+            window.removeEventListener('popstate', goMain)
+    }, [location])
     return (
         <Routes>
             <Route path="/settings" element={<SettingsPage />} />

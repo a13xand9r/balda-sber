@@ -24,7 +24,6 @@ export const StartPage = () => {
     const [state, dispatch] = useStore()
     const assistant = useAssistant()
     React.useEffect(() => {
-        console.log('start useEffect', state.decrementScore)
         if (state.decrementScore !== null){
             const winner = (() => {
                 if (state.player1.score > state.player2.score) return state.player1
@@ -111,6 +110,7 @@ export const StartPage = () => {
         <Container>
             <AppHeader
                 back={false}
+                minimize={true}
                 title='Балда онлайн'
             />
             <PageContainer>
