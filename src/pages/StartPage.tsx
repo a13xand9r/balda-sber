@@ -61,6 +61,7 @@ export const StartPage = () => {
         }
     }, [state.decrementScore])
     React.useEffect(() => {
+        window.onpopstate = null
         getWord(state.playGroundSize).then(res => dispatch(actions.setStartWord(res)))
     }, [])
     // React.useEffect(() => {

@@ -28,17 +28,17 @@ function App() {
     }, [assistant])
 
     const pushScreen = usePushScreen()
-    React.useEffect(() => {
-        console.log(location);
-        const goMain = () => pushScreen('')
-        const closeApp = () => assistant.close()
-        if (location.pathname === '/' || location.pathname === '/start'){
-            window.onpopstate = closeApp
-        } else {
-            window.onpopstate = goMain
-            console.log(window);
-        }
-    }, [location])
+    // React.useEffect(() => {
+    //     console.log(location);
+    //     const goMain = () => pushScreen('')
+    //     const closeApp = () => assistant.close()
+    //     if (location.pathname === '/' || location.pathname === '/start'){
+    //         window.onpopstate = closeApp
+    //     } else {
+    //         window.onpopstate = goMain
+    //         console.log(window);
+    //     }
+    // }, [location])
     return (
         <Routes>
             <Route path="/settings" element={<SettingsPage />} />

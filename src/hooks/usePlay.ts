@@ -87,6 +87,14 @@ export const usePlay = () => {
         }
     }, [])
 
+    React.useEffect(() => {
+        const goMain = () => pushScreen('')
+        window.onpopstate = goMain
+        // return () => {
+        //     window.onpopstate = null
+        // }
+    }, [])
+
     const interval = React.useRef<NodeJS.Timeout>()
 
     React.useEffect(() => {
