@@ -63,13 +63,13 @@ export const StartPage = () => {
     React.useEffect(() => {
         getWord(state.playGroundSize).then(res => dispatch(actions.setStartWord(res)))
     }, [])
-    React.useEffect(() => {
-        const closeApp = () => assistant.close()
-        window.addEventListener('popstate', closeApp)
-        return () => {
-            window.removeEventListener('popstate', closeApp)
-        }
-    }, [])
+    // React.useEffect(() => {
+    //     const closeApp = () => assistant.close()
+    //     window.addEventListener('popstate', closeApp)
+    //     return () => {
+    //         window.removeEventListener('popstate', closeApp)
+    //     }
+    // }, [])
     const onRulesClick = () => {
         pushScreen('rules')
     }

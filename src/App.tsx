@@ -30,12 +30,15 @@ function App() {
     const pushScreen = usePushScreen()
     const goMain = React.useMemo(() => () => pushScreen(''), [pushScreen])
     React.useEffect(() => {
-        window.addEventListener('popstate', goMain)
-    }, [])
-    React.useEffect(() => {
         console.log(location);
-        if (location.pathname === '/' || location.pathname === '/start')
+        if (location.pathname === '/' || location.pathname === '/start'){
             window.removeEventListener('popstate', goMain)
+        } else {
+            window.addEventListener('popstate', goMain)
+        }
+        return () => {
+            window.removeEventListener('popstate', goMain)
+        }
     }, [location])
     return (
         <Routes>
