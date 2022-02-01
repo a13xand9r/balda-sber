@@ -6,6 +6,7 @@ import { StyledButton } from './StartPage'
 import React from 'react'
 import { SmartAppData } from '../types/types'
 import styled from 'styled-components'
+import { isSberBoxLike } from '@sberdevices/plasma-temple'
 
 const StyledTextBox = styled(TextBox)`
     margin-top: 0.3rem;
@@ -53,7 +54,7 @@ export const RulesPage = () => {
         <Container style={{marginBottom: '5rem'}}>
             <AppHeader title='Правила' back={true} onBackCallback={() => pushScreen(-1)} />
             <PageContainer>
-                <Card style={{marginTop: '-1rem'}}>
+                <Card style={{marginTop: isSberBoxLike() ? '-1rem' : '0'}}>
                     <CardBody style={{ height: '100%', alignItems: 'center' }}>
                         <CardContent style={{ height: '100%', textAlign: 'start' }} cover={false}>
                             <StyledTextBox>
