@@ -11,7 +11,7 @@ import { useAssistant } from '../hooks/useAssistant'
 import { usePushScreen } from '../hooks/usePushScreen'
 import { useStore } from '../hooks/useStore'
 import { actions } from '../store/store'
-import { SmartAppData } from '../types/types'
+import { Player, SmartAppData } from '../types/types'
 import { StyledImg } from './VictoryPage'
 
 export const StyledButton = styled(Button)`
@@ -23,24 +23,37 @@ export const StartPage = () => {
     const pushScreen = usePushScreen()
     const [state, dispatch] = useStore()
     const assistant = useAssistant()
+
+    const player1 = React.useRef<Player>({
+        name: '',
+        words: [],
+        score: 0
+    })
+    const player2 = React.useRef<Player>({
+        name: '',
+        words: [],
+        score: 0
+    })
     React.useEffect(() => {
+        if (state.player1.score) player1.current = state.player1
+        if (state.player2.score) player2.current = state.player2
         if (state.decrementScore !== null){
             const winner = (() => {
-                if (state.player1.score > state.player2.score) return state.player1
-                if (state.player2.score > state.player1.score) return state.player2
+                if (player1.current.score > player2.current.score) return player1.current
+                if (player2.current.score > player1.current.score) return player2.current
                 return 'Ничья'
             })()
             const scoreDecrement = (() =>
                 winner === 'Ничья'
-                ? -Math.floor(state.player2.score / 4)
-                : state.player1.score > state.player2.score
+                ? -Math.floor(player2.current.score / 4)
+                : player1.current.score > player2.current.score
                     ? 0
-                    : -Math.floor(state.player2.score / 2)
+                    : -Math.floor(player2.current.score / 2)
             )()
             dispatch(actions.setDecrementScore(scoreDecrement))
             setTimeout(() => {
                 dispatch(actions.setDecrementScore(null))
-                dispatch(actions.resetGame())
+                // dispatch(actions.resetGame())
             }, 2500)
             assistant.sendAction({
                 type: 'ONLINE_GAME_FINISH',
@@ -48,17 +61,14 @@ export const StartPage = () => {
                     scoreIncrement: state.decrementScore,
                     gameStatus: 'Поражение',
                     opponent: {
-                        name: state.player2.name,
+                        name: player2.current.name,
                         scoreIncrement: scoreDecrement,
                         gameStatus: 'Поражение'
                     }
                 }
             })
-        } else {
-            setTimeout(() => {
-                dispatch(actions.resetGame())
-            }, 2700)
         }
+        dispatch(actions.resetGame())
     }, [state.decrementScore])
     React.useEffect(() => {
         window.onpopstate = null
