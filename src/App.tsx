@@ -17,7 +17,7 @@ import { usePushScreen } from './hooks/usePushScreen'
 function App() {
     const assistant = useAssistant()
     React.useEffect(() => {
-        if (assistant){
+        if (assistant) {
             assistant.sendAction({
                 type: 'START_APP',
                 payload: {}
@@ -27,9 +27,8 @@ function App() {
 
     const pushScreen = usePushScreen()
     React.useEffect(() => {
-        window.onpopstate = () => {
-            pushScreen('')
-        }
+        const goMain = () => pushScreen('')
+        window.addEventListener('popstate', goMain)
     }, [])
     return (
         <Routes>

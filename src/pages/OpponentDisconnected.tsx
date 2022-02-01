@@ -6,6 +6,7 @@ import { PageContainer } from '../components/SettingsContent'
 import { useAssistant } from '../hooks/useAssistant'
 import { usePushScreen } from '../hooks/usePushScreen'
 import { useStore } from '../hooks/useStore'
+import { actions } from '../store/store'
 import { SmartAppData } from '../types/types'
 import { StyledImg } from './VictoryPage'
 
@@ -16,7 +17,7 @@ const StyledButton = styled(Button)`
 
 export const OpponentDisconnected = () => {
     const pushScreen = usePushScreen()
-    const [{player1, player2, ...state}] = useStore()
+    const [{player1, player2, ...state}, dispatch] = useStore()
     const winner = React.useMemo(() => {
         if (player1.score > player2.score) return player1
         if (player2.score > player1.score) return player2
@@ -30,6 +31,9 @@ export const OpponentDisconnected = () => {
             ? Math.floor(player1.score / 2)
             : 0
     , [player1, player2])
+    React.useEffect(() => {
+        dispatch(actions.setDecrementScore(null))
+    }, [])
 
     const assistant = useAssistant()
     React.useEffect(() => {

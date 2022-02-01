@@ -10,6 +10,7 @@ export const getTimerPercentage = (timer: number, limit: number) => {
 
 export const badWords = [
     'лох',
+    'хуй',
     'пидор',
     'ебал',
     'ебат',

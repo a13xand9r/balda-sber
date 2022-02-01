@@ -6,6 +6,5 @@ export const getWord = async (lettersCount: number) => {
         //     `http://localhost:5000/word?lettersCount=${lettersCount}` :
             `https://balda-scenario-sber.herokuapp.com/word?lettersCount=${lettersCount}`
     )
-    console.log('word', data)
     return data
 }

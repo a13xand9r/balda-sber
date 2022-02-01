@@ -108,7 +108,6 @@ export const useWebSocket = (
         socket.current?.send(JSON.stringify(sendMessage))
     }
     const onWordDone = (cells: CellType[], newWord: string) => {
-        console.log('send cells', cells)
         const sendMessage: SendMessage = {
             type: 'WORD_DONE',
             payload: {

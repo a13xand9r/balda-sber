@@ -26,7 +26,7 @@ export const initialState = {
     isOpponentOnline: null as null | boolean,
     isTimer: false,
     timerLimit: 120,
-    isDecrementScore: false
+    decrementScore: null as null | number
     // cells: [] as CellType[]
 }
 
@@ -37,7 +37,6 @@ export const reducer = (state: StateType, action: ActionsType): StateType => {
         case 'SET_USER_ID':
             return { ...state, userId: action.userId }
         case 'SET_USER_SCORE':
-            console.log('action', action)
             return { ...state, userScore: action.score }
         case 'RESET_GAME':
             return {
@@ -46,6 +45,7 @@ export const reducer = (state: StateType, action: ActionsType): StateType => {
                 playGroundSize: 5,
                 isMultiplayer: false,
                 isOpponentOnline: null,
+                // decrementScore: null,
                 player1: {
                     name: state.name,
                     score: 0,
@@ -117,6 +117,8 @@ export const reducer = (state: StateType, action: ActionsType): StateType => {
             return { ...state, isTimer: action.flag }
         case 'SET_TIMER_LIMIT':
             return { ...state, timerLimit: action.limit }
+        case 'SET_DECREMENT_SCORE':
+            return { ...state, decrementScore: action.score }
         default: return state
     }
 }
@@ -141,4 +143,5 @@ export const actions = {
     setTimer: (flag: boolean) => ({ type: 'SET_TIMER', flag } as const),
     setTimerLimit: (limit: number) => ({ type: 'SET_TIMER_LIMIT', limit } as const),
     setUserScore: (score: UserScore) => ({ type: 'SET_USER_SCORE', score } as const),
+    setDecrementScore: (score: number | null) => ({ type: 'SET_DECREMENT_SCORE', score } as const),
 }

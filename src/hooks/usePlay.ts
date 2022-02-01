@@ -26,6 +26,8 @@ export const usePlay = () => {
     const [timer, setTimer] = React.useState<number>(state.timerLimit)
     const [timerDoneCounter, setTimerDoneCounter] = React.useState<number>(0)
 
+    const assistant = useAssistant()
+
     const playAudio = (src: string, volume = 1) => {
         let audio = new Audio(src)
         audio.volume = volume
@@ -72,6 +74,18 @@ export const usePlay = () => {
         pushScreen,
         nextMove
     )
+
+    const cellsRef = React.useRef<CellType[]>()
+    cellsRef.current = cells
+    React.useEffect(() => {
+        return () => {
+            console.log('decrementScore effect');
+            if (state.isMultiplayer && !cellsRef.current?.every(item => !!item.letter)) {
+                console.log('decrementScore effect inside if');
+                dispatch(actions.setDecrementScore(1))
+            }
+        }
+    }, [])
 
     const interval = React.useRef<NodeJS.Timeout>()
 
@@ -146,7 +160,6 @@ export const usePlay = () => {
     }, [currentPlayerNumber])
 
     React.useEffect(() => {
-        console.log('player1.words useEffect')
         player1.words.length && onWordDone(cells, wordInProgress)
     }, [player1.words])
 
@@ -242,7 +255,6 @@ export const usePlay = () => {
         }
     }, [cells])
 
-    const assistant = useAssistant()
     React.useEffect(() => {
         if (assistant){
             assistant.on('data', ({ smart_app_data }: any) => {
