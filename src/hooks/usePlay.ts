@@ -15,7 +15,8 @@ export const usePlay = () => {
         colored: false,
         letter: null,
         isAvailableToPutLetter: false,
-        isInput: false
+        isInput: false,
+        tempLetter: null,
     }))
     const [isLetterPut, setLetterPut] = React.useState(false)
     const [lastColored, setLastColored] = React.useState<null | number>(null)
